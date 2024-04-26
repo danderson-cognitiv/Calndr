@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node server/src/app.ts"
+    "start": "ts-node server/src/AppServer.ts"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +16,6 @@
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.19.2",
-    "mongodb": "^6.5.0",
     "mongoose": "^8.3.2",
     "typescript": "^5.4.5"
   },

@@ -1,9 +1,9 @@
 db = db.getSiblingDB('cal');
 db.createCollection('users');
-listsCollection = db.getCollection("users");
-listsCollection.deleteMany({}); 
+usersCollection = db.getCollection("users");
+usersCollection.deleteMany({}); 
 
-var result = listsCollection.insertMany([
+var result = usersCollection.insertMany([
     {
         name: "DandyAndy77",
         email: "david.j.anderson94@gmail.com",
@@ -25,12 +25,12 @@ var result = listsCollection.insertMany([
 var userId1 = result.insertedIds[0];
 var userId2 = result.insertedIds[1];
 
-listsCollection.updateOne(
+usersCollection.updateOne(
     { _id: userId1 },
-    { $set: { friends: [userId2] } }
+    { $set: { friends: [{userId: userId2, name: "FladenBrot420"}] } }
 );
 
-listsCollection.updateOne(
+usersCollection.updateOne(
     { _id: userId2 },
-    { $set: { friends: [userId1] } }
+    { $set: { friends: [{userId: userId1, name: "DandyAndy77"}] } }
 );
