@@ -1,19 +1,14 @@
 module.exports = {
     async up(db, client) {
-      // Assuming the database and collections are already set up in previous migrations or in the environment
   
-      // Create the 'events' collection if it doesn't exist
       await db.createCollection('events');
   
-      // Clear existing documents in the 'events' collection
       await db.collection('events').deleteMany({});
   
-      // Retrieve user IDs
       const dandyAndy77Id = await db.collection('users').findOne({ name: "DandyAndy77" });
       const fladenBrot420Id = await db.collection('users').findOne({ name: "FladenBrot420" });
   
-      // Insert multiple documents into 'events' collection
-      var result = await db.collection('events').insertMany([
+      await db.collection('events').insertMany([
         {
           created_by_user_id: dandyAndy77Id._id,
           name: "Dave's Birthday Party!",
@@ -34,7 +29,6 @@ module.exports = {
     },
   
     async down(db, client) {
-      // Rollback: Remove the 'events' collection
       await db.collection('events').drop();
     }
   };
