@@ -4,6 +4,7 @@
 We need to install mongodb, make sure you have homebrew installed and then run
 `brew install mongodb-community@6.0`
 And then `cd Calndr/database`
+Create the `db` directory by running `mkdir db`
 Then run `mongod -port 3000 -dbpath "./db"`
 This will create a background process that is running the mongo database. It also creates a `database/db` directory that holds metadata about the database
 
