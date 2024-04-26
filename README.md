@@ -19,7 +19,7 @@ Install migrate-mongo with `npm install -g migrate-mongo` or if you just run `np
 
 First you have to manually create the admin user.
 Go back to the mongosh shell and run `load("createAdminUser.js")`. This creates the admin user that we have credentials for.
-
+Next run `npm install --save dotenv` to install dotenv.
 Then in another terminal run from the `Calndr` directory run `migrate-mongo up`. You should see the Migration scripts being written to the console
 ```
 migrate-mongo up
