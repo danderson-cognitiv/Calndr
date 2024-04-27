@@ -9,17 +9,17 @@ module.exports = {
         username: "DandyAndy77",
         email: "david.j.anderson94@gmail.com",
         password: "password",
-        f_name: "Dave",
-        l_name: "Anderson",
-        events_visible: true
+        fName: "Dave",
+        lName: "Anderson",
+        eventsVisible: true
       },
       {
         username: "Fladenbrot420",
         email: "mahir_email@gmail.com",
         password: "password",
-        f_name: "Mahir",
-        l_name: "Bathija",
-        events_visible: false
+        fName: "Mahir",
+        lName: "Bathija",
+        eventsVisible: false
       }
     ]);
 

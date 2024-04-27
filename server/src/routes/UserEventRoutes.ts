@@ -1,17 +1,17 @@
 import express from 'express';
-import { EventModel } from '../../../database/model/EventModel';
+import { UserEventModel } from '../../../database/model/UserEventModel';
 
-const eventRouter = express.Router();
+const userEventRouter = express.Router();
 
 // Export a function that accepts the mongoDBConnection string
 export default function createEventRoutes(mongoDBConnection: string) {
-    const eventModel = new EventModel(mongoDBConnection);
+    const userEventModel = new UserEventModel(mongoDBConnection);
 
-    eventRouter.get('/event/:eventId', async (req, res) => {
-        var eventId = req.params.eventId;
+    userEventRouter.get('/user_event/:userEventId', async (req, res) => {
+        var eventId = req.params.userEventId;
         console.log('Query events by eventId: ' + eventId);
         try {
-            const event = await eventModel.getEventById(eventId);
+            const event = await userEventModel.getUserEventById(eventId);
             if (event) {
                 res.json(event);
             } else {
@@ -23,12 +23,12 @@ export default function createEventRoutes(mongoDBConnection: string) {
         }
     });
 
-    eventRouter.post('/event', async (req, res) => {
+    userEventRouter.post('/user_event', async (req, res) => {
         var payload = req.body;
         try {
-            const event = await eventModel.createEvent(payload);
-            if (event) {
-                res.json(event);
+            const userEvent = await userEventModel.createUserEvent(payload);
+            if (userEvent) {
+                res.json(userEvent);
             } else {
                 res.status(404).json({ message: "Failed" });
             }
@@ -38,13 +38,13 @@ export default function createEventRoutes(mongoDBConnection: string) {
         }
     });
 
-    eventRouter.put('/event/:eventId', async (req, res) => {
-        var eventId = req.params.eventId;
+    userEventRouter.put('/user_event/:userEventId', async (req, res) => {
+        var userEventId = req.params.userEventId;
         var payload = req.body;
         try {
-            const event = await eventModel.updateEvent(eventId, payload);
-            if (event) {
-                res.json(event);
+            const newevent = await userEventModel.updateUserEvent(userEventId, payload);
+            if (newevent) {
+                res.json(newevent);
             } else {
                 res.status(404).json({ message: "Failed" });
             }
@@ -54,16 +54,18 @@ export default function createEventRoutes(mongoDBConnection: string) {
         }
     });
 
-    eventRouter.delete('/event/:eventId', async (req, res) => {
-        var eventId = req.params.eventId;
+    userEventRouter.delete('/user_event/:userEventId', async (req, res) => {
+        var userEventId = req.params.userEventId;
         try {
-            await eventModel.deleteEvent(eventId);
-            res.status(200).json({ message: 'Event deleted successfully' });
+            await userEventModel.deleteUserEvent(userEventId);
+            
+            res.status(200).json({ message: 'User Event deleted successfully' });
+
         } catch (error) {
             console.error('Error accessing database:', error);
             res.status(500).json({ error: 'Internal server error' });
         }
     });
 
-    return eventRouter;
+    return userEventRouter;
 }

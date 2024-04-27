@@ -1,7 +1,10 @@
 import express from 'express';
 import * as bodyParser from 'body-parser';
-import createUserRoutes from './UserRoutes'; // Import user routes function
+import createUserRoutes from './UserRoutes';
 import createEventRoutes from './EventRoutes';
+import createUserEventRoutes from './UserEventRoutes';
+import createMessageRoutes from './MessageRoutes';
+import createPhotoRoutes from './PhotoRoutes';
 
 class App {
     // ref to Express instance
@@ -28,6 +31,9 @@ class App {
         // Use user routes
         this.expressApp.use('/', createUserRoutes(mongoDBConnection));
         this.expressApp.use('/', createEventRoutes(mongoDBConnection));
+        this.expressApp.use('/', createUserEventRoutes(mongoDBConnection));
+        this.expressApp.use('/', createMessageRoutes(mongoDBConnection));
+        this.expressApp.use('/', createPhotoRoutes(mongoDBConnection));
 
 
         // Serve static files

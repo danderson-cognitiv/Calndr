@@ -26,9 +26,9 @@ export default function createUserRoutes(mongoDBConnection: string) {
     userRouter.post('/user', async (req, res) => {
         var payload = req.body;
         try {
-            const newUser = await userModel.createUser(payload);
-            if (newUser) {
-                res.json(newUser);
+            const user = await userModel.createUser(payload);
+            if (user) {
+                res.json(user);
             } else {
                 res.status(404).json({ message: "Failed" });
             }
@@ -42,9 +42,9 @@ export default function createUserRoutes(mongoDBConnection: string) {
         var userId = req.params.userId;
         var payload = req.body;
         try {
-            const newUser = await userModel.updateUser(userId, payload);
-            if (newUser) {
-                res.json(newUser);
+            const user = await userModel.updateUser(userId, payload);
+            if (user) {
+                res.json(user);
             } else {
                 res.status(404).json({ message: "Failed" });
             }

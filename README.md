@@ -52,9 +52,9 @@ Open Postman or Insomnia and create a `GET` route with this url
     "name": "DandyAndy77",
     "email": "david.j.anderson94@gmail.com",
     "password": "password",
-    "f_name": "Dave",
-    "l_name": "Anderson",
-    "events_visible": true,
+    "fName": "Dave",
+    "lName": "Anderson",
+    "eventsVisible": true,
     "friends": [
         {
             "_id": "662be1ffa01fd430dcf4ab0f",

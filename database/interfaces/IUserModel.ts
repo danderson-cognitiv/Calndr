@@ -4,9 +4,9 @@ interface IUserModel extends Mongoose.Document {
     username: string;
     email: string;
     password: string;
-    f_name: string;
-    l_name: string;
-    events_visible: boolean;
+    fName: string;
+    lName: string;
+    eventsVisible: boolean;
     friends: Mongoose.Schema.Types.ObjectId[];
 }
 

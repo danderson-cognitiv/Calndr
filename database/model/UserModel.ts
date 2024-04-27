@@ -18,11 +18,12 @@ class UserModel {
             username: String,
             email: String,
             password: String,
-            f_name: String,
-            l_name: String,
-            events_visible: Boolean,
+            fName: String,
+            lName: String,
+            eventsVisible: Boolean,
             friends: [{ type: Mongoose.Schema.Types.ObjectId, ref: 'User' }] // Reference to User model
-        }); 
+        }, {collection: 'users'}
+        ); 
     }
 
     public async createModel() {
@@ -42,7 +43,7 @@ class UserModel {
             const user = await this.model
             .findById(userId)
             .populate('friends', 'username email');
-            
+            console.log(user)
             return user;
         }
         catch(e) {

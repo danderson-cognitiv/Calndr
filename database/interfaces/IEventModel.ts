@@ -2,11 +2,11 @@ import * as Mongoose from "mongoose";
 
 interface IEventModel extends Mongoose.Document {
     name: string;
-    start_time: Date;
-    end_time: Date;
+    startTime: Date;
+    endTime: Date;
     location: string;
     description: string;
-    created_by:  Mongoose.Schema.Types.ObjectId;
+    createdBy:  Mongoose.Schema.Types.ObjectId;
 }
 
 export { IEventModel };

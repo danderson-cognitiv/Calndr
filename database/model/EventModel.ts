@@ -16,11 +16,11 @@ class EventModel {
         this.schema = new Mongoose.Schema(
             {
                 name: { type: String, required: true },
-                start_time: { type: Date, required: true },
-                end_time: { type: Date, required: true },
+                startTime: { type: Date, required: true },
+                endTime: { type: Date, required: true },
                 location: { type: String, required: true },
                 description: { type: String, required: true },
-                created_by: { type: Mongoose.Schema.Types.ObjectId, ref: 'User' }
+                createdBy: { type: Mongoose.Schema.Types.ObjectId, ref: 'User' }
             }, {collection: 'events'}
         );    
     }
@@ -41,7 +41,7 @@ class EventModel {
         try {
             return await this.model
             .findById(eventId)
-            .populate('created_by', 'f_name l_name');
+            .populate('createdBy', 'fName lName');
         }
         catch(e) {
             console.error(e);
@@ -73,8 +73,8 @@ class EventModel {
     
     public async updateEvent(eventId: string, eventData: Partial<IEventModel>): Promise<IEventModel | null> {
         try {
-            const updatedEvent = await this.model.findByIdAndUpdate(eventId, eventData, { new: true }).exec();
-            return updatedEvent;
+            const event = await this.model.findByIdAndUpdate(eventId, eventData, { new: true }).exec();
+            return event;
         } catch (error) {
             console.error('Error updating event:', error);
             return null;
