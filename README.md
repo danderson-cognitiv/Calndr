@@ -3,6 +3,7 @@
 ## Starting the Mongo Database
 We need to install mongodb, follow the instructions here `https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/`
 And then `cd Calndr/database`
+Create the `db` directory by running `mkdir db`
 Then run `mongod -port 3000 -dbpath "./db"`
 This will create a background process that is running the mongo database. It also creates a `database/db` directory that holds metadata about the database
 
@@ -16,8 +17,8 @@ I'm fancy so we're going to automate migration scripts.
 Install migrate-mongo with `npm install -g migrate-mongo` or if you just run `npm install` maybe it will just work because it's in `package.json`... not sure.
 
 First you have to manually create the admin user.
-Go back to the mongosh and run `load("createAdminUser.js")`. This creates the admin user that we have credentials for.
-
+Go back to the mongosh shell and run `load("createAdminUser.js")`. This creates the admin user that we have credentials for.
+Next run `npm install --save dotenv` to install dotenv.
 Then in another terminal run from the `Calndr` directory run `migrate-mongo up`. You should see the Migration scripts being written to the console
 ```
 migrate-mongo up
