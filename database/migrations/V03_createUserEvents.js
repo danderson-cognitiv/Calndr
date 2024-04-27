@@ -4,9 +4,9 @@ module.exports = {
   
       await db.collection('userEvents').deleteMany({});
   
-      const daveId = await db.collection('users').findOne({ name: "DandyAndy77" });
-      const mahirId = await db.collection('users').findOne({ name: "FladenBrot420" });
-  
+      const daveId = await db.collection('users').findOne({ username: "DandyAndy77" });
+      const mahirId = await db.collection('users').findOne({ username: "Fladenbrot420" });
+
       const davesBirthdayEventId = await db.collection('events').findOne({ name: "Dave's Birthday Party!" });
       const mahirGraduationEventId = await db.collection('events').findOne({ name: "Mahir's Graduation party" });
   

@@ -1,13 +1,13 @@
 import * as Mongoose from "mongoose";
 
 interface IUserModel extends Mongoose.Document {
-    name: string;
+    username: string;
     email: string;
     password: string;
     f_name: string;
     l_name: string;
     events_visible: boolean;
-    friends: Mongoose.Types.ObjectId[];
+    friends: Mongoose.Schema.Types.ObjectId[];
 }
 
 export { IUserModel };
