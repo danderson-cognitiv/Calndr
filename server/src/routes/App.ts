@@ -1,6 +1,7 @@
 import express from 'express';
 import * as bodyParser from 'body-parser';
 import createUserRoutes from './UserRoutes'; // Import user routes function
+import createEventRoutes from './EventRoutes';
 
 class App {
     // ref to Express instance
@@ -25,8 +26,9 @@ class App {
 
     private routes(mongoDBConnection: string): void {
         // Use user routes
-        const userRoutes = createUserRoutes(mongoDBConnection);
-        this.expressApp.use('/', userRoutes);
+        this.expressApp.use('/', createUserRoutes(mongoDBConnection));
+        this.expressApp.use('/', createEventRoutes(mongoDBConnection));
+
 
         // Serve static files
         this.expressApp.use('/app/json/', express.static(__dirname + '/app/json'));

@@ -1,0 +1,73 @@
+import express from 'express';
+import { EventModel } from '../../../database/model/EventModel';
+
+const eventRouter = express.Router();
+
+// Export a function that accepts the mongoDBConnection string
+export default function createEventRoutes(mongoDBConnection: string) {
+    const eventModel = new EventModel(mongoDBConnection);
+
+    eventRouter.get('/event/:eventId', async (req, res) => {
+        var eventId = req.params.eventId;
+        console.log('Query events by eventId: ' + eventId);
+        try {
+            const event = await eventModel.getEventById(eventId);
+            if (event) {
+                res.json(event);
+            } else {
+                res.status(404).json({ message: "event not found" });
+            }
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
+    eventRouter.post('/event', async (req, res) => {
+        var payload = req.body;
+        try {
+            const newevent = await eventModel.createEvent(payload);
+            if (newevent) {
+                res.json(newevent);
+            } else {
+                res.status(404).json({ message: "Failed" });
+            }
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
+    eventRouter.put('/event/:eventId', async (req, res) => {
+        var eventId = req.params.eventId;
+        var payload = req.body;
+        try {
+            const newevent = await eventModel.updateEvent(eventId, payload);
+            if (newevent) {
+                res.json(newevent);
+            } else {
+                res.status(404).json({ message: "Failed" });
+            }
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
+    eventRouter.delete('/event/:eventId', async (req, res) => {
+        var eventId = req.params.eventId;
+        try {
+            const newevent = await eventModel.deleteEvent(eventId);
+            if (newevent) {
+                res.json(newevent);
+            } else {
+                res.status(404).json({ message: "Failed" });
+            }
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
+    return eventRouter;
+}

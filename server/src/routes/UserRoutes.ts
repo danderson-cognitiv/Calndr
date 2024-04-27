@@ -23,7 +23,7 @@ export default function createUserRoutes(mongoDBConnection: string) {
         }
     });
 
-    userRouter.post('/user/create', async (req, res) => {
+    userRouter.post('/user', async (req, res) => {
         var payload = req.body;
         try {
             const newUser = await userModel.createUser(payload);
@@ -38,7 +38,7 @@ export default function createUserRoutes(mongoDBConnection: string) {
         }
     });
 
-    userRouter.put('/user/:userId/update', async (req, res) => {
+    userRouter.put('/user/:userId', async (req, res) => {
         var userId = req.params.userId;
         var payload = req.body;
         try {
