@@ -25,7 +25,7 @@ module.exports = {
     },
   
     async down(db, client) {
-      await db.collection('userEvents').drop();
+      await db.collection('messages').drop();
     }
   };
   
