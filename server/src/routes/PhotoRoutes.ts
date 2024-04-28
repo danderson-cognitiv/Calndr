@@ -1,11 +1,13 @@
 import express from 'express';
 import { PhotoModel } from '../../../database/model/PhotoModel';
+import * as Mongoose from "mongoose";
+import { DatabaseModels } from '../../../database/DatabaseModels';
 
 const photoRouter = express.Router();
 
 // Export a function that accepts the mongoDBConnection string
-export default function createPhotoRoutes(mongoDBConnection: string) {
-    const photoModel = new PhotoModel(mongoDBConnection);
+export default function createPhotoRoutes() {
+    const photoModel = DatabaseModels.photoModel;
 
     photoRouter.get('/photo/:photoId', async (req, res) => {
         var photoId = req.params.photoId;

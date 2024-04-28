@@ -4,15 +4,17 @@ import { IMessageModel } from '../interfaces/IMessageModel';
 class MessageModel {
     public schema:any;
     public model:any;
-    public dbConnectionString:string;
 
-    public constructor(DB_CONNECTION_STRING:string) {
-        this.dbConnectionString = DB_CONNECTION_STRING;
-        this.createSchema();
-        this.createModel();
+    public static getModel(mongoose: Mongoose.Mongoose) : MessageModel {
+        return new MessageModel(mongoose);
     }
 
-    public createSchema() {
+    private constructor(mongoose: Mongoose.Mongoose) {
+        this.createSchema();
+        this.createModel(mongoose);
+    }
+
+    private createSchema() {
         this.schema = new Mongoose.Schema(
             {
                 content: { type: String, required: true },
@@ -22,18 +24,9 @@ class MessageModel {
         );    
     }
 
-    public async createModel() {
-        try {
-            await Mongoose.connect(this.dbConnectionString);
-            Mongoose.set('debug', true);
-
-            this.model = Mongoose.model<IMessageModel>("message", this.schema);
-        }
-        catch (e) {
-            console.error(e);
-        }
+    public async createModel(mongoose: Mongoose.Mongoose) {
+        this.model = mongoose.models.Message || mongoose.model<IMessageModel>('Message', this.schema);
     }
-
     public async getMessageById(messageId:string): Promise<IMessageModel | null> {
         try {
             return await this.model

@@ -1,11 +1,11 @@
 import express from 'express';
-import { EventModel } from '../../../database/model/EventModel';
+import { DatabaseModels } from '../../../database/DatabaseModels';
 
 const eventRouter = express.Router();
 
 // Export a function that accepts the mongoDBConnection string
-export default function createEventRoutes(mongoDBConnection: string) {
-    const eventModel = new EventModel(mongoDBConnection);
+export default function createEventRoutes() {
+    const eventModel = DatabaseModels.eventModel
 
     eventRouter.get('/event/:eventId', async (req, res) => {
         var eventId = req.params.eventId;

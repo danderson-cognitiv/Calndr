@@ -1,15 +1,18 @@
 import express from 'express';
-import { UserEventModel } from '../../../database/model/UserEventModel';
+import { DatabaseModels } from '../../../database/DatabaseModels';
+
 
 const userEventRouter = express.Router();
 
 // Export a function that accepts the mongoDBConnection string
-export default function createEventRoutes(mongoDBConnection: string) {
-    const userEventModel = new UserEventModel(mongoDBConnection);
+export default function createEventRoutes() {
+    const userEventModel = DatabaseModels.userEventModel;
+    const userModel = DatabaseModels.userModel;
+
 
     userEventRouter.get('/user_event/:userEventId', async (req, res) => {
         var eventId = req.params.userEventId;
-        console.log('Query events by eventId: ' + eventId);
+        console.log('Query events by userEventId: ' + eventId);
         try {
             const event = await userEventModel.getUserEventById(eventId);
             if (event) {
@@ -17,6 +20,40 @@ export default function createEventRoutes(mongoDBConnection: string) {
             } else {
                 res.status(404).json({ message: "event not found" });
             }
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
+    userEventRouter.get('/user_event/user/:userId', async (req, res) => {
+        const userId = req.params.userId;
+        console.log(`Query user events by userId: ${userId}`);
+        try {
+            const userEvents = await userEventModel.getUserEventsByUserId(userId);
+            return res.json(userEvents);
+
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
+    userEventRouter.get('/user_event/user/:userId/friend/:friendUserId', async (req, res) => {
+        const { userId, friendUserId } = req.params;
+        console.log(`Query user events by userId: ${userId} and friendUserId: ${friendUserId}`);
+        try {
+            const friendUser = await userModel.getUserById(friendUserId);
+            if (!friendUser) {
+                return res.status(404).json({ message: "Friend user not found" });
+            }
+            if (friendUser.eventsVisible) {
+                const friendEvents = await userEventModel.getUserEventsByUserId(friendUserId);
+                return res.json(friendEvents);
+            }
+
+            return res.json(await userEventModel.getSharedEvents(userId, friendUserId));
+
         } catch (error) {
             console.error('Error accessing database:', error);
             res.status(500).json({ error: 'Internal server error' });

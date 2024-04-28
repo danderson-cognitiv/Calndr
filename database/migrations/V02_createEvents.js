@@ -24,6 +24,14 @@ module.exports = {
           endTime: new Date("2024-06-10T00:00:00"),
           location: "123 12th Ave, Seattle WA, 98119",
           description: "I'm finally graduating guys!!! Come get lit with me, BYOB"
+        },
+        {
+          createdBy: fladenbrot420Id._id,
+          name: "Mahir's secret after party",
+          startTime: new Date("2024-06-10T00:00:00"),
+          endTime: new Date("2024-06-10T04:00:00"),
+          location: "123 12th Ave, Seattle WA, 98119",
+          description: "Super secret party! dont tell dave!"
         }
       ]);
     },

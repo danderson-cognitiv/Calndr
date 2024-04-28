@@ -1,11 +1,11 @@
 import express from 'express';
-import { MessageModel } from '../../../database/model/MessageModel';
+import { DatabaseModels } from '../../../database/DatabaseModels';
 
 const messageRouter = express.Router();
 
 // Export a function that accepts the mongoDBConnection string
-export default function createMessageRoutes(mongoDBConnection: string) {
-    const messageModel = new MessageModel(mongoDBConnection);
+export default function createMessageRoutes() {
+    const messageModel = DatabaseModels.messageModel;
 
     messageRouter.get('/message/:messageId', async (req, res) => {
         var messageId = req.params.messageId;
