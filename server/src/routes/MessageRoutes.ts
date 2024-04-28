@@ -23,6 +23,36 @@ export default function createMessageRoutes() {
         }
     });
 
+    messageRouter.get('/message', async (req, res) => {
+        try {
+            const message = await messageModel.getMessages();
+            if (message) {
+                res.json(message);
+            } else {
+                res.status(404).json({ message: "message not found" });
+            }
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
+    messageRouter.get('/message/event/:eventId', async (req, res) => {
+        var eventId = req.params.eventId;
+        console.log('Query message by eventId: ' + eventId);
+        try {
+            const messages = await messageModel.getMessagesByEventIdInOrder(eventId);
+            if (messages) {
+                res.json(messages);
+            } else {
+                res.status(404).json({ message: "message not found" });
+            }
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
     messageRouter.post('/message', async (req, res) => {
         var payload = req.body;
         try {
@@ -64,6 +94,7 @@ export default function createMessageRoutes() {
             res.status(500).json({ error: 'Internal server error' });
         }
     });
+
 
     return messageRouter;
 }

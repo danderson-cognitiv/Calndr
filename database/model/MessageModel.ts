@@ -52,6 +52,85 @@ class MessageModel {
             return null;
         }
     }
+
+    public async getMessages(): Promise<IMessageModel[] | null> {
+        try {
+            return await this.model
+            .find()
+            .populate({
+                path: 'userEvent',
+                select: 'event user',
+                populate: [
+                    {
+                        path: 'user',
+                        model: 'User',
+                        select: 'fName lName'
+                    }
+                ]
+            });
+        }
+        catch(e) {
+            console.error(e);
+            return null;
+        }
+    }
+
+    public async getMessagesByEventIdInOrder(eventId: string): Promise<IMessageModel[] | null> {
+        try {
+            const messages = await this.model.aggregate([
+                {
+                    $lookup: {
+                        from: 'userEvents', // Join 'messages' with 'userEvents'
+                        localField: 'userEvent',
+                        foreignField: '_id',
+                        as: 'userEventDetails'
+                    }
+                },
+                {
+                    $unwind: '$userEventDetails' // Flatten the result
+                },
+                {
+                    $lookup: {
+                        from: 'users', // Further join 'userEvents' with 'users'
+                        localField: 'userEventDetails.user',
+                        foreignField: '_id',
+                        as: 'userDetails'
+                    }
+                },
+                {
+                    $unwind: '$userDetails' // Flatten the result
+                },
+                {
+                    $match: {
+                        'userEventDetails.event': new Mongoose.Types.ObjectId(eventId) // Filter by eventId
+                    }
+                },
+                {
+                    $sort: { 'sentAt': 1 } // Sort by sent date
+                },
+                {
+                    $project: { // Structure the output as needed
+                        _id: 1,
+                        content: 1,
+                        sentAt: 1,
+                        userEvent: {
+                            _id: '$userEventDetails._id',
+                            user: {
+                                _id: '$userDetails._id',
+                                fName: '$userDetails.fName',
+                                lName: '$userDetails.lName'
+                            }
+                        }
+                    }
+                }
+            ]);
+    
+            return messages;
+        } catch (e) {
+            console.error(e);
+            return null;
+        }
+    }
     
     public async createMessaage(messageData: Partial<IMessageModel>): Promise<IMessageModel | null> {
         try {
