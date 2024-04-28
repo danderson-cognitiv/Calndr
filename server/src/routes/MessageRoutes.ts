@@ -1,11 +1,11 @@
 import express from 'express';
-import { MessageModel } from '../../../database/model/MessageModel';
+import { DatabaseModels } from '../../../database/DatabaseModels';
 
 const messageRouter = express.Router();
 
 // Export a function that accepts the mongoDBConnection string
-export default function createMessageRoutes(mongoDBConnection: string) {
-    const messageModel = new MessageModel(mongoDBConnection);
+export default function createMessageRoutes() {
+    const messageModel = DatabaseModels.messageModel;
 
     messageRouter.get('/message/:messageId', async (req, res) => {
         var messageId = req.params.messageId;
@@ -14,6 +14,36 @@ export default function createMessageRoutes(mongoDBConnection: string) {
             const message = await messageModel.getMessageById(messageId);
             if (message) {
                 res.json(message);
+            } else {
+                res.status(404).json({ message: "message not found" });
+            }
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
+    messageRouter.get('/message', async (req, res) => {
+        try {
+            const message = await messageModel.getMessages();
+            if (message) {
+                res.json(message);
+            } else {
+                res.status(404).json({ message: "message not found" });
+            }
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
+    messageRouter.get('/message/event/:eventId', async (req, res) => {
+        var eventId = req.params.eventId;
+        console.log('Query message by eventId: ' + eventId);
+        try {
+            const messages = await messageModel.getMessagesByEventIdInOrder(eventId);
+            if (messages) {
+                res.json(messages);
             } else {
                 res.status(404).json({ message: "message not found" });
             }
@@ -64,6 +94,7 @@ export default function createMessageRoutes(mongoDBConnection: string) {
             res.status(500).json({ error: 'Internal server error' });
         }
     });
+
 
     return messageRouter;
 }

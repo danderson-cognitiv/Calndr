@@ -4,15 +4,17 @@ import {IUserModel} from '../interfaces/IUserModel';
 class UserModel {
     public schema:any;
     public model:any;
-    public dbConnectionString:string;
 
-    public constructor(DB_CONNECTION_STRING:string) {
-        this.dbConnectionString = DB_CONNECTION_STRING;
+    public static getModel(mongoose: Mongoose.Mongoose) : UserModel {
+        return new UserModel(mongoose);
+    }
+    
+    private constructor(mongoose: Mongoose.Mongoose) {
         this.createSchema();
-        this.createModel();
+        this.createModel(mongoose);
     }
 
-    public createSchema() {
+    private createSchema() {
         
         this.schema = new Mongoose.Schema({
             username: String,
@@ -26,17 +28,11 @@ class UserModel {
         ); 
     }
 
-    public async createModel() {
-        try {
-            await Mongoose.connect(this.dbConnectionString);
-            Mongoose.set('debug', true);
-
-            this.model = Mongoose.model<IUserModel>("User", this.schema);
-        }
-        catch (e) {
-            console.error(e);
-        }
+    private async createModel(mongoose: Mongoose.Mongoose) {
+        this.model = mongoose.models.User || mongoose.model<IUserModel>('User', this.schema);
     }
+
+
 
     public async getUserById(userId:string): Promise<IUserModel | null> {
         try {
@@ -49,6 +45,38 @@ class UserModel {
         catch(e) {
             console.error(e);
             return null;
+        }
+    }
+
+    public async getUsers(): Promise<IUserModel[]> {
+        try {
+            const users = await this.model.find()
+            console.log(users)
+            return users;
+        }
+        catch(e) {
+            console.error(e);
+            return [];
+        }
+    }
+
+    public async getFriendsByUserId(userId: string): Promise<IUserModel[]> {
+        try {
+            const user = await this.model.findById(userId).populate({
+                path: 'friends',
+                select: 'username email fName lName'
+            });
+    
+            if (user && user.friends) {
+                console.log('Friends found:', user.friends);
+                return user.friends;
+            } else {
+                console.log('No friends found or user not found');
+                return [];
+            }
+        } catch (e) {
+            console.error('Error retrieving friends:', e);
+            return [];
         }
     }
     

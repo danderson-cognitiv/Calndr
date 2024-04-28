@@ -1,10 +1,12 @@
 import express from 'express';
 import * as bodyParser from 'body-parser';
+import * as Mongoose from "mongoose";
 import createUserRoutes from './UserRoutes';
 import createEventRoutes from './EventRoutes';
 import createUserEventRoutes from './UserEventRoutes';
 import createMessageRoutes from './MessageRoutes';
 import createPhotoRoutes from './PhotoRoutes';
+import {DatabaseModels} from '../../../database/DatabaseModels';
 
 class App {
     // ref to Express instance
@@ -13,7 +15,8 @@ class App {
     constructor(mongoDBConnection: string) {
         this.expressApp = express();
         this.middleware();
-        this.routes(mongoDBConnection); // Pass mongoDBConnection to routes function
+        DatabaseModels.initialize(mongoDBConnection);
+        this.routes();
     }
 
     // Configure Express middleware.
@@ -27,13 +30,13 @@ class App {
         });
     }
 
-    private routes(mongoDBConnection: string): void {
+    private routes(): void {
         // Use user routes
-        this.expressApp.use('/', createUserRoutes(mongoDBConnection));
-        this.expressApp.use('/', createEventRoutes(mongoDBConnection));
-        this.expressApp.use('/', createUserEventRoutes(mongoDBConnection));
-        this.expressApp.use('/', createMessageRoutes(mongoDBConnection));
-        this.expressApp.use('/', createPhotoRoutes(mongoDBConnection));
+        this.expressApp.use('/', createUserRoutes());
+        this.expressApp.use('/', createEventRoutes());
+        this.expressApp.use('/', createUserEventRoutes());
+        this.expressApp.use('/', createMessageRoutes());
+        this.expressApp.use('/', createPhotoRoutes());
 
 
         // Serve static files
