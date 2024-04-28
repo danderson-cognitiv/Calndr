@@ -1,8 +1,7 @@
 # Calndr
 
 ## Starting the Mongo Database
-We need to install mongodb, make sure you have homebrew installed and then run
-`brew install mongodb-community@6.0`
+We need to install mongodb, follow the instructions here `https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/`
 And then `cd Calndr/database`
 Create the `db` directory by running `mkdir db`
 Then run `mongod -port 3000 -dbpath "./db"`
@@ -29,6 +28,8 @@ MIGRATED UP: V02_createEvents.js
 MIGRATED UP: V03_createUserEvents.js
 ```
 
+If you run into an error for dotenv not found, run `npm install --save dotenv`
+
 
 ## Starting the App Server
 In the `Calndr` directory run `npm start`. You should see 
@@ -51,9 +52,9 @@ Open Postman or Insomnia and create a `GET` route with this url
     "name": "DandyAndy77",
     "email": "david.j.anderson94@gmail.com",
     "password": "password",
-    "f_name": "Dave",
-    "l_name": "Anderson",
-    "events_visible": true,
+    "fName": "Dave",
+    "lName": "Anderson",
+    "eventsVisible": true,
     "friends": [
         {
             "_id": "662be1ffa01fd430dcf4ab0f",
