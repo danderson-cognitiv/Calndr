@@ -4,15 +4,17 @@ import { IPhotoModel } from '../interfaces/IPhotoModel';
 class PhotoModel {
     public schema:any;
     public model:any;
-    public dbConnectionString:string;
 
-    public constructor(DB_CONNECTION_STRING:string) {
-        this.dbConnectionString = DB_CONNECTION_STRING;
-        this.createSchema();
-        this.createModel();
+    public static getModel(mongoose: Mongoose.Mongoose) : PhotoModel {
+        return new PhotoModel(mongoose);
     }
 
-    public createSchema() {
+    private constructor(mongoose: Mongoose.Mongoose) {
+        this.createSchema();
+        this.createModel(mongoose);
+    }
+
+    private createSchema() {
         this.schema = new Mongoose.Schema(
             {
                 path: { type: String, required: true },
@@ -21,16 +23,8 @@ class PhotoModel {
         );    
     }
 
-    public async createModel() {
-        try {
-            await Mongoose.connect(this.dbConnectionString);
-            Mongoose.set('debug', true);
-
-            this.model = Mongoose.model<IPhotoModel>("photo", this.schema);
-        }
-        catch (e) {
-            console.error(e);
-        }
+    private async createModel(mongoose: Mongoose.Mongoose) {
+        this.model = mongoose.models.Photo || mongoose.model<IPhotoModel>('Photo', this.schema);
     }
 
     public async getPhotoById(photoId:string): Promise<IPhotoModel | null> {

@@ -20,6 +20,14 @@ module.exports = {
         fName: "Mahir",
         lName: "Bathija",
         eventsVisible: false
+      },
+      {
+        username: "Emilit",
+        email: "emilysoolee@gmail.com",
+        password: "password",
+        fName: "Emily",
+        lName: "Lee",
+        eventsVisible: true
       }
     ]);
 

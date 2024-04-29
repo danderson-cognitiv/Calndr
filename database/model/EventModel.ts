@@ -4,15 +4,17 @@ import { IEventModel } from '../interfaces/IEventModel';
 class EventModel {
     public schema:any;
     public model:any;
-    public dbConnectionString:string;
 
-    public constructor(DB_CONNECTION_STRING:string) {
-        this.dbConnectionString = DB_CONNECTION_STRING;
-        this.createSchema();
-        this.createModel();
+    public static getModel(mongoose: Mongoose.Mongoose) : EventModel {
+        return new EventModel(mongoose);
     }
 
-    public createSchema() {
+    private constructor(mongoose: Mongoose.Mongoose) {
+        this.createSchema();
+        this.createModel(mongoose);
+    }
+
+    private createSchema() {
         this.schema = new Mongoose.Schema(
             {
                 name: { type: String, required: true },
@@ -25,16 +27,8 @@ class EventModel {
         );    
     }
 
-    public async createModel() {
-        try {
-            await Mongoose.connect(this.dbConnectionString);
-            Mongoose.set('debug', true);
-
-            this.model = Mongoose.model<IEventModel>("Event", this.schema);
-        }
-        catch (e) {
-            console.error(e);
-        }
+    private async createModel(mongoose: Mongoose.Mongoose) {
+        this.model = mongoose.models.Event || mongoose.model<IEventModel>('Event', this.schema);
     }
 
     public async getEventById(eventId:string): Promise<IEventModel | null> {

@@ -9,7 +9,8 @@ module.exports = {
 
       const davesBirthdayEventId = await db.collection('events').findOne({ name: "Dave's Birthday Party!" });
       const mahirGraduationEventId = await db.collection('events').findOne({ name: "Mahir's Graduation party" });
-  
+      const mahirSecretParty = await db.collection('events').findOne({ name: "Mahir's secret after party" });
+
       await db.collection('userEvents').insertMany([
         {
           event: davesBirthdayEventId._id,
@@ -28,6 +29,11 @@ module.exports = {
         },
         {
           event: davesBirthdayEventId._id,
+          user: mahirId._id,
+          rsvp: true
+        },
+        {
+          event: mahirSecretParty._id,
           user: mahirId._id,
           rsvp: true
         }

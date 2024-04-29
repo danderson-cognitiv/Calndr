@@ -14,7 +14,7 @@ module.exports = {
     },
   
     // The migrations dir, can be an relative or absolute path
-    migrationsDir: "database/migrations",
+    migrationsDir: "./database/migrations",
   
     changelogCollectionName: "changelog",
   
