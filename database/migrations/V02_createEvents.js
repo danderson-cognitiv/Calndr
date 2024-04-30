@@ -47,7 +47,7 @@ module.exports = {
         },
         {
           createdBy: emilitId._id,
-          name: "Emily's Birthday!",
+          name: "Emily's Birthday Party!",
           startTime: new Date("2024-11-29T19:00:00"),
           endTime: new Date("2024-11-30T00:00:00"),
           location: "159th 21st St, Seattle, WA 98122",
