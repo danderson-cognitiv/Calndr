@@ -28,7 +28,7 @@ class EventModel {
     }
 
     private async createModel(mongoose: Mongoose.Mongoose) {
-        this.model = mongoose.models.Event || mongoose.model<IEventModel>('Event', this.schema);
+        this.model = mongoose.model<IEventModel>('Event', this.schema);
     }
 
     public async getEventById(eventId:string): Promise<IEventModel | null> {

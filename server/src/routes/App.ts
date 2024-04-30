@@ -12,10 +12,13 @@ class App {
     // ref to Express instance
     public expressApp: express.Application;
 
-    constructor(mongoDBConnection: string) {
+    constructor() {
         this.expressApp = express();
         this.middleware();
-        DatabaseModels.initialize(mongoDBConnection);
+    }
+
+    async initializeDatabaseModels(mongoDBConnection: string) {
+        await DatabaseModels.initialize(mongoDBConnection);
         this.routes();
     }
 

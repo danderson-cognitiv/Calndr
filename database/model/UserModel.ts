@@ -29,7 +29,7 @@ class UserModel {
     }
 
     private async createModel(mongoose: Mongoose.Mongoose) {
-        this.model = mongoose.models.User || mongoose.model<IUserModel>('User', this.schema);
+        this.model = mongoose.model<IUserModel>('User', this.schema);
     }
 
 

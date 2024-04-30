@@ -5,7 +5,7 @@ const messageRouter = express.Router();
 
 // Export a function that accepts the mongoDBConnection string
 export default function createMessageRoutes() {
-    const messageModel = DatabaseModels.messageModel;
+    const messageModel = DatabaseModels.MessageModel;
 
     messageRouter.get('/message/:messageId', async (req, res) => {
         var messageId = req.params.messageId;
