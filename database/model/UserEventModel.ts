@@ -93,17 +93,39 @@ class UserEventModel {
             const friendEventIds = friendEvents.map(doc => doc.event);  // Extract just the event ObjectId from each document
 
         
-            const sharedEvents = await this.model.find({
+            const sharedEvents: IUserEventModel[] = await this.model.find({
                 user: userId,
                 event: { $in: friendEventIds }
-            }).populate('event', 'name startTime endTime location description')
+            });
+
+            const sharedEventIds = sharedEvents.map(doc => doc.event);  // Extract just the event ObjectId from each document
+
+            const sharedFriendUserEvents: IUserEventModel[] = await this.model.find({
+                user: friendUserId,
+                event: { $in: sharedEventIds }
+            })
+            .populate('event', 'name startTime endTime location description')
             .populate('user', 'fName lName');
 
-            return sharedEvents;
+            return sharedFriendUserEvents;
         } catch (error) {
             console.error('Error getting shared events:', error);
             return [];
         }
+    }
+
+    public async getUserEventsForEvent(eventId: string) : Promise<IUserEventModel[] | null > {
+        try {
+
+            const userEvents = await this.model.find({
+                event:  eventId
+            }).populate('user', 'fName lName');
+            return userEvents;
+        } catch (error) {
+            console.error('Error getting shared events:', error);
+            return [];
+        }
+
     }
 
 }

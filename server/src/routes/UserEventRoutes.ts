@@ -60,6 +60,19 @@ export default function createEventRoutes() {
         }
     });
 
+    userEventRouter.get('/user_event/event/:eventId', async (req, res) => {
+        const eventId = req.params.eventId;
+        console.log(`Query user events by eventId: ${eventId}`);
+        try {
+            const userEvents = await userEventModel.getUserEventsForEvent(eventId);
+            return res.json(userEvents);
+
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
     userEventRouter.post('/user_event', async (req, res) => {
         var payload = req.body;
         try {
