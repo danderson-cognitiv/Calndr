@@ -54,7 +54,7 @@ module.exports = {
           rsvp: true
         },
         {
-          event: davesBirthdayEventId._id,
+          event: mahirGraduationEventId._id,
           user: mahirId._id,
           rsvp: true
         },
@@ -75,17 +75,7 @@ module.exports = {
         }, 
         {
           event: emilysBirthdayEventId._id,
-          user: mahirId._id,
-          rsvp: true
-        }, 
-        {
-          event: emilysBirthdayEventId._id,
           user: daveId._id,
-          rsvp: true
-        }, 
-        {
-          event: emilysBirthdayEventId._id,
-          user: mahirId._id,
           rsvp: true
         }, 
         {
@@ -132,11 +122,6 @@ module.exports = {
           event: bensonsBirthdayEventId._id,
           user: emilitId._id,
           rsvp: true
-        }, 
-        {
-          event: bensonsBirthdayEventId._id,
-          user: mahirId._id,
-          rsvp: false
         }, 
         {
           event: bensonsBirthdayEventId._id,

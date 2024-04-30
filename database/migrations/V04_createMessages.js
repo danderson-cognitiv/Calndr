@@ -7,9 +7,9 @@ module.exports = {
       const daveUser = await db.collection('users').findOne({ username: "DandyAndy77" });
       const mahirUser = await db.collection('users').findOne({ username: "Fladenbrot420" });
       
-      const mahirBirthdayEvent = await db.collection('events').findOne({ name: "Mahir's Graduation party" });
-      const daveUserEvent = await db.collection('userEvents').findOne({ event: mahirBirthdayEvent._id, user: daveUser._id });
-      const mahirUserEvent = await db.collection('userEvents').findOne({ event: mahirBirthdayEvent._id, user: mahirUser._id });
+      const mahirGraduationEvent = await db.collection('events').findOne({ name: "Mahir's Graduation party" });
+      const daveUserEvent = await db.collection('userEvents').findOne({ event: mahirGraduationEvent._id, user: daveUser._id });
+      const mahirUserEvent = await db.collection('userEvents').findOne({ event: mahirGraduationEvent._id, user: mahirUser._id });
 
       await db.collection('messages').insertMany([
         {
