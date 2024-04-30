@@ -5,7 +5,7 @@ const eventRouter = express.Router();
 
 // Export a function that accepts the mongoDBConnection string
 export default function createEventRoutes() {
-    const eventModel = DatabaseModels.eventModel
+    const eventModel = DatabaseModels.EventModel
 
     eventRouter.get('/event/:eventId', async (req, res) => {
         var eventId = req.params.eventId;

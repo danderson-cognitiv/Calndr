@@ -24,7 +24,7 @@ class PhotoModel {
     }
 
     private async createModel(mongoose: Mongoose.Mongoose) {
-        this.model = mongoose.models.Photo || mongoose.model<IPhotoModel>('Photo', this.schema);
+        this.model = mongoose.model<IPhotoModel>('Photo', this.schema);
     }
 
     public async getPhotoById(photoId:string): Promise<IPhotoModel | null> {

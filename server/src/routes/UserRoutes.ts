@@ -7,7 +7,7 @@ const userRouter = express.Router();
 
 // Export a function that accepts the mongoDBConnection string
 export default function createUserRoutes() {
-    const userModel = DatabaseModels.userModel;
+    const userModel = DatabaseModels.UserModel;
 
     userRouter.get('/user/:userId', async (req, res) => {
         var userId = req.params.userId;
@@ -28,6 +28,7 @@ export default function createUserRoutes() {
     userRouter.get('/user', async (req, res) => {
         console.log('Query all users');
         try {
+            console.log(userModel);
             const user = await userModel.getUsers();
             res.json(user);
 

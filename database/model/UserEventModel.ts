@@ -26,7 +26,7 @@ class UserEventModel {
     }
 
     private async createModel(mongoose: Mongoose.Mongoose) {
-        this.model = mongoose.models.UserEvent || mongoose.model<IUserEventModel>('UserEvent', this.schema);
+        this.model = mongoose.model<IUserEventModel>('UserEvent', this.schema);
     }
 
     public async getUserEventById(userEventId:string): Promise<IUserEventModel | null> {

@@ -7,7 +7,7 @@ const photoRouter = express.Router();
 
 // Export a function that accepts the mongoDBConnection string
 export default function createPhotoRoutes() {
-    const photoModel = DatabaseModels.photoModel;
+    const photoModel = DatabaseModels.PhotoModel;
 
     photoRouter.get('/photo/:photoId', async (req, res) => {
         var photoId = req.params.photoId;

@@ -8,31 +8,44 @@ import { PhotoModel } from './model/PhotoModel';
 
 export class DatabaseModels {
     private static connection: Mongoose.Connection;
+    private static userModel: UserModel;
+    private static eventModel: EventModel;
+    private static userEventModel: UserEventModel;
+    private static messageModel: MessageModel;
+    private static photoModel: PhotoModel;
+
 
     public static async initialize(DB_CONNECTION_STRING: string): Promise<void> {
-        if (!DatabaseModels.connection) {
+        if (!this.connection) {
             await Mongoose.connect(DB_CONNECTION_STRING);
-            DatabaseModels.connection = Mongoose.connection;
+            this.connection = Mongoose.connection;
+            this.userModel = UserModel.getModel(Mongoose);
+            this.eventModel = EventModel.getModel(Mongoose);
+            this.userEventModel = UserEventModel.getModel(Mongoose);
+            this.messageModel = MessageModel.getModel(Mongoose);
+            this.photoModel = PhotoModel.getModel(Mongoose);
         }
+
+            
     }
 
-    public static get userModel(): UserModel {
-        return UserModel.getModel(Mongoose);
+    public static get UserModel(): UserModel {
+        return this.userModel;
     }
 
-    public static get eventModel(): EventModel {
-        return EventModel.getModel(Mongoose);
+    public static get EventModel(): EventModel {
+        return this.eventModel;
     }
 
-    public static get userEventModel(): UserEventModel {
-        return UserEventModel.getModel(Mongoose);
+    public static get UserEventModel(): UserEventModel {
+        return this.userEventModel;
     }
 
-    public static get messageModel(): MessageModel {
-        return MessageModel.getModel(Mongoose);
+    public static get MessageModel(): MessageModel {
+        return this.messageModel;
     }
 
-    public static get photoModel(): PhotoModel {
-        return PhotoModel.getModel(Mongoose);
+    public static get PhotoModel(): PhotoModel {
+        return this.photoModel;
     }
 }

@@ -25,7 +25,7 @@ class MessageModel {
     }
 
     public async createModel(mongoose: Mongoose.Mongoose) {
-        this.model = mongoose.models.Message || mongoose.model<IMessageModel>('Message', this.schema);
+        this.model = mongoose.model<IMessageModel>('Message', this.schema);
     }
     public async getMessageById(messageId:string): Promise<IMessageModel | null> {
         try {

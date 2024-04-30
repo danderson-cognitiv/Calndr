@@ -10,7 +10,8 @@ const dbPassword = process.env.DB_PASSWORD;
 
 const mongoDBConnection = 'mongodb://' + dbUser + ':' + encodeURIComponent("test") + process.env.DB_INFO;
 console.log("server db connection URL " + mongoDBConnection);
-
-let server: any = new App(mongoDBConnection).expressApp;
+const app = new App();
+app.initializeDatabaseModels(mongoDBConnection);
+let server: any = app.expressApp;
 server.listen(port);
 console.log("server running in port " + port);
