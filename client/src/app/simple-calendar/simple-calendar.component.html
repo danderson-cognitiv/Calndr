@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="calendar">
+      <!-- Calendar header -->
+      <div class="row">
+        <div class="col" *ngFor="let day of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']">
+          {{ day }}
+        </div>
+      </div>
+      <!-- Calendar rows -->
+      <div class="row" *ngFor="let week of weeks">
+        <div class="col" *ngFor="let date of week">
+          {{ date.getDate() }}
+        </div>
+      </div>
+    </div>
+  </div>
+  

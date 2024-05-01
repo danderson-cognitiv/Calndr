@@ -1,0 +1,10 @@
+.calendar {
+    margin-top: 1rem;
+  }
+  
+  .calendar .row .col {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
