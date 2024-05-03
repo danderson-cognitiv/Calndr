@@ -5,6 +5,7 @@ import { EventModel } from './model/EventModel';
 import { MessageModel } from './model/MessageModel';
 import { PhotoModel } from './model/PhotoModel';
 import { PollModel } from './model/PollModel';
+import { PollOptionModel } from './model/PollOptionModel';
 
 
 export class DatabaseModels {
@@ -15,7 +16,7 @@ export class DatabaseModels {
     private static messageModel: MessageModel;
     private static photoModel: PhotoModel;
     private static pollModel: PollModel; 
-
+    private static pollOptionModel: PollOptionModel; 
 
     public static async initialize(DB_CONNECTION_STRING: string): Promise<void> {
         if (!this.connection) {
@@ -27,6 +28,7 @@ export class DatabaseModels {
             this.messageModel = MessageModel.getModel(Mongoose);
             this.photoModel = PhotoModel.getModel(Mongoose);
             this.pollModel = PollModel.getModel(Mongoose);
+            this.pollOptionModel = PollOptionModel.getModel(Mongoose);
         }
 
             
@@ -53,6 +55,9 @@ export class DatabaseModels {
     }
     public static get PollModel(): PollModel {
         return this.pollModel;
+    }
+    public static get PollOptionModel(): PollOptionModel {
+        return this.pollOptionModel;
     }
 
 }
