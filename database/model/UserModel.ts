@@ -48,6 +48,20 @@ class UserModel {
         }
     }
 
+    public async getUserByName(username:string): Promise<IUserModel | null> {
+        try {
+            const user = await this.model
+            .findOne({username: username})
+            .populate('friends', 'username email');
+            console.log(user)
+            return user;
+        }
+        catch(e) {
+            console.error(e);
+            return null;
+        }
+    }
+
     public async getUsers(): Promise<IUserModel[]> {
         try {
             const users = await this.model.find()
