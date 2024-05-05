@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router} from '@angular/router';
+import { CalndrProxyService } from '../proxies/calndrproxy.service';
+
 
 @Component({
   selector: 'app-simple-calendar',
@@ -10,10 +13,14 @@ export class SimpleCalendarComponent implements OnInit {
   currentMonth: number;
   currentYear: number;
 
-  constructor() {
+  constructor(private router: Router, proxy$: CalndrProxyService) {
     const today = new Date();
     this.currentMonth = today.getMonth();
     this.currentYear = today.getFullYear();
+    proxy$.getUserById('6637f2c077cbb8298d1685c8').subscribe((result: any)  =>
+    {
+      console.log(result);
+    });
   }
 
   ngOnInit(): void {

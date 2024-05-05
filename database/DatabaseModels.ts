@@ -25,8 +25,6 @@ export class DatabaseModels {
             this.messageModel = MessageModel.getModel(Mongoose);
             this.photoModel = PhotoModel.getModel(Mongoose);
         }
-
-            
     }
 
     public static get UserModel(): UserModel {
