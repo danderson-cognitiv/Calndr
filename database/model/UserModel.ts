@@ -94,11 +94,7 @@ class UserModel {
 
     public async updateUser(userId: string, userData: Partial<IUserModel>): Promise<UserModel | null> {
         try {
-            // Option 1: Update and return the updated document
             const updatedUser = await this.model.findByIdAndUpdate(userId, { $set: userData }, { new: true, runValidators: true });
-
-            // Option 2: Just update the document without returning it
-            // await this.model.updateOne({ _id: userId }, { $set: updates });
 
             if (updatedUser) {
                 console.log('User updated successfully');
