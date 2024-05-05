@@ -63,7 +63,7 @@ module.exports = {
           user: mahirId._id,
           rsvp: true
         },
-                {
+        {
           event: mahirSecretPartyEventId._id,
           user: angeloId._id,
           rsvp: true

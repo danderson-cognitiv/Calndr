@@ -25,6 +25,22 @@ export default function createUserRoutes() {
         }
     });
 
+    userRouter.get('/user/name/:username', async (req, res) => {
+        var username = req.params.username;
+        console.log('Query users by username: ' + username);
+        try {
+            const user = await userModel.getUserByName(username);
+            if (user) {
+                res.json(user);
+            } else {
+                res.status(404).json({ message: "User not found" });
+            }
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
     userRouter.get('/user', async (req, res) => {
         console.log('Query all users');
         try {

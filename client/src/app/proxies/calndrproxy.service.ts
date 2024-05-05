@@ -15,7 +15,9 @@ export class CalndrProxyService {
     return this.httpClient.get<IUserModel>( this.hostUrl + 'user/' + userId);
   }
 
-//   getItems(index: string) {
-//     return this.httpClient.get( this.hostUrl + 'json/lists/' + index + '.json');
-//   }
+  getUserByName(username:string) {
+    return this.httpClient.get<IUserModel>(this.hostUrl + 'user/name/' + username);
+  }
+
+
 }
