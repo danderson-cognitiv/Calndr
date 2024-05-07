@@ -1,0 +1,36 @@
+<div class="container" *ngIf="userForm">
+    <form [formGroup]="userForm" (ngSubmit)="saveProfile()">
+      <h1>Edit User Profile</h1>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" class="form-control" formControlName="username">
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="form-control" formControlName="email">
+      </div>
+      <div class="form-group">
+        <label for="fName">First Name</label>
+        <input type="text" id="fName" class="form-control" formControlName="fName">
+      </div>
+      <div class="form-group">
+        <label for="lName">Last Name</label>
+        <input type="text" id="lName" class="form-control" formControlName="lName">
+      </div>
+      <div class="form-group">
+        <label for="eventsVisible">Hide My Events</label>
+        <select class="form-control" id="eventsVisible" formControlName="eventsVisible">
+          <option value="true">True</option>
+          <option value="false">False</option>
+        </select>
+      </div>          
+      <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid">Save Changes</button>
+    </form>
+  </div>
+  
+  <ng-template #loading>
+    <div class="container">
+      <p>Loading profile...</p>
+    </div>
+  </ng-template>
+  
