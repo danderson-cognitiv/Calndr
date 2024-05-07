@@ -86,6 +86,19 @@ class UserEventModel {
         }
     }
 
+    public async getUserEventsByUserIdAndEventId(userId: string, eventId: string): Promise<IUserEventModel | null>  {
+        try {
+            console.log('querying userEvents by user and event')
+            return await this.model.findOne({ user: userId, event: eventId })            
+                                    .populate('event', 'name startTime endTime location description')
+                                    .populate('user', 'username fName lName');
+        } catch (error) {
+            console.error('Error getting user events for userId: ' + userId + ' and eventId: ' + eventId, error);
+            return null;
+        }
+    }
+
+
     public async getSharedEvents(userId: string, friendUserId: string): Promise<IUserEventModel[] | null> {
         try {
             const friendEvents: IUserEventModel[] = await this.model.find({ user: friendUserId }).select('event -_id');
