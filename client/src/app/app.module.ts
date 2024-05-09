@@ -14,6 +14,15 @@ import { ProfileComponent } from './profile/profile.component';
 import { EventChatComponent } from './event-chat/event-chat.component';
 import { CommonModule } from '@angular/common';
 
+// angular-calendar related
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+
+import { CalendarComponent } from './calendar/calendar.component';
+
+
+
 
 @NgModule({
     declarations: [
@@ -22,7 +31,8 @@ import { CommonModule } from '@angular/common';
       HomePageComponent,
       FriendsComponent,
       ProfileComponent,
-      EventChatComponent
+      EventChatComponent,
+      CalendarComponent,
     ],
     imports: [
       BrowserModule,
@@ -30,7 +40,12 @@ import { CommonModule } from '@angular/common';
       HttpClientModule,
       ReactiveFormsModule,
       CommonModule,
-      FormsModule
+      FormsModule,
+      BrowserAnimationsModule,
+      CalendarModule.forRoot({
+        provide: DateAdapter,
+        useFactory: adapterFactory,
+      }),
     ],
     providers: [CalndrProxyService, provideAnimationsAsync()],
     bootstrap: [AppComponent]
