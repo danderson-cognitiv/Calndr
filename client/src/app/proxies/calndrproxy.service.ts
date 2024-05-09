@@ -39,8 +39,12 @@ export class CalndrProxyService {
     return this.httpClient.get<IUserEventModel>(this.hostUrl + 'user_event/user/' + userId + '/event/' + eventId);
   }
 
-  postMessage(payload: any) {
+  createMessage(payload: any) {
     return this.httpClient.post(this.hostUrl + 'message', payload)
+  }
+
+  createEvent(payload: any) {
+    return this.httpClient.post(this.hostUrl + 'event', payload)
   }
 
 }

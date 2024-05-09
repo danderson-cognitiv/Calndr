@@ -14,7 +14,9 @@ import { CreateEventModalComponent } from './create-event-modal/create-event-mod
 import { ProfileComponent } from './profile/profile.component';
 import { EventChatComponent } from './event-chat/event-chat.component';
 import { CommonModule } from '@angular/common';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
     declarations: [
@@ -32,7 +34,9 @@ import { CommonModule } from '@angular/common';
       HttpClientModule,
       ReactiveFormsModule,
       CommonModule,
-      FormsModule
+      FormsModule,
+      NgSelectModule,
+      NgbModule
     ],
     providers: [CalndrProxyService, provideAnimationsAsync()],
     bootstrap: [AppComponent]

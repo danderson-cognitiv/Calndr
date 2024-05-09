@@ -91,7 +91,7 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
       userEvent: this.userEvent._id,
     };
   
-    this.proxy$.postMessage(payload).subscribe({
+    this.proxy$.createMessage(payload).subscribe({
       next: (result) => {
         console.log('Message posted successfully', result);
         this.messages.push({ ...result, userEvent: this.userEvent, sentAt: sentAt, content: this.messageContent });
