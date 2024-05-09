@@ -38,7 +38,7 @@ class MessageModel {
                     {
                         path: 'user',
                         model: 'User',
-                        select: 'fName lName'
+                        select: 'username fName lName'
                     },
                     { 
                         path: 'event', 
@@ -64,7 +64,7 @@ class MessageModel {
                     {
                         path: 'user',
                         model: 'User',
-                        select: 'fName lName'
+                        select: 'username fName lName'
                     }
                 ]
             });
@@ -117,6 +117,7 @@ class MessageModel {
                             _id: '$userEventDetails._id',
                             user: {
                                 _id: '$userDetails._id',
+                                username: '$userDetails.username',
                                 fName: '$userDetails.fName',
                                 lName: '$userDetails.lName'
                             }

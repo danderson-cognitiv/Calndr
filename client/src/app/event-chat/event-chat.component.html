@@ -1,0 +1,34 @@
+<div class="container" *ngIf="userEvent; else loading">
+    <h1>{{ userEvent.event.name }}</h1>
+    <div class="card">
+      <div class="card-body">
+        <h3>Event Details</h3>
+        <p><strong>Start Time:</strong> {{ userEvent.event.startTime | date: 'medium' }}</p>
+        <p><strong>End Time:</strong> {{ userEvent.event.endTime | date: 'medium' }}</p>
+        <p><strong>Location:</strong> {{ userEvent.event.location }}</p>
+        <p><strong>Description:</strong> {{ userEvent.event.description }}</p>
+      </div>
+    </div>
+    
+    <!-- Event chat messages and sending interface -->
+    <div class="chat-container">
+    <h3>Event Chat</h3>
+    <div class="messages" #messagesContainer>
+        <div *ngFor="let message of messages" 
+            [ngClass]="{'my-message': message.userEvent.user.username === currentUserName, 'other-message': message.userEvent.user.username !== currentUserName}" 
+            class="message">
+        <p>{{ message.userEvent.user.fName }} {{ message.userEvent.user.lName }}: {{ message.content }}</p>
+        <span class="timestamp">{{ message.sentAt | date: 'short' }}</span>
+        </div>
+    </div>
+    <input type="text" [(ngModel)]="messageContent" placeholder="Type a message..."
+    class="form-control" (keydown.enter)="sendMessage()" />
+      </div>
+      </div>
+  
+  <ng-template #loading>
+    <div class="container">
+      <p>Loading event details...</p>
+    </div>
+  </ng-template>
+  

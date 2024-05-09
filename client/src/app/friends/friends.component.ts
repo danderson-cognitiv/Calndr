@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { CalndrProxyService } from '../proxies/calndrproxy.service';
 import { IUserModel } from '../../../../database/interfaces/IUserModel';// Assuming you have a user model
 
