@@ -9,6 +9,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HomePageComponent } from './home-page/home-page.component';
 import { FriendsComponent } from './friends/friends.component';
 import { CalndrProxyService } from './proxies/calndrproxy.service';
+import { CreateEventModalComponent } from './create-event-modal/create-event-modal.component';
+import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
+
 
 
 @NgModule({
@@ -16,12 +19,14 @@ import { CalndrProxyService } from './proxies/calndrproxy.service';
       AppComponent,
       SimpleCalendarComponent,
       HomePageComponent,
-      FriendsComponent
+      FriendsComponent,
+      CreateEventModalComponent
     ],
     imports: [
       BrowserModule,
       AppRoutingModule,
-      HttpClientModule
+      HttpClientModule,
+      ReactiveFormsModule
     ],
     providers: [CalndrProxyService, provideAnimationsAsync()],
     bootstrap: [AppComponent]
