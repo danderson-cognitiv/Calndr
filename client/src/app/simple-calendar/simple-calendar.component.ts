@@ -17,10 +17,6 @@ export class SimpleCalendarComponent implements OnInit {
     const today = new Date();
     this.currentMonth = today.getMonth();
     this.currentYear = today.getFullYear();
-    proxy$.getUserById('6637f2c077cbb8298d1685c8').subscribe((result: any)  =>
-    {
-      console.log(result);
-    });
   }
 
   ngOnInit(): void {
