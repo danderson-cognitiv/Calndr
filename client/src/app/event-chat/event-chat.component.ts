@@ -29,14 +29,12 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const eventId = params['eventId'];
-      if (eventId) {
+      const userEventId = params['userEventId'];
+      if (userEventId) {
         this.loadUser(this.currentUserName).subscribe({
           next: (user: IUserModel) => {
             this.currentUser = user;
-            this.loadUserEvent(eventId);
-          
-            this.loadMessages(eventId);
+            this.loadUserEvent(userEventId);
           },
           error: (error) => console.error('Failed to load current User:', error)
         });
@@ -46,11 +44,12 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  private loadUserEvent(eventId: string): void {
+  private loadUserEvent(userEventId: string): void {
     console.log(this.currentUser)
-    this.proxy$.getUserEventForUserAndEvent(this.currentUser._id, eventId).subscribe({
+    this.proxy$.getUserEventById(userEventId).subscribe({
       next: (userEvent: IUserEventModel) => {
         this.userEvent = userEvent;
+        this.loadMessages(this.userEvent.event._id);
       },
       error: (error) => console.error('Failed to load event:', error)
     });
@@ -94,6 +93,7 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
     this.proxy$.createMessage(payload).subscribe({
       next: (result) => {
         console.log('Message posted successfully', result);
+        console.log(this.userEvent)
         this.messages.push({ ...result, userEvent: this.userEvent, sentAt: sentAt, content: this.messageContent });
         this.messageContent = '';
       },
