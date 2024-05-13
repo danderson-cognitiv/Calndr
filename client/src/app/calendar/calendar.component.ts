@@ -1,118 +1,11 @@
-// import { Component, ChangeDetectionStrategy } from '@angular/core';
-// import { CalendarEvent, CalendarView } from 'angular-calendar';
-// import { startOfWeek, endOfWeek, addHours } from 'date-fns';
-
-// @Component({
-//   selector: 'app-calendar',
-//   changeDetection: ChangeDetectionStrategy.OnPush,
-//   templateUrl: './calendar.component.html',
-//   styleUrls: ['./calendar.component.css']
-// })
-// export class CalendarComponent {
-//   view: CalendarView = CalendarView.Week;
-//   viewDate: Date = new Date();
-
-//   events: CalendarEvent[] = [
-//     {
-//       start: addHours(startOfWeek(new Date()), 2),
-//       end: addHours(startOfWeek(new Date()), 4),
-//       title: 'An event',
-//       color: {
-//         primary: '#ad2121',
-//         secondary: '#FAE3E3'
-//       }
-//     },
-//     {
-//       start: addHours(endOfWeek(new Date()), -3),
-//       end: addHours(endOfWeek(new Date()), -1),
-//       title: 'Another event',
-//       color: {
-//         primary: '#1e90ff',
-//         secondary: '#D1E8FF'
-//       }
-//     }
-//   ];
-// }
-
-// import { Component, ChangeDetectionStrategy } from '@angular/core';
-// import { CalendarEvent, CalendarView } from 'angular-calendar';
-// import { Subject } from 'rxjs';
-// import { addDays, startOfDay, isSameMonth, isSameDay } from 'date-fns';
-
-// @Component({
-//   selector: 'app-calendar',
-//   changeDetection: ChangeDetectionStrategy.OnPush,
-//   templateUrl: './calendar.component.html',
-//   styleUrls: ['./calendar.component.css']
-// })
-// export class CalendarComponent {
-//   view: CalendarView = CalendarView.Month;
-//   CalendarView = CalendarView;
-//   viewDate: Date = new Date();
-//   refresh: Subject<void> = new Subject<void>();
-
-//   events: CalendarEvent[] = [
-//     {
-//       start: startOfDay(new Date()),
-//       title: 'An event with no end date',
-//       color: { primary: '#ad2121', secondary: '#FAE3E3' }
-//     }
-//   ];
-
-//   dayClicked({ day }: { day: any; sourceEvent: MouseEvent | KeyboardEvent }): void {
-//     const date = day.date;
-//     const events = day.events as CalendarEvent[];
-//     if (isSameMonth(date, this.viewDate)) {
-//       if (isSameDay(this.viewDate, date) || events.length === 0) {
-//         this.viewDate = date;
-//         this.addEvent(date);
-//       }
-//     }
-//   }
-
-//   setView(view: CalendarView) {
-//     this.view = view;
-//   }
-
-//   addEvent(date: Date): void {
-//     this.events = [
-//       ...this.events,
-//       {
-//         title: 'New event',
-//         start: startOfDay(date),
-//         color: { primary: '#e3bc08', secondary: '#FDF1BA' }
-//       }
-//     ];
-//     this.refresh.next();
-//   }
-
-//   navigateDays(days: number): void {
-//     this.viewDate = addDays(this.viewDate, days);
-//   }
-// }
-
-
-import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef,
-} from '@angular/core';
-import {
-  startOfDay,
-  endOfDay,
-  subDays,
-  addDays,
-  endOfMonth,
-  isSameDay,
-  isSameMonth,
-  addHours,
-} from 'date-fns';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  CalendarEvent,
-  CalendarEventAction,
-  CalendarEventTimesChangedEvent,
-  CalendarView,
-} from 'angular-calendar';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
+import { Router } from '@angular/router';
+
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -160,6 +53,7 @@ export class CalendarComponent {
     event: CalendarEvent;
   };
 
+  // Labels for Editing and Deleting Events from Calendar 
   actions: CalendarEventAction[] = [
     {
       label: '<i class="fas fa-fw fa-pencil-alt"></i>',
@@ -226,6 +120,7 @@ export class CalendarComponent {
   activeDayIsOpen: boolean = true;
 
   constructor(private modal: NgbModal) {}
+  
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
