@@ -39,6 +39,13 @@ export default function createEventRoutes() {
                         reminderTime: payload.startTime
                     });
                 });
+                await userEventModel.createUserEvent({
+                    event: event._id,
+                    user: payload.createdBy,
+                    rsvp: true,
+                    reminderTime: payload.startTime
+                });
+                
                 res.json(event);
             } else {
                 res.status(404).json({ message: "Failed" });

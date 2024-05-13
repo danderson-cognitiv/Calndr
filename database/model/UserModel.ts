@@ -65,7 +65,6 @@ class UserModel {
     public async getUsers(): Promise<IUserModel[]> {
         try {
             const users = await this.model.find()
-            console.log(users)
             return users;
         }
         catch(e) {
@@ -94,7 +93,7 @@ class UserModel {
         }
     }
     
-    public async createUser(userData: Partial<IUserModel>): Promise<Mongoose.Document | null> {
+    public async createUser(userData: Partial<IUserModel>): Promise<IUserModel | null> {
         try {
             const user = new this.model(userData);
             await user.save();
@@ -120,6 +119,16 @@ class UserModel {
         } catch (e) {
             console.error('Error updating user:', e);
             return null;
+        }
+    }
+
+    public async deleteUser(userId: string): Promise<boolean> {
+        try {
+            var result = await this.model.findByIdAndDelete(userId).exec();
+            return !!result;
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            return false;
         }
     }
 

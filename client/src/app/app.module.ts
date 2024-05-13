@@ -14,6 +14,8 @@ import { CreateEventModalComponent } from './create-event-modal/create-event-mod
 import { ProfileComponent } from './profile/profile.component';
 import { EventChatComponent } from './event-chat/event-chat.component';
 import { CommonModule } from '@angular/common';
+import { MyEventsComponent } from './my-events/my-events.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
     declarations: [
@@ -23,7 +25,8 @@ import { CommonModule } from '@angular/common';
       FriendsComponent,
       CreateEventModalComponent,
       ProfileComponent,
-      EventChatComponent
+      EventChatComponent,
+      MyEventsComponent
     ],
     imports: [
       BrowserModule,
@@ -31,7 +34,8 @@ import { CommonModule } from '@angular/common';
       HttpClientModule,
       ReactiveFormsModule,
       CommonModule,
-      FormsModule
+      FormsModule,
+      MatIconModule
     ],
     providers: [CalndrProxyService, provideAnimationsAsync()],
     bootstrap: [AppComponent]

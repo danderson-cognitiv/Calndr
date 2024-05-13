@@ -19,8 +19,22 @@ const corsOptions = {
   };
 
 const app = new App();
-app.initializeDatabaseModels(mongoDBConnection);
-let server: any = app.expressApp;
-server.use(cors(corsOptions))
-server.listen(port);
-console.log("server running in port " + port);
+
+export function startApiServer(): Promise<{ serverInstance: any; message: string }> {
+  return app.initializeDatabaseModels(mongoDBConnection).then(() => {
+    const server = app.expressApp;
+    server.use(cors(corsOptions));
+    return new Promise<{ serverInstance: any; message: string }>((resolve) => {
+      const listener = server.listen(port, () => {
+        console.log(`Server running on port ${port}`);
+        resolve({
+          serverInstance: listener,
+          message: 'Server is up and running'
+        });
+      });
+    });
+  }).catch(err => {
+    console.error('Failed to initialize database models:', err);
+    throw err;
+  });
+}
