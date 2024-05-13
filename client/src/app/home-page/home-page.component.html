@@ -1,11 +1,24 @@
 <div class="homepage">
-    <app-simple-calendar></app-simple-calendar>
-
-    <app-friends></app-friends>
-    
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createEventModal">
-      Create Event
-    </button>
-    <app-create-event-modal></app-create-event-modal>
+  <div class="container">
+    <div class="row">
+      <!-- Empty column occupying 3 columns on the left -->
+      <div class="col-lg-3">
+        
+      </div>
+  
+      <!-- Column for the calendar occupying 9 columns on the right -->
+      <div class="col-lg-9">
+        <div style="text-align:center">
+          <app-calendar></app-calendar>
+        </div>
+      </div>
+    </div>
   </div>
+  <app-friends></app-friends>
+    
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createEventModal">
+      Create Event
+  </button>
+  <app-create-event-modal></app-create-event-modal>
+</div>
   
