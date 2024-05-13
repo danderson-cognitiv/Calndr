@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, TemplateRef, } from '@angular/core';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { Subject } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
@@ -27,7 +27,7 @@ const colors: Record<string, EventColor> = {
 
 @Component({
   selector: 'app-calendar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   styles: [
     `
       h3 {
@@ -115,7 +115,7 @@ export class CalendarComponent {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private router: Router, private proxy$: CalndrProxyService, private cdr: ChangeDetectorRef) {}
+  constructor(private router: Router, private proxy$: CalndrProxyService) {}
   ngOnInit(): void {
     this.proxy$.getUserByName('DandyAndy77').subscribe({
       next: (user: IUserModel) => {
@@ -134,10 +134,6 @@ export class CalendarComponent {
             }));
             console.log("parsed events:", events);
             this.events = events;
-
-            setTimeout(() => {
-              this.cdr.detectChanges();
-            });
           },
           error: (error) => {
             console.error('Failed to load user events:', error);
@@ -148,7 +144,6 @@ export class CalendarComponent {
       error: () => {},
     });
   }
-
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
