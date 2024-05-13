@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CalndrProxyService } from '../proxies/calndrproxy.service';
 import { IUserEventModel } from '../../../../database/interfaces/IUserEventModel';
 import { title } from 'process';
+import { IUserModel } from '../../../../database/interfaces/IUserModel';
 
 
 const colors: Record<string, EventColor> = {
@@ -67,31 +68,78 @@ export class CalendarComponent {
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [];
+  events: CalendarEvent[] = [
+    // {
+    //   start: subDays(startOfDay(new Date()), 1),
+    //   end: addDays(new Date(), 1),
+    //   title: 'A 3 day event',
+    //   color: { ...colors['red'] },
+    //   actions: this.actions,
+    //   allDay: true,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true,
+    //   },
+    //   draggable: true,
+    // },
+    // {
+    //   start: startOfDay(new Date()),
+    //   title: 'An event with no end date',
+    //   color: { ...colors['yellow'] },
+    //   actions: this.actions,
+    // },
+    // {
+    //   start: subDays(endOfMonth(new Date()), 3),
+    //   end: addDays(endOfMonth(new Date()), 3),
+    //   title: 'A long event that spans 2 months',
+    //   color: { ...colors['blue'] },
+    //   allDay: true,
+    // },
+    // {
+    //   start: addHours(startOfDay(new Date()), 2),
+    //   end: addHours(new Date(), 2),
+    //   title: 'A draggable and resizable event',
+    //   color: { ...colors['yellow'] },
+    //   actions: this.actions,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true,
+    //   },
+    //   draggable: true,
+    // },
+  ];
+
 
   activeDayIsOpen: boolean = true;
 
   constructor(private router: Router, private proxy$: CalndrProxyService) {}
   ngOnInit(): void {
-    this.proxy$.getUserEventsByUserId('66419eca8dd92d4cafd0fe45').subscribe({
-      next: (userEvents: IUserEventModel[]) => {
-        console.log('received events!', userEvents);
-        const events = userEvents.map(({ event }: IUserEventModel) => ({
-          start: event.startTime,
-          end: event.endTime,
-          title: event.name,
-          color: { ...colors['blue'] },
-          actions: this.actions,
-        }));
-
-        this.events = events;
+    this.proxy$.getUserByName('DandyAndy77').subscribe({
+      next: (user: IUserModel) => {
+        console.log('!!! received a user', user, user._id)
+        this.proxy$.getUserEventsByUserId(user._id).subscribe({
+          next: (userEvents: IUserEventModel[]) => {
+            console.log('received events!', userEvents);
+            const events = userEvents.map(({ event }: IUserEventModel) => ({
+              start: event.startTime,
+              end: event.endTime,
+              title: event.name,
+              color: { ...colors['blue'] },
+              actions: this.actions,
+            }));
+    
+            this.events = events;
+          },
+          error: (error) => {
+            console.error('Failed to load user events:', error);
+            this.events = []; 
+          }
+        })
       },
-      error: (error) => {
-        console.error('Failed to load user events:', error);
-        this.events = []; 
-      }
-    })
+      error: () => {},
+    });
   }
+
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
