@@ -5,8 +5,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { EventChatComponent } from './event-chat/event-chat.component';
 
 const routes: Routes = [
-    {path: '', component: HomePageComponent},
-    {path: 'profile', component: ProfileComponent},
+    { path: '', component: HomePageComponent },
+    { path: 'profile', component: ProfileComponent },
     { path: 'event/:userEventId', component: EventChatComponent }
 ]
 

@@ -123,13 +123,14 @@ export class CalendarComponent {
         this.proxy$.getUserEventsByUserId(user._id).subscribe({
           next: (userEvents: IUserEventModel[]) => {
             console.log('received events!', userEvents);
-            const events = userEvents.map(({ event }: IUserEventModel) => ({
+            const events = userEvents.map(({ event, _id: userEventId }: IUserEventModel) => ({
               start: new Date(event.startTime),
               end: new Date(event.endTime),
               title: event.name,
               color: { ...colors['blue'] },
               actions: this.actions,
               draggable: true,
+              meta: { userEventId }
 
             }));
             console.log("parsed events:", events);
@@ -181,7 +182,7 @@ export class CalendarComponent {
   handleEvent(action: string, event: CalendarEvent): void {
     console.log(`${action} event:`, event);
 
-    // Insert router navigation code to event page
+    this.router.navigate(['/event/' + event.meta.userEventId]);
 
     // this.modalData = { event, action };
     // this.modal.open(this.modalContent, { size: 'lg' });
