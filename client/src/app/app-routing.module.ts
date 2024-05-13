@@ -7,7 +7,7 @@ import { EventChatComponent } from './event-chat/event-chat.component';
 const routes: Routes = [
     {path: '', component: HomePageComponent},
     {path: 'profile', component: ProfileComponent},
-    { path: 'event/:eventId', component: EventChatComponent }
+    { path: 'event/:userEventId', component: EventChatComponent }
 ]
 
 @NgModule({

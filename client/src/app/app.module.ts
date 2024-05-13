@@ -10,9 +10,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HomePageComponent } from './home-page/home-page.component';
 import { FriendsComponent } from './friends/friends.component';
 import { CalndrProxyService } from './proxies/calndrproxy.service';
+import { CreateEventModalComponent } from './create-event-modal/create-event-modal.component';
 import { ProfileComponent } from './profile/profile.component';
 import { EventChatComponent } from './event-chat/event-chat.component';
 import { CommonModule } from '@angular/common';
+
 
 // angular-calendar related
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -23,15 +25,13 @@ import { FlatpickrModule } from 'angularx-flatpickr';
 
 import { CalendarComponent } from './calendar/calendar.component';
 
-
-
-
 @NgModule({
     declarations: [
       AppComponent,
       SimpleCalendarComponent,
       HomePageComponent,
       FriendsComponent,
+      CreateEventModalComponent,
       ProfileComponent,
       EventChatComponent,
       CalendarComponent,

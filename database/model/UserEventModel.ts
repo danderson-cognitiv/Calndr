@@ -34,7 +34,7 @@ class UserEventModel {
             return await this.model
             .findById(userEventId)
             .populate('event', 'name startTime endTime location description')
-            .populate('user', 'fName lName');
+            .populate('user', 'fName lName username');
         }
         catch(e) {
             console.error(e);
