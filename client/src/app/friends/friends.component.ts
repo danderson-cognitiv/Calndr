@@ -25,5 +25,8 @@ export class FriendsComponent implements OnInit {
       }
     });
   }
-}
 
+  toggleFriendSelection(friend: any) {
+    friend.selected = !friend.selected;
+  }
+}
