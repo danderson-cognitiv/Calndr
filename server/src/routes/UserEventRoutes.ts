@@ -25,7 +25,7 @@ export default function createEventRoutes() {
             res.status(500).json({ error: 'Internal server error' });
         }
     });
-
+    
     userEventRouter.get('/user_event/user/:userId', async (req, res) => {
         const userId = req.params.userId;
         console.log(`Query user events by userId: ${userId}`);

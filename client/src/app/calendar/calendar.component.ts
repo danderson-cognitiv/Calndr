@@ -4,6 +4,9 @@ import { Subject } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { Router } from '@angular/router';
+import { CalndrProxyService } from '../proxies/calndrproxy.service';
+import { IUserEventModel } from '../../../../database/interfaces/IUserEventModel';
+import { title } from 'process';
 
 
 const colors: Record<string, EventColor> = {
@@ -64,53 +67,31 @@ export class CalendarComponent {
 
   refresh = new Subject<void>();
 
-  
-  // Calendar Events Go Here
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: { ...colors['red'] },
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-      color: { ...colors['blue'] },
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: { ...colors['yellow'] },
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
-  ];
+  events: CalendarEvent[] = [];
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private router: Router) {}
-  
+  constructor(private router: Router, private proxy$: CalndrProxyService) {}
+  ngOnInit(): void {
+    this.proxy$.getUserEventsByUserId('66419eca8dd92d4cafd0fe45').subscribe({
+      next: (userEvents: IUserEventModel[]) => {
+        console.log('received events!', userEvents);
+        const events = userEvents.map(({ event }: IUserEventModel) => ({
+          start: event.startTime,
+          end: event.endTime,
+          title: event.name,
+          color: { ...colors['blue'] },
+          actions: this.actions,
+        }));
+
+        this.events = events;
+      },
+      error: (error) => {
+        console.error('Failed to load user events:', error);
+        this.events = []; 
+      }
+    })
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
