@@ -1,7 +1,6 @@
 import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
 import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
 import { Subject } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { Router } from '@angular/router';
@@ -40,18 +39,9 @@ const colors: Record<string, EventColor> = {
   templateUrl: 'calendar.component.html',
 })
 export class CalendarComponent {
-  @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
-
   view: CalendarView = CalendarView.Month;
-
   CalendarView = CalendarView;
-
   viewDate: Date = new Date();
-
-  modalData!: {
-    action: string;
-    event: CalendarEvent;
-  };
 
   // Labels for Editing and Deleting Events from Calendar 
   actions: CalendarEventAction[] = [
@@ -119,7 +109,7 @@ export class CalendarComponent {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private modal: NgbModal) {}
+  constructor(private router: Router) {}
   
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
@@ -155,8 +145,12 @@ export class CalendarComponent {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    console.log(`${action} event:`, event);
+
+    // Insert router navigation code to event page
+
+    // this.modalData = { event, action };
+    // this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   addEvent(): void {
