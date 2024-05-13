@@ -17,6 +17,16 @@ import { CommonModule } from '@angular/common';
 import { MyEventsComponent } from './my-events/my-events.component';
 import { MatIconModule } from '@angular/material/icon';
 
+
+// angular-calendar related
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { FlatpickrModule } from 'angularx-flatpickr';
+
+import { CalendarComponent } from './calendar/calendar.component';
+
 @NgModule({
     declarations: [
       AppComponent,
@@ -27,6 +37,7 @@ import { MatIconModule } from '@angular/material/icon';
       ProfileComponent,
       EventChatComponent,
       MyEventsComponent
+      CalendarComponent,
     ],
     imports: [
       BrowserModule,
@@ -36,7 +47,15 @@ import { MatIconModule } from '@angular/material/icon';
       CommonModule,
       FormsModule,
       MatIconModule
+      BrowserAnimationsModule,
+      NgbModalModule,
+      FlatpickrModule,
+      CalendarModule.forRoot({
+        provide: DateAdapter,
+        useFactory: adapterFactory,
+      }),
     ],
+    exports: [CalendarComponent],
     providers: [CalndrProxyService, provideAnimationsAsync()],
     bootstrap: [AppComponent]
   })
