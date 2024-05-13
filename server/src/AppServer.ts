@@ -38,3 +38,8 @@ export function startApiServer(): Promise<{ serverInstance: any; message: string
     throw err;
   });
 }
+
+if (require.main === module) {
+  startApiServer().then(({ message }) => console.log(message))
+    .catch(err => console.error('Server failed to start:', err));
+}
