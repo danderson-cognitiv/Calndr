@@ -10,7 +10,6 @@ const routes: Routes = [
     {path: 'profile', component: ProfileComponent},
     {path: 'event/:userEventId', component: EventChatComponent },
     {path: 'events', component: MyEventsComponent}
-
 ]
 
 @NgModule({

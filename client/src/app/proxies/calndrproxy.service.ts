@@ -59,5 +59,4 @@ export class CalndrProxyService {
   updateUserEvent(userEvent: string, payload: any) {
     return this.httpClient.put(`${this.hostUrl}user_event/${userEvent}`, payload);
   }
-
 }

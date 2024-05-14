@@ -4,6 +4,10 @@ import { Subject } from 'rxjs';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { Router } from '@angular/router';
+import { CalndrProxyService } from '../proxies/calndrproxy.service';
+import { IUserEventModel } from '../../../../database/interfaces/IUserEventModel';
+import { title } from 'process';
+import { IUserModel } from '../../../../database/interfaces/IUserModel';
 
 
 const colors: Record<string, EventColor> = {
@@ -64,9 +68,10 @@ export class CalendarComponent {
 
   refresh = new Subject<void>();
 
-  
-  // Calendar Events Go Here
-  events: CalendarEvent[] = [
+
+  events: CalendarEvent[] = [];
+
+  sampleEvents: CalendarEvent[] = [
     {
       start: subDays(startOfDay(new Date()), 1),
       end: addDays(new Date(), 1),
@@ -107,10 +112,40 @@ export class CalendarComponent {
     },
   ];
 
+
   activeDayIsOpen: boolean = true;
 
-  constructor(private router: Router) {}
-  
+  constructor(private router: Router, private proxy$: CalndrProxyService) {}
+  ngOnInit(): void {
+    this.proxy$.getUserByName('DandyAndy77').subscribe({
+      next: (user: IUserModel) => {
+        console.log('!!! received a user', user, user._id)
+        this.proxy$.getUserEventsByUserId(user._id).subscribe({
+          next: (userEvents: any[]) => {
+            console.log('received events!', userEvents);
+            const events = userEvents.map(({ event, _id: userEventId }) => ({
+              start: new Date(event.startTime),
+              end: new Date(event.endTime),
+              title: event.name,
+              color: { ...colors['blue'] },
+              actions: this.actions,
+              draggable: true,
+              meta: { userEventId }
+
+            }));
+            console.log("parsed events:", events);
+            this.events = events;
+          },
+          error: (error) => {
+            console.error('Failed to load user events:', error);
+            this.events = []; 
+          }
+        })
+      },
+      error: () => {},
+    });
+  }
+
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -146,8 +181,8 @@ export class CalendarComponent {
 
   handleEvent(action: string, event: CalendarEvent): void {
     console.log(`${action} event:`, event);
-
-    // Insert router navigation code to event page
+    console.log('hi');
+    this.router.navigate(['/event/' + event.meta.userEventId]);
 
     // this.modalData = { event, action };
     // this.modal.open(this.modalContent, { size: 'lg' });
