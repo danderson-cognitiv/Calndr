@@ -10,7 +10,7 @@ const port = process.env.PORT;
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
 
-const mongoDBConnection = 'mongodb://' + dbUser + ':' + encodeURIComponent("test") + process.env.DB_INFO;
+const mongoDBConnection = process.env.CLOUD_DB_CONNECTION_STRING || 'mongodb://' + dbUser + ':' + encodeURIComponent("test") + process.env.DB_INFO;
 console.log("server db connection URL " + mongoDBConnection);
 
 const corsOptions = {
