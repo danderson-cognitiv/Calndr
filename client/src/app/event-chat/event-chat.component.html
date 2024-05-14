@@ -7,12 +7,25 @@
         <p><strong>End Time:</strong> {{ userEvent.event.endTime | date: 'medium' }}</p>
         <p><strong>Location:</strong> {{ userEvent.event.location }}</p>
         <p><strong>Description:</strong> {{ userEvent.event.description }}</p>
+        <p></p>
+        <h3>Attendees</h3>
+        <div *ngFor="let attendee of attendees">
+          <p>
+            {{ attendee.user.username }}
+            <mat-icon [ngStyle]="{ color: attendee.rsvp ? 'green' : 'red' }">
+              {{ attendee.rsvp ? 'check' : 'close' }}
+            </mat-icon>
+            <!-- RSVP toggle button -->
+            <button *ngIf="attendee.user.username === currentUserName" (click)="toggleRSVP(attendee)" class="btn btn-info btn-sm">
+              Toggle RSVP
+            </button>
+          </p>
+        </div>        
       </div>
     </div>
     
     <!-- Event chat messages and sending interface -->
     <div class="chat-container">
-    <h3>Event Chat</h3>
     <div class="messages" #messagesContainer>
         <div *ngFor="let message of messages" 
             [ngClass]="{'my-message': message.userEvent.user.username === currentUserName, 'other-message': message.userEvent.user.username !== currentUserName}" 

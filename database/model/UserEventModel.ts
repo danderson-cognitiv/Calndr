@@ -132,7 +132,7 @@ class UserEventModel {
 
             const userEvents = await this.model.find({
                 event:  eventId
-            }).populate('user', 'fName lName');
+            }).populate('user', 'username fName lName');
             return userEvents;
         } catch (error) {
             console.error('Error getting shared events:', error);

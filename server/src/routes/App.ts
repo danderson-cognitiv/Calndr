@@ -17,7 +17,7 @@ class App {
         this.middleware();
     }
 
-    async initializeDatabaseModels(mongoDBConnection: string) {
+    async initializeDatabaseModels(mongoDBConnection: string): Promise<void> {
         await DatabaseModels.initialize(mongoDBConnection);
         this.routes();
     }

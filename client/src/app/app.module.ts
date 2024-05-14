@@ -14,6 +14,8 @@ import { CreateEventModalComponent } from './create-event-modal/create-event-mod
 import { ProfileComponent } from './profile/profile.component';
 import { EventChatComponent } from './event-chat/event-chat.component';
 import { CommonModule } from '@angular/common';
+import { MyEventsComponent } from './my-events/my-events.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 // angular-calendar related
@@ -34,7 +36,8 @@ import { CalendarComponent } from './calendar/calendar.component';
       CreateEventModalComponent,
       ProfileComponent,
       EventChatComponent,
-      CalendarComponent,
+      MyEventsComponent,
+      CalendarComponent
     ],
     imports: [
       BrowserModule,
@@ -43,6 +46,7 @@ import { CalendarComponent } from './calendar/calendar.component';
       ReactiveFormsModule,
       CommonModule,
       FormsModule,
+      MatIconModule,
       BrowserAnimationsModule,
       NgbModalModule,
       FlatpickrModule,
