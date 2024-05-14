@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CalndrProxyService } from '../proxies/calndrproxy.service';
 import { IUserModel } from '../../../../database/interfaces/IUserModel';// Assuming you have a user model
+import { FriendSelectionService } from './friend-selection.service';
 
 @Component({
   selector: 'app-friends',
@@ -11,7 +12,7 @@ import { IUserModel } from '../../../../database/interfaces/IUserModel';// Assum
 export class FriendsComponent implements OnInit {
   friends: any[] = [];  // Already properly initialized as an empty array.
 
-  constructor(private router: Router, private proxy$: CalndrProxyService) {}
+  constructor(private router: Router, private proxy$: CalndrProxyService, private friendSelectionService: FriendSelectionService) {}
 
   ngOnInit(): void {
     this.proxy$.getUserByName('DandyAndy77').subscribe({
@@ -28,5 +29,9 @@ export class FriendsComponent implements OnInit {
 
   toggleFriendSelection(friend: any) {
     friend.selected = !friend.selected;
+    console.log("friend", friend)
+    this.friendSelectionService.updateSelectedFriends(
+      this.friends.filter(friend => friend.selected)
+    );
   }
 }
