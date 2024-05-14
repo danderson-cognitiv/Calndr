@@ -20,6 +20,7 @@
     "@popperjs/core": "^2.11.8",
     "@types/express": "^4.17.21",
     "@types/mongoose": "^5.11.97",
+    "angularx-flatpickr": "^7.3.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -27,11 +28,11 @@
     "migrate-mongo": "^11.0.0"
   },
   "devDependencies": {
-    "chai": "^4.0.0",
     "@types/cors": "^2.8.17",
     "@types/jquery": "^3.5.30",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.12.11",
+    "chai": "^4.0.0",
     "chai-http": "^4.4.0",
     "mocha": "^10.4.0",
     "ts-node": "^10.9.2",
