@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router'; // Import ActivatedRou
 import { CalndrProxyService } from '../proxies/calndrproxy.service';
 import { IMessageModel } from '../../../../database/interfaces/IMessageModel';
 import { IUserModel } from '../../../../database/interfaces/IUserModel';
-import { IUserEventModel } from '../../../../database/interfaces/IUserEventModel';
+import { IUserEventViewModel } from '../../../../database/views/IUserEventViewModel';
 import { FormsModule } from '@angular/forms'; 
 import { Observable } from 'rxjs';
 
@@ -17,7 +17,7 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
   messages!: any[];
   currentUserName:string = 'DandyAndy77'; //todo change this to dynamically save the userId. Write down we are going to hardcode to fname of Dave
   currentUser!: IUserModel;
-  userEvent!: any;
+  userEvent!: IUserEventViewModel;
   messageContent: string = '';
   attendees!: any;
   
@@ -48,7 +48,7 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
   private loadUserEvent(userEventId: string): void {
     console.log(this.currentUser)
     this.proxy$.getUserEventById(userEventId).subscribe({
-      next: (userEvent: IUserEventModel) => {
+      next: (userEvent: IUserEventViewModel) => {
         this.userEvent = userEvent;
         this.loadMessages(this.userEvent.event._id);
       },
@@ -113,7 +113,7 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
 
   private loadAttendees(eventId: string): void {
     this.proxy$.getUserEventsByEventId(eventId).subscribe({
-      next: (attendees: IUserEventModel[]) => {
+      next: (attendees: IUserEventViewModel[]) => {
         this.attendees = attendees;
         console.log(attendees)
       },

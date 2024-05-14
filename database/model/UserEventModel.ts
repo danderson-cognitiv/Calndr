@@ -1,5 +1,6 @@
 import * as Mongoose from "mongoose";
 import { IUserEventModel } from '../interfaces/IUserEventModel';
+import { IUserEventViewModel } from '../views/IUserEventViewModel'
 
 class UserEventModel {
     public schema:any;
@@ -29,7 +30,7 @@ class UserEventModel {
         this.model = mongoose.model<IUserEventModel>('UserEvent', this.schema);
     }
 
-    public async getUserEventById(userEventId:string): Promise<IUserEventModel | null> {
+    public async getUserEventById(userEventId:string): Promise<IUserEventViewModel | null> {
         try {
             return await this.model
             .findById(userEventId)
