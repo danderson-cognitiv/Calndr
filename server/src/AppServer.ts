@@ -14,16 +14,16 @@ const mongoDBConnection = 'mongodb://' + dbUser + ':' + encodeURIComponent("test
 console.log("server db connection URL " + mongoDBConnection);
 
 const corsOptions = {
-    origin: 'http://' + process.env.CLIENT_HOST + ':' + process.env.CLIENT_PORT,
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
-  };
+  origin: 'http://' + process.env.CLIENT_HOST + ':' + process.env.CLIENT_PORT,
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+};
 
 const app = new App();
 
 export function startApiServer(): Promise<{ serverInstance: any; message: string }> {
+  let server = app.expressApp;
+  server.use(cors(corsOptions));
   return app.initializeDatabaseModels(mongoDBConnection).then(() => {
-    const server = app.expressApp;
-    server.use(cors(corsOptions));
     return new Promise<{ serverInstance: any; message: string }>((resolve) => {
       const listener = server.listen(port, () => {
         console.log(`Server running on port ${port}`);

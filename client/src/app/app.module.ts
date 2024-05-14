@@ -46,7 +46,7 @@ import { CalendarComponent } from './calendar/calendar.component';
       ReactiveFormsModule,
       CommonModule,
       FormsModule,
-      MatIconModule
+      MatIconModule,
       BrowserAnimationsModule,
       NgbModalModule,
       FlatpickrModule,

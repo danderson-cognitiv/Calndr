@@ -4,11 +4,9 @@
     "module": "commonjs",
     "strict": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "moduleResolution": "node"  // Ensure this is set to 'node' for CommonJS
+    "outDir": "./dist"
   },
   "include": ["src/**/*.ts", "tests/**/*.ts"],
   "exclude": ["node_modules"]
