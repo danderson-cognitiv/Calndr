@@ -24,6 +24,7 @@ before((done) => {
       global.serverInstance.close(() => {
         console.log('Server stopped');
         done();
+        process.exit();
       });
     } else {
       console.log('No server instance found');
