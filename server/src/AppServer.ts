@@ -14,13 +14,32 @@ const mongoDBConnection = 'mongodb://' + dbUser + ':' + encodeURIComponent("test
 console.log("server db connection URL " + mongoDBConnection);
 
 const corsOptions = {
-    origin: 'http://' + process.env.CLIENT_HOST + ':' + process.env.CLIENT_PORT,
-    methods: ['GET', 'POST', 'PUT', 'DELETE']
-  };
+  origin: 'http://' + process.env.CLIENT_HOST + ':' + process.env.CLIENT_PORT,
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+};
 
 const app = new App();
-app.initializeDatabaseModels(mongoDBConnection);
-let server: any = app.expressApp;
-server.use(cors(corsOptions))
-server.listen(port);
-console.log("server running in port " + port);
+
+export function startApiServer(): Promise<{ serverInstance: any; message: string }> {
+  let server = app.expressApp;
+  server.use(cors(corsOptions));
+  return app.initializeDatabaseModels(mongoDBConnection).then(() => {
+    return new Promise<{ serverInstance: any; message: string }>((resolve) => {
+      const listener = server.listen(port, () => {
+        console.log(`Server running on port ${port}`);
+        resolve({
+          serverInstance: listener,
+          message: 'Server is up and running'
+        });
+      });
+    });
+  }).catch(err => {
+    console.error('Failed to initialize database models:', err);
+    throw err;
+  });
+}
+
+if (require.main === module) {
+  startApiServer().then(({ message }) => console.log(message))
+    .catch(err => console.error('Server failed to start:', err));
+}

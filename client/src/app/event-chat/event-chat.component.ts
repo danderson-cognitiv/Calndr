@@ -19,6 +19,7 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
   currentUser!: IUserModel;
   userEvent!: any;
   messageContent: string = '';
+  attendees!: any;
   
 
   constructor(
@@ -60,6 +61,7 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
       next: (messages: IMessageModel[]) => {
         this.messages = messages;
         console.log(this.messages)
+        this.loadAttendees(this.userEvent.event._id);
       },
       error: (error) => console.error('Failed to load event:', error)
     });
@@ -108,4 +110,37 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
       this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
     }
   }
+
+  private loadAttendees(eventId: string): void {
+    this.proxy$.getUserEventsByEventId(eventId).subscribe({
+      next: (attendees: IUserEventModel[]) => {
+        this.attendees = attendees;
+        console.log(attendees)
+      },
+      error: (error) => console.error('Failed to load attendees:', error)
+    });
+  }
+
+  public toggleRSVP(attendee: any): void {
+    // Toggle the RSVP status directly on the attendee object
+    attendee.rsvp = !attendee.rsvp;
+  
+    // Prepare the payload to send to the backend
+    let payload = { ...attendee, rsvp: attendee.rsvp };
+  
+    // Call the backend update method
+    this.proxy$.updateUserEvent(attendee._id, payload).subscribe({
+      next: (result) => {
+        console.log('RSVP status updated successfully', result);
+      },
+      error: (error) => {
+        console.error('Failed to update RSVP status:', error);
+        // Revert RSVP on error
+        attendee.rsvp = !attendee.rsvp;
+      }
+    });
+  }
+  
+  
+
 }
