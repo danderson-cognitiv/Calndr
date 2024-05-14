@@ -36,7 +36,7 @@ import { CalendarComponent } from './calendar/calendar.component';
       CreateEventModalComponent,
       ProfileComponent,
       EventChatComponent,
-      MyEventsComponent
+      MyEventsComponent,
       CalendarComponent
     ],
     imports: [
