@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router'; // Import ActivatedRou
 import { CalndrProxyService } from '../proxies/calndrproxy.service';
 import { IMessageModel } from '../../../../database/interfaces/IMessageModel';
 import { IUserModel } from '../../../../database/interfaces/IUserModel';
-import { IUserEventModel } from '../../../../database/interfaces/IUserEventModel';
+import { IUserEventViewModel } from '../../../../database/views/IUserEventViewModel';
 import { FormsModule } from '@angular/forms'; 
 import { Observable } from 'rxjs';
 
@@ -17,8 +17,9 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
   messages!: any[];
   currentUserName:string = 'DandyAndy77'; //todo change this to dynamically save the userId. Write down we are going to hardcode to fname of Dave
   currentUser!: IUserModel;
-  userEvent!: any;
+  userEvent!: IUserEventViewModel;
   messageContent: string = '';
+  attendees!: any;
   
 
   constructor(
@@ -47,7 +48,7 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
   private loadUserEvent(userEventId: string): void {
     console.log(this.currentUser)
     this.proxy$.getUserEventById(userEventId).subscribe({
-      next: (userEvent: IUserEventModel) => {
+      next: (userEvent: IUserEventViewModel) => {
         this.userEvent = userEvent;
         this.loadMessages(this.userEvent.event._id);
       },
@@ -60,6 +61,7 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
       next: (messages: IMessageModel[]) => {
         this.messages = messages;
         console.log(this.messages)
+        this.loadAttendees(this.userEvent.event._id);
       },
       error: (error) => console.error('Failed to load event:', error)
     });
@@ -108,4 +110,37 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
       this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
     }
   }
+
+  private loadAttendees(eventId: string): void {
+    this.proxy$.getUserEventsByEventId(eventId).subscribe({
+      next: (attendees: IUserEventViewModel[]) => {
+        this.attendees = attendees;
+        console.log(attendees)
+      },
+      error: (error) => console.error('Failed to load attendees:', error)
+    });
+  }
+
+  public toggleRSVP(attendee: any): void {
+    // Toggle the RSVP status directly on the attendee object
+    attendee.rsvp = !attendee.rsvp;
+  
+    // Prepare the payload to send to the backend
+    let payload = { ...attendee, rsvp: attendee.rsvp };
+  
+    // Call the backend update method
+    this.proxy$.updateUserEvent(attendee._id, payload).subscribe({
+      next: (result) => {
+        console.log('RSVP status updated successfully', result);
+      },
+      error: (error) => {
+        console.error('Failed to update RSVP status:', error);
+        // Revert RSVP on error
+        attendee.rsvp = !attendee.rsvp;
+      }
+    });
+  }
+  
+  
+
 }

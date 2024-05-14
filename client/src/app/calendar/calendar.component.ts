@@ -5,7 +5,7 @@ import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, Cal
 import { EventColor } from 'calendar-utils';
 import { Router } from '@angular/router';
 import { CalndrProxyService } from '../proxies/calndrproxy.service';
-import { IUserEventModel } from '../../../../database/interfaces/IUserEventModel';
+import { IUserEventViewModel } from '../../../../database/views/IUserEventViewModel';
 import { title } from 'process';
 import { IUserModel } from '../../../../database/interfaces/IUserModel';
 
@@ -121,9 +121,9 @@ export class CalendarComponent {
       next: (user: IUserModel) => {
         console.log('!!! received a user', user, user._id)
         this.proxy$.getUserEventsByUserId(user._id).subscribe({
-          next: (userEvents: IUserEventModel[]) => {
+          next: (userEvents: IUserEventViewModel[]) => {
             console.log('received events!', userEvents);
-            const events = userEvents.map(({ event, _id: userEventId }: IUserEventModel) => ({
+            const events = userEvents.map(({ event, _id: userEventId }) => ({
               start: new Date(event.startTime),
               end: new Date(event.endTime),
               title: event.name,
@@ -181,7 +181,7 @@ export class CalendarComponent {
 
   handleEvent(action: string, event: CalendarEvent): void {
     console.log(`${action} event:`, event);
-
+    console.log('hi');
     this.router.navigate(['/event/' + event.meta.userEventId]);
 
     // this.modalData = { event, action };

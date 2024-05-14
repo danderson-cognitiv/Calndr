@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { IUserModel } from "../../../../database/interfaces/IUserModel"
 import { IEventModel } from "../../../../database/interfaces/IEventModel"
 import { IMessageModel } from '../../../../database/interfaces/IMessageModel';
-import { IUserEventModel } from '../../../../database/interfaces/IUserEventModel';
+import { IUserEventViewModel } from '../../../../database/views/IUserEventViewModel';
 
 
 @Injectable({
@@ -36,7 +36,7 @@ export class CalndrProxyService {
   }
 
   getUserEventById(userEventId:string) {
-    return this.httpClient.get<IUserEventModel>(this.hostUrl + 'user_event/' + userEventId);
+    return this.httpClient.get<IUserEventViewModel>(this.hostUrl + 'user_event/' + userEventId);
   }
 
   createMessage(payload: any) {
@@ -48,6 +48,15 @@ export class CalndrProxyService {
   }
 
   getUserEventsByUserId(userId:string) {
-    return this.httpClient.get<IUserEventModel[]>(this.hostUrl + 'user_event/user/' + userId);
+    return this.httpClient.get<IUserEventViewModel[]>(this.hostUrl + 'user_event/user/' + userId);
+  }
+
+
+  getUserEventsByEventId(eventId:string) {
+    return this.httpClient.get<IUserEventViewModel[]>(this.hostUrl + 'user_event/event/' + eventId);
+  }
+
+  updateUserEvent(userEvent: string, payload: any) {
+    return this.httpClient.put(`${this.hostUrl}user_event/${userEvent}`, payload);
   }
 }
