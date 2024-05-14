@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IUserEventModel } from '../../../../database/interfaces/IUserEventModel';
 import { CalndrProxyService } from '../proxies/calndrproxy.service';
 import { Router } from '@angular/router';
 import { IUserModel } from '../../../../database/interfaces/IUserModel';
 import { Observable } from 'rxjs';
+import { IUserEventViewModel } from '../../../../database/views/IUserEventViewModel';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { Observable } from 'rxjs';
 export class MyEventsComponent implements OnInit {
   currentUserName:string = 'DandyAndy77'; //todo change this to dynamically save the userId. Write down we are going to hardcode to fname of Dave
   currentUser!: IUserModel;
-  userEvents!: any;
+  userEvents!: IUserEventViewModel[];
 
   constructor(
     private proxy$: CalndrProxyService, 
@@ -26,7 +26,7 @@ export class MyEventsComponent implements OnInit {
       next: (user: IUserModel) => {
         this.currentUser = user;
         this.loadUserEvents(user._id).subscribe({
-          next: (events: IUserEventModel[]) => {
+          next: (events: IUserEventViewModel[]) => {
             this.userEvents = events;
             console.log(this.userEvents)
           },
@@ -42,12 +42,9 @@ export class MyEventsComponent implements OnInit {
   }
   
 
-    private loadUserEvents(userId: string): Observable<IUserEventModel[]> {
+    private loadUserEvents(userId: string): Observable<IUserEventViewModel[]> {
       return this.proxy$.getUserEventsByUserId(userId);
     }
-
-
-        
 }
 
 
