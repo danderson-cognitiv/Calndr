@@ -196,9 +196,9 @@ export class CalendarComponent {
     userIds.push(this.currentUserId);
 
     this.proxy$.getUserEventsByUserIds(userIds).subscribe({
-      next: (userEvents: IUserEventModel[]) => {
+      next: (userEvents: IUserEventViewModel[]) => {
         console.log('received events!', userEvents);
-        const events = userEvents.map(({ event, _id: userEventId }: IUserEventModel) => ({
+        const events = userEvents.map(({ event, _id: userEventId }: IUserEventViewModel) => ({
           start: new Date(event.startTime),
           end: new Date(event.endTime),
           title: event.name,

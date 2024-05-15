@@ -61,6 +61,6 @@ export class CalndrProxyService {
   }
 
   getUserEventsByUserIds(userIds:string[]) {
-    return this.httpClient.get<IUserEventModel[]>(this.hostUrl + 'user_event/users/' + userIds.join(','));
+    return this.httpClient.get<IUserEventViewModel[]>(this.hostUrl + 'user_event/users/' + userIds.join(','));
   }
 }
