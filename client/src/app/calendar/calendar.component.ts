@@ -8,6 +8,7 @@ import { CalndrProxyService } from '../proxies/calndrproxy.service';
 import { IUserEventViewModel } from '../../../../database/views/IUserEventViewModel';
 import { title } from 'process';
 import { IUserModel } from '../../../../database/interfaces/IUserModel';
+import { FriendSelectionService } from '../friends/friend-selection.service';
 
 
 const colors: Record<string, EventColor> = {
@@ -27,7 +28,7 @@ const colors: Record<string, EventColor> = {
 
 @Component({
   selector: 'app-calendar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   styles: [
     `
       h3 {
@@ -68,8 +69,8 @@ export class CalendarComponent {
 
   refresh = new Subject<void>();
 
-
   events: CalendarEvent[] = [];
+  currentUserId: string | null = null;
 
   sampleEvents: CalendarEvent[] = [
     {
@@ -112,14 +113,16 @@ export class CalendarComponent {
     },
   ];
 
-
   activeDayIsOpen: boolean = true;
 
-  constructor(private router: Router, private proxy$: CalndrProxyService) {}
+  constructor(private router: Router, private proxy$: CalndrProxyService, private friendSelectionService: FriendSelectionService) {}
+
   ngOnInit(): void {
+    this.friendSelectionService.selectedFriends$.subscribe(this.onSelectedFriendsChange.bind(this));
     this.proxy$.getUserByName('DandyAndy77').subscribe({
       next: (user: IUserModel) => {
         console.log('!!! received a user', user, user._id)
+        this.currentUserId = user._id;
         this.proxy$.getUserEventsByUserId(user._id).subscribe({
           next: (userEvents: IUserEventViewModel[]) => {
             console.log('received events!', userEvents);
@@ -145,7 +148,6 @@ export class CalendarComponent {
       error: () => {},
     });
   }
-
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -186,6 +188,33 @@ export class CalendarComponent {
 
     // this.modalData = { event, action };
     // this.modal.open(this.modalContent, { size: 'lg' });
+  }
+
+  onSelectedFriendsChange(selectedFriends: any[]) {
+    console.log("!!! friends are", selectedFriends);
+    const userIds = selectedFriends.map(f => f._id);
+    userIds.push(this.currentUserId);
+
+    this.proxy$.getUserEventsByUserIds(userIds).subscribe({
+      next: (userEvents: IUserEventModel[]) => {
+        console.log('received events!', userEvents);
+        const events = userEvents.map(({ event, _id: userEventId }: IUserEventModel) => ({
+          start: new Date(event.startTime),
+          end: new Date(event.endTime),
+          title: event.name,
+          color: { ...colors['blue'] },
+          actions: this.actions,
+          draggable: true,
+          meta: { userEventId }
+        }));
+        console.log("!!! [app-calendar] attempting to update events", events);
+        this.events = events;
+      },
+      error: (error) => {
+        console.error('Failed to load user events:', error);
+        this.events = [];
+      }
+    })
   }
 
   addEvent(): void {

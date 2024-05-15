@@ -87,6 +87,20 @@ class UserEventModel {
         }
     }
 
+    public async getUserEventsByUserIds(userIds: string[]): Promise<IUserEventModel[]> {
+        try {
+            console.log('querying userEvents by users', userIds)
+            const result = await this.model.find().where('user').in(userIds)
+                .populate('event', 'name startTime endTime location description')
+                .populate('user', 'fName lName');
+            console.log("!!! trying to get by user id's", result);
+            return result;
+        } catch (error) {
+            console.error('Error getting user events for userId: ' + userIds, error);
+            return [];
+        }
+    }
+
     public async getUserEventsByUserIdAndEventId(userId: string, eventId: string): Promise<IUserEventModel | null>  {
         try {
             console.log('querying userEvents by user and event')

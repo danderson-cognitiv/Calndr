@@ -59,4 +59,8 @@ export class CalndrProxyService {
   updateUserEvent(userEvent: string, payload: any) {
     return this.httpClient.put(`${this.hostUrl}user_event/${userEvent}`, payload);
   }
+
+  getUserEventsByUserIds(userIds:string[]) {
+    return this.httpClient.get<IUserEventModel[]>(this.hostUrl + 'user_event/users/' + userIds.join(','));
+  }
 }

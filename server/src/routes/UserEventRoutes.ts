@@ -39,6 +39,19 @@ export default function createEventRoutes() {
         }
     });
 
+    userEventRouter.get('/user_event/users/:userIds', async (req, res) => {
+        const userIds = req.params.userIds.split(',');
+        console.log(`Query user events by userIds: ${userIds}`);
+        try {
+            const userEvents = await userEventModel.getUserEventsByUserIds(userIds);
+            return res.json(userEvents);
+
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
     userEventRouter.get('/user_event/user/:userId/event/:eventId', async (req, res) => {
         const userId = req.params.userId;
         const eventId = req.params.eventId;
