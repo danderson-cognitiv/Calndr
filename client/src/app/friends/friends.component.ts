@@ -29,14 +29,13 @@ export class FriendsComponent implements OnInit {
   ngOnInit(): void {
     this.proxy$.getUserByName('DandyAndy77').subscribe({
       next: (result: IUserModel) => {
-        this.currentUser = { _id: result._id, username: 'Me', selected: false }; // Set username as 'Me'
-        this.friends = result.friends || [];
-        this.friends.push(this.currentUser);
+        this.currentUser = { _id: result._id, username: 'You', selected: false }; // Set username as 'Me'
+        this.friends = [this.currentUser, ...(result.friends || [])]; // Add current user to the beginning of the friends array
         this.friendColorService.initializeFriendColors(this.friends);
       },
       error: (error) => {
         console.error('Failed to load friends:', error);
-        this.currentUser = { _id: 'currentUserId', username: 'Me', selected: false }; // Ensure currentUser is set on error
+        this.currentUser = { _id: 'currentUserId', username: 'You', selected: false }; // Ensure currentUser is set on error
         this.friends = [this.currentUser];
       }
     });

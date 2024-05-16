@@ -4,8 +4,8 @@
     <li *ngFor="let friend of friends" class="friend-item">
       <label class="friend-label">
         <span class="color-circle" [style.background-color]="getFriendColor(friend._id)"></span>
-        <span class="username" style="color: black;">
-          {{ friend.username === 'Me' ? 'Me' : friend.username }}
+        <span class="username" [ngStyle]="{'font-weight': friend.username === 'You' ? 'bold' : 'normal'}" style="color: black;">
+          {{ friend.username }}
         </span>
         <input type="checkbox" 
           [checked]="friend.selected"
