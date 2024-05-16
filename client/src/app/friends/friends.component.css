@@ -1,6 +1,9 @@
 /* friends.component.css */
+.friends-section {
+  margin-top: 45px;
+}
 .no-bullets {
-    list-style-type: none; /* Remove bullet points */
+    list-style-type: none;
   }
 
   
