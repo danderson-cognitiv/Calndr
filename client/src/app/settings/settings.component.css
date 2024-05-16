@@ -9,12 +9,19 @@
 }
 
 .info-section {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .info-icon {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
   font-style: normal;
-  color: #888;
+  color: blue;
+  background-color: white;
+  border-radius: 50%;
   cursor: pointer;
 }
 
