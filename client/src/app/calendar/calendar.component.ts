@@ -9,7 +9,7 @@ import { IUserEventViewModel } from '../../../../database/views/IUserEventViewMo
 import { title } from 'process';
 import { IUserModel } from '../../../../database/interfaces/IUserModel';
 import { FriendSelectionService } from '../friends/friend-selection.service';
-
+import { FriendColorService } from '../friends/friend-color.service';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -131,7 +131,12 @@ export class CalendarComponent {
 
   activeDayIsOpen: boolean = true;
 
-  constructor(private router: Router, private proxy$: CalndrProxyService, private friendSelectionService: FriendSelectionService) {}
+  constructor(
+    private router: Router, 
+    private proxy$: CalndrProxyService, 
+    private friendSelectionService: FriendSelectionService,
+    private friendColorService: FriendColorService
+  ) {}
 
   ngOnInit(): void {
     this.friendSelectionService.selectedFriends$.subscribe(this.onSelectedFriendsChange.bind(this));
@@ -203,26 +208,14 @@ export class CalendarComponent {
     this.router.navigate(['/event/' + event.meta.userEventId]);
   }
 
-  private friendColorMap: Map<string, EventColor> = new Map();
-
   onSelectedFriendsChange(selectedFriends: any[]): void {
     console.log("!!! friends are", selectedFriends);
-    const colorKeys = Object.keys(colors).filter(key => key !== 'blue'); // Exclude 'blue', reserved for your events
     const allUserIds = selectedFriends.map(f => f._id);
-  
-    // Ensure User ID is always included
+
     if (!allUserIds.includes(this.currentUserId)) {
       allUserIds.push(this.currentUserId);
     }
-  
-    // Update the color map only for new friends
-    selectedFriends.forEach((friend) => {
-      if (!this.friendColorMap.has(friend._id) && friend._id !== this.currentUserId) {
-        this.friendColorMap.set(friend._id, colors[colorKeys[this.friendColorMap.size % colorKeys.length]]);
-      }
-    });
-  
-    // Load events
+
     this.proxy$.getUserEventsByUserIds(allUserIds).subscribe({
       next: (userEvents: IUserEventViewModel[]) => {
         console.log('received events!', userEvents);
@@ -231,7 +224,7 @@ export class CalendarComponent {
           start: new Date(event.startTime),
           end: new Date(event.endTime),
           title: event.name,
-          color: user._id === this.currentUserId ? colors['blue'] : (this.friendColorMap.get(user._id) || colors['blue']),
+          color: { primary: this.friendColorService.getFriendColor(user._id), secondary: '#F0F0F0' },
           actions: this.actions,
           draggable: true,
           meta: { userEventId, user }

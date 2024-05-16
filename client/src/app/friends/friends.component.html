@@ -1,19 +1,19 @@
 <div *ngIf="friends.length > 0; else noFriends">
   <h2>Friends List</h2>
   <ul class="no-bullets">
-    <!-- Loop over each friend in the friends array -->
     <li *ngFor="let friend of friends">
       <label>
         <input type="checkbox" 
-               [checked]="friend.selected" 
-               (change)="toggleFriendSelection(friend)">
-        {{ friend.username }} <!-- Assuming each friend object has a 'username' property -->
+          [checked]="friend.selected"
+          (change)="toggleFriendSelection(friend)">
+      <span [style.color]="getFriendColor(friend._id)">
+        {{ friend.username }}
+      </span>
       </label>
     </li>
   </ul>
 </div>
 
-<!-- Template to display when there are no friends -->
 <ng-template #noFriends>
   <p>No friends found.</p>
 </ng-template>
