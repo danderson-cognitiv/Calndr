@@ -63,6 +63,10 @@ export class CalendarComponent {
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
+  activeDayIsOpen: boolean = false;
+  events: CalendarEvent[] = [];
+  refresh = new Subject<void>();
+  currentUserId: string | null = null;
 
   // Labels for Editing and Deleting Events from Calendar 
   actions: CalendarEventAction[] = [
@@ -82,11 +86,6 @@ export class CalendarComponent {
       },
     },
   ];
-
-  refresh = new Subject<void>();
-
-  events: CalendarEvent[] = [];
-  currentUserId: string | null = null;
 
   sampleEvents: CalendarEvent[] = [
     {
@@ -128,8 +127,6 @@ export class CalendarComponent {
       draggable: true,
     },
   ];
-
-  activeDayIsOpen: boolean = true;
 
   constructor(
     private router: Router, 
