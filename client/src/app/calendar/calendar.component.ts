@@ -24,6 +24,22 @@ const colors: Record<string, EventColor> = {
     primary: '#e3bc08',
     secondary: '#FDF1BA',
   },
+  green: {
+    primary: '#34A853',
+    secondary: '#B9F6CA'
+  },
+  orange: {
+    primary: '#FFA500',
+    secondary: '#FFD580'
+  },
+  purple: {
+    primary: '#800080',
+    secondary: '#E6E6FA'
+  },
+  teal: {
+    primary: '#008080',
+    secondary: '#AADED6'
+  }
 };
 
 @Component({
@@ -185,28 +201,42 @@ export class CalendarComponent {
     console.log(`${action} event:`, event);
     console.log('hi');
     this.router.navigate(['/event/' + event.meta.userEventId]);
-
-    // this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
   }
 
-  onSelectedFriendsChange(selectedFriends: any[]) {
-    console.log("!!! friends are", selectedFriends);
-    const userIds = selectedFriends.map(f => f._id);
-    userIds.push(this.currentUserId);
+  private friendColorMap: Map<string, EventColor> = new Map();
 
-    this.proxy$.getUserEventsByUserIds(userIds).subscribe({
+  onSelectedFriendsChange(selectedFriends: any[]): void {
+    console.log("!!! friends are", selectedFriends);
+    const colorKeys = Object.keys(colors).filter(key => key !== 'blue'); // Exclude 'blue', reserved for your events
+    const allUserIds = selectedFriends.map(f => f._id);
+  
+    // Ensure User ID is always included
+    if (!allUserIds.includes(this.currentUserId)) {
+      allUserIds.push(this.currentUserId);
+    }
+  
+    // Update the color map only for new friends
+    selectedFriends.forEach((friend) => {
+      if (!this.friendColorMap.has(friend._id) && friend._id !== this.currentUserId) {
+        this.friendColorMap.set(friend._id, colors[colorKeys[this.friendColorMap.size % colorKeys.length]]);
+      }
+    });
+  
+    // Load events
+    this.proxy$.getUserEventsByUserIds(allUserIds).subscribe({
       next: (userEvents: IUserEventViewModel[]) => {
         console.log('received events!', userEvents);
-        const events = userEvents.map(({ event, _id: userEventId }: IUserEventViewModel) => ({
+  
+        const events = userEvents.map(({ event, user, _id: userEventId }: IUserEventViewModel) => ({
           start: new Date(event.startTime),
           end: new Date(event.endTime),
           title: event.name,
-          color: { ...colors['blue'] },
+          color: user._id === this.currentUserId ? colors['blue'] : (this.friendColorMap.get(user._id) || colors['blue']),
           actions: this.actions,
           draggable: true,
-          meta: { userEventId }
+          meta: { userEventId, user }
         }));
+  
         console.log("!!! [app-calendar] attempting to update events", events);
         this.events = events;
       },
