@@ -1,9 +1,39 @@
-/* friends.component.css */
 .friends-section {
-  margin-top: 45px;
+  margin-top: 50px; 
 }
-.no-bullets {
-    list-style-type: none;
-  }
 
-  
+.no-bullets-user,
+.no-bullets-friends {
+  list-style-type: none;
+  padding: 0;
+}
+
+.color-circle {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.user-item,
+.friend-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-label,
+.friend-label {
+  display: flex;
+  align-items: center;
+  width: 80%;
+}
+
+.username {
+  flex-grow: 1;
+}
+
+.aligned-checkbox {
+  margin-left: auto;
+}

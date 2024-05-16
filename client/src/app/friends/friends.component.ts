@@ -14,6 +14,7 @@ const colors: string[] = [
   styleUrls: ['./friends.component.css']
 })
 export class FriendsComponent implements OnInit {
+  currentUser: { username: string, selected: boolean } | null = { username: 'DandyAndy77', selected: true };
   friends: any[] = [];  
   friendColorMap: Map<string, string> = new Map();
 
