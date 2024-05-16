@@ -15,7 +15,7 @@ const colors: string[] = [
   styleUrls: ['./friends.component.css']
 })
 export class FriendsComponent implements OnInit {
-  currentUser: { _id: string, username: string, selected: boolean } | null = { _id: 'currentUserId', username: 'DandyAndy77', selected: false };
+  currentUser: { _id: string, username: string, selected: boolean } | null = null;
   friends: any[] = [];
   friendColorMap: Map<string, string> = new Map();
 
@@ -29,14 +29,15 @@ export class FriendsComponent implements OnInit {
   ngOnInit(): void {
     this.proxy$.getUserByName('DandyAndy77').subscribe({
       next: (result: IUserModel) => {
-        this.currentUser = { _id: result._id, username: result.username, selected: false };
+        this.currentUser = { _id: result._id, username: 'Me', selected: false }; // Set username as 'Me'
         this.friends = result.friends || [];
-        this.friends.push(this.currentUser); // Add current user to friends list
+        this.friends.push(this.currentUser);
         this.friendColorService.initializeFriendColors(this.friends);
       },
       error: (error) => {
         console.error('Failed to load friends:', error);
-        this.friends = [this.currentUser]; // Ensure current user is in friends list even on error
+        this.currentUser = { _id: 'currentUserId', username: 'Me', selected: false }; // Ensure currentUser is set on error
+        this.friends = [this.currentUser];
       }
     });
   }
