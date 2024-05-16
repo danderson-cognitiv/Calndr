@@ -142,34 +142,15 @@ export class CalendarComponent {
     this.friendSelectionService.selectedFriends$.subscribe(this.onSelectedFriendsChange.bind(this));
     this.proxy$.getUserByName('DandyAndy77').subscribe({
       next: (user: IUserModel) => {
-        console.log('!!! received a user', user, user._id)
+        console.log('!!! received a user', user, user._id);
         this.currentUserId = user._id;
-        this.proxy$.getUserEventsByUserId(user._id).subscribe({
-          next: (userEvents: IUserEventViewModel[]) => {
-            console.log('received events!', userEvents);
-            const events = userEvents.map(({ event, _id: userEventId }) => ({
-              start: new Date(event.startTime),
-              end: new Date(event.endTime),
-              title: event.name,
-              color: { ...colors['blue'] },
-              actions: this.actions,
-              draggable: true,
-              meta: { userEventId }
-
-            }));
-            console.log("parsed events:", events);
-            this.events = events;
-          },
-          error: (error) => {
-            console.error('Failed to load user events:', error);
-            this.events = []; 
-          }
-        })
       },
-      error: () => {},
+      error: () => {
+        console.error('Failed to load current user data');
+      },
     });
   }
-
+  
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -207,15 +188,17 @@ export class CalendarComponent {
     console.log('hi');
     this.router.navigate(['/event/' + event.meta.userEventId]);
   }
-
+  
   onSelectedFriendsChange(selectedFriends: any[]): void {
     console.log("!!! friends are", selectedFriends);
     const allUserIds = selectedFriends.map(f => f._id);
-
-    if (!allUserIds.includes(this.currentUserId)) {
+  
+    // Add the current user to the list of selected friends if selected
+    if (this.currentUserId && !allUserIds.includes(this.currentUserId) && selectedFriends.some(f => f._id === this.currentUserId)) {
       allUserIds.push(this.currentUserId);
     }
-
+  
+    // Fetch events for the selected friends
     this.proxy$.getUserEventsByUserIds(allUserIds).subscribe({
       next: (userEvents: IUserEventViewModel[]) => {
         console.log('received events!', userEvents);
@@ -237,9 +220,9 @@ export class CalendarComponent {
         console.error('Failed to load user events:', error);
         this.events = [];
       }
-    })
+    });
   }
-
+  
   addEvent(): void {
     this.events = [
       ...this.events,

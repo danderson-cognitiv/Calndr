@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 const colors: string[] = [
-  '#ad2121', '#e3bc08', '#34A853', '#FFA500', '#800080', '#008080'
+  '#ad2121', '#1e90ff', '#e3bc08', '#34A853', '#FFA500', '#800080', '#008080'
 ];
 
 @Injectable({
@@ -20,7 +20,7 @@ export class FriendColorService {
   }
 
   getFriendColor(friendId: string): string {
-    return this.friendColorMap.get(friendId) || '#1e90ff'; 
+    return this.friendColorMap.get(friendId) || '#000';
   }
 
   getFriendColorMap(): Map<string, string> {
