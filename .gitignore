@@ -1,2 +1,7 @@
 node_modules/
 database/db
+createDB/
+curlCommands/
+e2e/
+node_modules/
+docs/

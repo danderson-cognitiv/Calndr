@@ -2,12 +2,16 @@
   "name": "calndr",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  
   "scripts": {
     "start": "ts-node server/src/AppServer.ts",
     "test": "node --loader ts-node/esm node_modules/.bin/mocha --require ts-node/register 'server/tests/*'"
   },
-  "keywords": [],
+  "keywords": [
+    "azure",
+    "boilerplate",
+    "express"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -25,7 +29,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "migrate-mongo": "^11.0.0"
+    "migrate-mongo": "^11.0.0",
+    "passport": "^0.7.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

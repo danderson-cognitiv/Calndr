@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* angular-cli file: src/styles.css */
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~@angular/material/theming';
+@import './themes/light-theme.scss';
+
+body.dark-theme {
+  @import './themes/dark-theme.scss';
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -17,9 +17,10 @@ class UserModel {
     private createSchema() {
         
         this.schema = new Mongoose.Schema({
-            username: String,
+            ssoID: { type: String, required: true, unique: true },
+            // username: String,
             email: String,
-            password: String,
+            // password: String,
             fName: String,
             lName: String,
             eventsVisible: Boolean,

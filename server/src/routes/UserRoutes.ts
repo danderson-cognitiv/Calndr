@@ -9,6 +9,14 @@ const userRouter = express.Router();
 export default function createUserRoutes() {
     const userModel = DatabaseModels.UserModel;
 
+    // userRouter.get('/login', function(req, res) {
+    //     if (req.isAuthenticated()) {
+    //         res.redirect('/info');
+    //     } else {
+    //         res.redirect('/error');
+    //     }
+    // })
+
     userRouter.get('/user/:userId', async (req, res) => {
         var userId = req.params.userId;
         console.log('Query users by userId: ' + userId);

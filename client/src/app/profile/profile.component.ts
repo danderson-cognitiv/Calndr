@@ -29,8 +29,8 @@ export class ProfileComponent implements OnInit {
       next: (user: IUserModel) => {
         this.user = user;
         this.userForm.patchValue({
-          username: user.username,
-          email: user.email,
+          // // username: user.username,
+          // email: user.email,
           fName: user.fName,
           lName: user.lName,
           eventsVisible: user.eventsVisible.toString()

@@ -1,9 +1,9 @@
 import * as Mongoose from "mongoose";
 
 interface IUserModel extends Mongoose.Document {
-    username: string;
+    // username: string;
     email: string;
-    password: string;
+    // password: string;
     fName: string;
     lName: string;
     eventsVisible: boolean;

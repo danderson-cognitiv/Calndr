@@ -10,7 +10,9 @@ const port = process.env.PORT;
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
 
-const mongoDBConnection = 'mongodb://' + dbUser + ':' + encodeURIComponent("test") + process.env.DB_INFO;
+// const mongoDBConnection = 'mongodb://' + dbUser + ':' + encodeURIComponent("test") + process.env.DB_INFO;
+// const mongoDBConnection = 'mongodb+srv://elee5:D0bJC1CCLDrCdK9O@calndr.akrrre6.mongodb.net/'
+const mongoDBConnection = 'mongodb+srv://' + dbUser + ':' + dbPassword + '@' + process.env.DB_INFO;
 console.log("server db connection URL " + mongoDBConnection);
 
 const corsOptions = {
@@ -21,12 +23,13 @@ const corsOptions = {
 const app = new App();
 
 export function startApiServer(): Promise<{ serverInstance: any; message: string }> {
+  console.log('mongoDBConnection:' + mongoDBConnection);
   let server = app.expressApp;
   server.use(cors(corsOptions));
   return app.initializeDatabaseModels(mongoDBConnection).then(() => {
     return new Promise<{ serverInstance: any; message: string }>((resolve) => {
       const listener = server.listen(port, () => {
-        console.log(`Server running on port ${port}`);
+        console.log(`Server running on port ${port} or azure port`);
         resolve({
           serverInstance: listener,
           message: 'Server is up and running'
