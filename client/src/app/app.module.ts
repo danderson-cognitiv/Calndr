@@ -12,11 +12,11 @@ import { FriendsComponent } from './friends/friends.component';
 import { CalndrProxyService } from './proxies/calndrproxy.service';
 import { CreateEventModalComponent } from './create-event-modal/create-event-modal.component';
 import { ProfileComponent } from './profile/profile.component';
+import { SettingsComponent } from './settings/settings.component';
 import { EventChatComponent } from './event-chat/event-chat.component';
 import { CommonModule } from '@angular/common';
 import { MyEventsComponent } from './my-events/my-events.component';
 import { MatIconModule } from '@angular/material/icon';
-
 
 // angular-calendar related
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,6 +35,7 @@ import { CalendarComponent } from './calendar/calendar.component';
       FriendsComponent,
       CreateEventModalComponent,
       ProfileComponent,
+      SettingsComponent,
       EventChatComponent,
       MyEventsComponent,
       CalendarComponent
