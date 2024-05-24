@@ -3,8 +3,7 @@ dotenv.config();
 
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
-const mongoDBConnection = 'mongodb://' + dbUser + ':' + encodeURIComponent("test") + process.env.DB_INFO;
-console.log(mongoDBConnection);
+const mongoDBConnection = process.env.CLOUD_DB_CONNECTION_STRING || 'mongodb://' + dbUser + ':' + encodeURIComponent("test") + process.env.DB_INFO;console.log(mongoDBConnection);
 
 module.exports = {
     mongodb: {
