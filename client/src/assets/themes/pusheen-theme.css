@@ -1,0 +1,17 @@
+body {
+    background-color: #f3f3f3;
+    color: #333;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+  }
+  
+  .calendar-header {
+    background-color: #ffcccb;
+  }
+  
+  .calendar-event {
+    background-color: #d1c4e9;
+    border-color: #b39ddb;
+  }
+  
+  /* Add more styles specific to Pusheen theme */
+  
