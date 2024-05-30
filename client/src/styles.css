@@ -2,17 +2,18 @@
 
 /* angular-cli file: src/styles.css */
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
-@import "assets/themes/pusheen-theme.css";
+/* @import '@angular/material/prebuilt-themes/indigo-pink.css'; */
+/* "@angular/material/prebuilt-themes/deeppurple-amber.css",*/
+@import "assets/themes/pusheen-theme.css"; 
 @import "assets/themes/hello-kitty-theme.css";
 
-.pusheen-theme {
+/* .pusheen-theme {
   @import "assets/themes/pusheen-theme.css";
 }
 
 .hello-kitty-theme {
   @import "assets/themes/hello-kitty-theme.css";
-}
+} */
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
