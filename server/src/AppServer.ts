@@ -6,7 +6,7 @@ const cors = require('cors');
 dotenv.config();
 
 //todo check these for null
-const port = process.env.PORT || 8080;
+const port = process.env.PORT;
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
 
