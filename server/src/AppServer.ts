@@ -11,8 +11,8 @@ const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
 
 // const mongoDBConnection = 'mongodb://' + dbUser + ':' + encodeURIComponent("test") + process.env.DB_INFO;
-// const mongoDBConnection = 'mongodb+srv://elee5:D0bJC1CCLDrCdK9O@calndr.akrrre6.mongodb.net/'
-const mongoDBConnection = 'mongodb+srv://' + dbUser + ':' + dbPassword + '@' + process.env.DB_INFO;
+const mongoDBConnection = 'mongodb+srv://dbAdmin:test@calndr.tmbdgpo.mongodb.net/?retryWrites=true&w=majority&appName=Calndr'
+// const mongoDBConnection = 'mongodb+srv://' + dbUser + ':' + dbPassword + '@' + process.env.DB_INFO;
 console.log("server db connection URL " + mongoDBConnection);
 
 const corsOptions = {
