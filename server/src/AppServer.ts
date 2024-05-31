@@ -13,16 +13,11 @@ const dbPassword = process.env.DB_PASSWORD;
 const mongoDBConnection = process.env.CLOUD_DB_CONNECTION_STRING || 'mongodb://' + dbUser + ':' + encodeURIComponent("test") + process.env.DB_INFO;
 console.log("server db connection URL " + mongoDBConnection);
 
-const corsOptions = {
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
-};
-
 const app = new App();
 
 export function startApiServer(): Promise<{ serverInstance: any; message: string }> {
   let server = app.expressApp;
-  server.use(cors(corsOptions));
+  server.use(cors());
   return app.initializeDatabaseModels(mongoDBConnection).then(() => {
     return new Promise<{ serverInstance: any; message: string }>((resolve) => {
       const listener = server.listen(port, () => {
