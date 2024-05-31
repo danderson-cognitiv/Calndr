@@ -45,8 +45,7 @@ class App {
         // Serve static files
         this.expressApp.use('/app/json/', express.static(__dirname + '/app/json'));
         this.expressApp.use('/images', express.static(__dirname + '/img'));
-        // this.expressApp.use('/', express.static(__dirname + '/pages'));
-        this.expressApp.use('/', express.static(__dirname + '/../../dist/client/browser'));
+        this.expressApp.use('/', express.static(__dirname + '/../../dist/client/browser'));        
     }
 }
 
