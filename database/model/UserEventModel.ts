@@ -93,7 +93,6 @@ class UserEventModel {
             const result = await this.model.find().where('user').in(userIds)
                 .populate('event', 'name startTime endTime location description')
                 .populate('user', 'fName lName');
-            console.log("!!! trying to get by user id's", result);
             return result;
         } catch (error) {
             console.error('Error getting user events for userId: ' + userIds, error);

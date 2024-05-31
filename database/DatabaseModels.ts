@@ -1,4 +1,5 @@
 import * as Mongoose from 'mongoose';
+import mongoose from 'mongoose';
 import { UserModel } from './model/UserModel';
 import { UserEventModel } from './model/UserEventModel';
 import { EventModel } from './model/EventModel';

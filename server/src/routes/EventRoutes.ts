@@ -27,7 +27,6 @@ export default function createEventRoutes() {
     eventRouter.post('/event', async (req, res) => {
         var payload = req.body;
         try {
-            console.log("PAYLOAD", payload);
             const event = await eventModel.createEvent(payload);
             
             if (event) {

@@ -182,7 +182,6 @@ export class CalendarComponent {
 
   handleEvent(action: string, event: CalendarEvent): void {
     console.log(`${action} event:`, event);
-    console.log('hi');
     this.router.navigate(['/event/' + event.meta.userEventId]);
   }
   
