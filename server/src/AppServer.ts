@@ -10,9 +10,9 @@ const port = process.env.PORT;
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
 
-// const mongoDBConnection = 'mongodb://' + dbUser + ':' + encodeURIComponent("test") + process.env.DB_INFO;
-const mongoDBConnection = 'mongodb+srv://dbAdmin:test@calndr.tmbdgpo.mongodb.net/?retryWrites=true&w=majority&appName=Calndr'
-// const mongoDBConnection = 'mongodb+srv://' + dbUser + ':' + dbPassword + '@' + process.env.DB_INFO;
+// // const mongoDBConnection = 'mongodb://' + dbUser + ':' + encodeURIComponent("test") + process.env.DB_INFO;
+// const mongoDBConnection = 'mongodb+srv://dbAdmin:test@calndr.tmbdgpo.mongodb.net/?retryWrites=true&w=majority&appName=Calndr'
+const mongoDBConnection = 'mongodb+srv://' + dbUser + ':' + dbPassword + '@' + process.env.DB_INFO;
 console.log("server db connection URL " + mongoDBConnection);
 
 const corsOptions = {
