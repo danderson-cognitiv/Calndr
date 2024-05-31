@@ -25,13 +25,40 @@ export default function createEventRoutes() {
             res.status(500).json({ error: 'Internal server error' });
         }
     });
-
+    
     userEventRouter.get('/user_event/user/:userId', async (req, res) => {
         const userId = req.params.userId;
         console.log(`Query user events by userId: ${userId}`);
         try {
             const userEvents = await userEventModel.getUserEventsByUserId(userId);
             return res.json(userEvents);
+
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
+    userEventRouter.get('/user_event/users/:userIds', async (req, res) => {
+        const userIds = req.params.userIds.split(',');
+        console.log(`Query user events by userIds: ${userIds}`);
+        try {
+            const userEvents = await userEventModel.getUserEventsByUserIds(userIds);
+            return res.json(userEvents);
+
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
+    userEventRouter.get('/user_event/user/:userId/event/:eventId', async (req, res) => {
+        const userId = req.params.userId;
+        const eventId = req.params.eventId;
+        console.log(`Query user events by userId: ${userId} and eventId: ${eventId}`);
+        try {
+            const userEvent = await userEventModel.getUserEventsByUserIdAndEventId(userId, eventId);
+            return res.json(userEvent);
 
         } catch (error) {
             console.error('Error accessing database:', error);

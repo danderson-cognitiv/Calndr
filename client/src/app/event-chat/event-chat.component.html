@@ -1,0 +1,47 @@
+<div class="container" *ngIf="userEvent; else loading">
+    <h1>{{ userEvent.event.name }}</h1>
+    <div class="card">
+      <div class="card-body">
+        <h3>Event Details</h3>
+        <p><strong>Start Time:</strong> {{ userEvent.event.startTime | date: 'medium' }}</p>
+        <p><strong>End Time:</strong> {{ userEvent.event.endTime | date: 'medium' }}</p>
+        <p><strong>Location:</strong> {{ userEvent.event.location }}</p>
+        <p><strong>Description:</strong> {{ userEvent.event.description }}</p>
+        <p></p>
+        <h3>Attendees</h3>
+        <div *ngFor="let attendee of attendees">
+          <p>
+            {{ attendee.user.username }}
+            <mat-icon [ngStyle]="{ color: attendee.rsvp ? 'green' : 'red' }">
+              {{ attendee.rsvp ? 'check' : 'close' }}
+            </mat-icon>
+            <!-- RSVP toggle button -->
+            <button *ngIf="attendee.user.username === currentUserName" (click)="toggleRSVP(attendee)" class="btn btn-info btn-sm">
+              Toggle RSVP
+            </button>
+          </p>
+        </div>        
+      </div>
+    </div>
+    
+    <!-- Event chat messages and sending interface -->
+    <div class="chat-container">
+    <div class="messages" #messagesContainer>
+        <div *ngFor="let message of messages" 
+            [ngClass]="{'my-message': message.userEvent.user.username === currentUserName, 'other-message': message.userEvent.user.username !== currentUserName}" 
+            class="message">
+        <p>{{ message.userEvent.user.fName }} {{ message.userEvent.user.lName }}: {{ message.content }}</p>
+        <span class="timestamp">{{ message.sentAt | date: 'short' }}</span>
+        </div>
+    </div>
+    <input type="text" [(ngModel)]="messageContent" placeholder="Type a message..."
+    class="form-control" (keydown.enter)="sendMessage()" />
+      </div>
+      </div>
+  
+  <ng-template #loading>
+    <div class="container">
+      <p>Loading event details...</p>
+    </div>
+  </ng-template>
+  

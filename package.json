@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node server/src/AppServer.ts"
+    "start": "ts-node server/src/AppServer.ts",
+    "test": "node --loader ts-node/esm node_modules/.bin/mocha --require ts-node/register 'server/tests/*'"
   },
   "keywords": [],
   "author": "",
@@ -14,19 +15,27 @@
     "@fullcalendar/core": "^6.1.11",
     "@fullcalendar/daygrid": "^6.1.11",
     "@fullcalendar/interaction": "^6.1.11",
+    "@ng-bootstrap/ng-bootstrap": "^16.0.0",
+    "@ng-select/ng-select": "^12.0.7",
+    "@popperjs/core": "^2.11.8",
     "@types/express": "^4.17.21",
     "@types/mongoose": "^5.11.97",
-    "@types/node": "^20.12.7",
+    "angularx-flatpickr": "^7.3.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "migrate-mongo": "^11.0.0",
-    "mongoose": "^8.3.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "migrate-mongo": "^11.0.0"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.17"
+    "@types/cors": "^2.8.17",
+    "@types/jquery": "^3.5.30",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^20.12.11",
+    "chai": "^4.0.0",
+    "chai-http": "^4.4.0",
+    "mocha": "^10.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
   }
 }

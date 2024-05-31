@@ -24,9 +24,8 @@ export class DatabaseModels {
             this.userEventModel = UserEventModel.getModel(Mongoose);
             this.messageModel = MessageModel.getModel(Mongoose);
             this.photoModel = PhotoModel.getModel(Mongoose);
+            console.log('db models done')
         }
-
-            
     }
 
     public static get UserModel(): UserModel {

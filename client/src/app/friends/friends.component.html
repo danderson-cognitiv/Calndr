@@ -1,0 +1,21 @@
+<div *ngIf="friends.length > 0; else noFriends" class="friends-section">
+  <h2>Social Planners</h2>
+  <ul class="no-bullets-friends">
+    <li *ngFor="let friend of friends" class="friend-item">
+      <label class="friend-label">
+        <span class="color-circle" [style.background-color]="getFriendColor(friend._id)"></span>
+        <span class="username" [ngStyle]="{'font-weight': friend.username === 'You' ? 'bold' : 'normal'}" style="color: black;">
+          {{ friend.username }}
+        </span>
+        <input type="checkbox" 
+          [checked]="friend.selected"
+          (change)="toggleFriendSelection(friend)"
+          class="aligned-checkbox">
+      </label>
+    </li>
+  </ul>
+</div>
+
+<ng-template #noFriends>
+  <p>No friends found.</p>
+</ng-template>

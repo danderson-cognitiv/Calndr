@@ -5,7 +5,8 @@ const eventRouter = express.Router();
 
 // Export a function that accepts the mongoDBConnection string
 export default function createEventRoutes() {
-    const eventModel = DatabaseModels.EventModel
+    const eventModel = DatabaseModels.EventModel;
+    const userEventModel = DatabaseModels.UserEventModel;
 
     eventRouter.get('/event/:eventId', async (req, res) => {
         var eventId = req.params.eventId;
@@ -26,8 +27,25 @@ export default function createEventRoutes() {
     eventRouter.post('/event', async (req, res) => {
         var payload = req.body;
         try {
+            console.log("PAYLOAD", payload);
             const event = await eventModel.createEvent(payload);
+            
             if (event) {
+                payload.friends.forEach(async (friend: any) => {
+                    await userEventModel.createUserEvent({
+                        event: event._id,
+                        user: friend,
+                        rsvp: false,
+                        reminderTime: payload.startTime
+                    });
+                });
+                await userEventModel.createUserEvent({
+                    event: event._id,
+                    user: payload.createdBy,
+                    rsvp: true,
+                    reminderTime: payload.startTime
+                });
+                
                 res.json(event);
             } else {
                 res.status(404).json({ message: "Failed" });

@@ -48,10 +48,23 @@ class UserModel {
         }
     }
 
+    public async getUserByName(username:string): Promise<IUserModel | null> {
+        try {
+            const user = await this.model
+            .findOne({username: username})
+            .populate('friends', 'username email');
+            console.log(user)
+            return user;
+        }
+        catch(e) {
+            console.error(e);
+            return null;
+        }
+    }
+
     public async getUsers(): Promise<IUserModel[]> {
         try {
             const users = await this.model.find()
-            console.log(users)
             return users;
         }
         catch(e) {
@@ -80,7 +93,7 @@ class UserModel {
         }
     }
     
-    public async createUser(userData: Partial<IUserModel>): Promise<Mongoose.Document | null> {
+    public async createUser(userData: Partial<IUserModel>): Promise<IUserModel | null> {
         try {
             const user = new this.model(userData);
             await user.save();
@@ -94,11 +107,7 @@ class UserModel {
 
     public async updateUser(userId: string, userData: Partial<IUserModel>): Promise<UserModel | null> {
         try {
-            // Option 1: Update and return the updated document
             const updatedUser = await this.model.findByIdAndUpdate(userId, { $set: userData }, { new: true, runValidators: true });
-
-            // Option 2: Just update the document without returning it
-            // await this.model.updateOne({ _id: userId }, { $set: updates });
 
             if (updatedUser) {
                 console.log('User updated successfully');
@@ -110,6 +119,16 @@ class UserModel {
         } catch (e) {
             console.error('Error updating user:', e);
             return null;
+        }
+    }
+
+    public async deleteUser(userId: string): Promise<boolean> {
+        try {
+            var result = await this.model.findByIdAndDelete(userId).exec();
+            return !!result;
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            return false;
         }
     }
 

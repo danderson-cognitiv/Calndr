@@ -1,5 +1,6 @@
 import * as Mongoose from "mongoose";
 import { IUserEventModel } from '../interfaces/IUserEventModel';
+import { IUserEventViewModel } from '../views/IUserEventViewModel'
 
 class UserEventModel {
     public schema:any;
@@ -29,12 +30,12 @@ class UserEventModel {
         this.model = mongoose.model<IUserEventModel>('UserEvent', this.schema);
     }
 
-    public async getUserEventById(userEventId:string): Promise<IUserEventModel | null> {
+    public async getUserEventById(userEventId:string): Promise<IUserEventViewModel | null> {
         try {
             return await this.model
             .findById(userEventId)
             .populate('event', 'name startTime endTime location description')
-            .populate('user', 'fName lName');
+            .populate('user', 'fName lName username');
         }
         catch(e) {
             console.error(e);
@@ -86,6 +87,33 @@ class UserEventModel {
         }
     }
 
+    public async getUserEventsByUserIds(userIds: string[]): Promise<IUserEventModel[]> {
+        try {
+            console.log('querying userEvents by users', userIds)
+            const result = await this.model.find().where('user').in(userIds)
+                .populate('event', 'name startTime endTime location description')
+                .populate('user', 'fName lName');
+            console.log("!!! trying to get by user id's", result);
+            return result;
+        } catch (error) {
+            console.error('Error getting user events for userId: ' + userIds, error);
+            return [];
+        }
+    }
+
+    public async getUserEventsByUserIdAndEventId(userId: string, eventId: string): Promise<IUserEventModel | null>  {
+        try {
+            console.log('querying userEvents by user and event')
+            return await this.model.findOne({ user: userId, event: eventId })            
+                                    .populate('event', 'name startTime endTime location description')
+                                    .populate('user', 'username fName lName');
+        } catch (error) {
+            console.error('Error getting user events for userId: ' + userId + ' and eventId: ' + eventId, error);
+            return null;
+        }
+    }
+
+
     public async getSharedEvents(userId: string, friendUserId: string): Promise<IUserEventModel[] | null> {
         try {
             const friendEvents: IUserEventModel[] = await this.model.find({ user: friendUserId }).select('event -_id');
@@ -119,7 +147,7 @@ class UserEventModel {
 
             const userEvents = await this.model.find({
                 event:  eventId
-            }).populate('user', 'fName lName');
+            }).populate('user', 'username fName lName');
             return userEvents;
         } catch (error) {
             console.error('Error getting shared events:', error);

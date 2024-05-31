@@ -1,0 +1,30 @@
+.messages {
+    display: flex;
+    flex-direction: column;
+    max-height: 600px; /* adjust based on your design needs */
+    overflow-y: auto;
+  }
+  
+  .message {
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 10px;
+    background-color: #f4f4f8;
+    max-width: 80%;
+  }
+  
+  .my-message {
+    align-self: flex-end;
+    background-color: #5fc9f8; /* your color for own messages */
+  }
+  
+  .other-message {
+    align-self: flex-start;
+    background-color: #8e8e93; /* different color for others' messages */
+  }
+  
+  .timestamp {
+    font-size: 0.8rem;
+    opacity: 0.6;
+  }
+  

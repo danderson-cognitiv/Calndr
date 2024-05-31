@@ -1,0 +1,22 @@
+<div class="homepage mt-5">
+  <div class="container">
+    <div class="row">
+      <!-- Empty column occupying 3 columns on the left -->
+      <div class="col-lg-3">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createEventModal">
+          Create Event
+      </button>
+      <app-friends></app-friends>
+        
+      </div>
+  
+      <!-- Column for the calendar occupying 9 columns on the right -->
+      <div class="col-lg-9">
+        <div style="text-align:center">
+          <app-calendar></app-calendar>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-create-event-modal></app-create-event-modal>
+</div>
