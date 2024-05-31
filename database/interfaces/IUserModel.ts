@@ -1,6 +1,7 @@
 import * as Mongoose from "mongoose";
 
 interface IUserModel extends Mongoose.Document {
+    _id: any,
     username: string;
     email: string;
     password: string;

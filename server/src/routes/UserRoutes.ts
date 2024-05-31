@@ -31,7 +31,7 @@ export default function createUserRoutes() {
         try {
             const user = await userModel.getUserByName(username);
             if (user) {
-                res.json(user);
+                res.json(user);                
             } else {
                 res.status(404).json({ message: "User not found" });
             }

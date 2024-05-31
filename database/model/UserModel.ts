@@ -1,5 +1,7 @@
 import * as Mongoose from "mongoose";
 import {IUserModel} from '../interfaces/IUserModel';
+const { ObjectId } = require('mongoose').Types;
+
 
 class UserModel {
     public schema:any;
@@ -36,10 +38,10 @@ class UserModel {
 
     public async getUserById(userId:string): Promise<IUserModel | null> {
         try {
+            console.log("USERID" + userId)
             const user = await this.model
-            .findById(userId)
+            .findById(new ObjectId(userId))
             .populate('friends', 'username email');
-            console.log(user)
             return user;
         }
         catch(e) {
