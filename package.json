@@ -2,7 +2,7 @@
   "name": "calndr",
   "version": "1.0.0",
   "description": "",
-  "main": "./server.js",
+  "main": "./src/AppServer.ts",
   "scripts": {
     "start": "ts-node server/src/AppServer.ts",
     "test": "node --loader ts-node/esm node_modules/.bin/mocha --require ts-node/register 'server/tests/*'"
