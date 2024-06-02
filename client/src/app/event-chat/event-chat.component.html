@@ -16,7 +16,7 @@
               {{ attendee.rsvp ? 'check' : 'close' }}
             </mat-icon>
             <!-- RSVP toggle button -->
-            <button *ngIf="attendee.user.username === currentUserName" (click)="toggleRSVP(attendee)" class="btn btn-info btn-sm">
+            <button *ngIf="attendee.user.username === currentUser.username" (click)="toggleRSVP(attendee)" class="btn btn-info btn-sm">
               Toggle RSVP
             </button>
           </p>
@@ -28,7 +28,7 @@
     <div class="chat-container">
     <div class="messages" #messagesContainer>
         <div *ngFor="let message of messages" 
-            [ngClass]="{'my-message': message.userEvent.user.username === currentUserName, 'other-message': message.userEvent.user.username !== currentUserName}" 
+            [ngClass]="{'my-message': message.userEvent.user.username === currentUser.username, 'other-message': message.userEvent.user.username !== currentUser.username}" 
             class="message">
         <p>{{ message.userEvent.user.fName }} {{ message.userEvent.user.lName }}: {{ message.content }}</p>
         <span class="timestamp">{{ message.sentAt | date: 'short' }}</span>

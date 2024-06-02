@@ -4,6 +4,8 @@ import { CalndrProxyService } from '../proxies/calndrproxy.service';
 import { IUserModel } from '../../../../database/interfaces/IUserModel';
 import { FriendSelectionService } from './friend-selection.service';
 import { FriendColorService } from './friend-color.service';
+import { AuthService } from '../AuthService';
+import { filter, switchMap } from 'rxjs/operators';
 
 const colors: string[] = [
   '#ad2121', '#1e90ff', '#e3bc08', '#34A853', '#FFA500', '#800080', '#008080'
@@ -23,11 +25,15 @@ export class FriendsComponent implements OnInit {
     private router: Router,
     private proxy$: CalndrProxyService,
     private friendSelectionService: FriendSelectionService,
-    private friendColorService: FriendColorService
+    private friendColorService: FriendColorService,
+    private authService: AuthService // Inject AuthService
   ) {}
 
   ngOnInit(): void {
-    this.proxy$.getUserByName('DandyAndy77').subscribe({
+    // Wait until the user is loaded before performing operations
+    this.authService.currentUser$.pipe(
+      filter((user): user is IUserModel => !!user && !!user._id)
+    ).subscribe({
       next: (result: IUserModel) => {
         this.currentUser = { _id: result._id, username: 'You', selected: false };
         this.friends = [this.currentUser, ...(result.friends || [])];

@@ -1,9 +1,10 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CalndrProxyService } from '../proxies/calndrproxy.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { IUserModel } from '../../../../database/interfaces/IUserModel'; // Assuming you have a user model
+import { IUserModel } from '../../../../database/interfaces/IUserModel';
+import { AuthService } from '../AuthService';
+import { filter, switchMap } from 'rxjs/operators';
 
 declare var $: any;
 
@@ -16,12 +17,17 @@ export class CreateEventModalComponent implements OnInit {
   @Output() onSave: EventEmitter<void> = new EventEmitter<void>();
   @ViewChild('createEventModal') createEventModal!: ElementRef;
   
-  friends: any[] = []; // Already properly initialized as an empty array.
+  friends: any[] = [];
   user: any;
   eventForm!: FormGroup;
   isFriendsListLoaded: boolean = false;
 
-  constructor(private router: Router, private proxy$: CalndrProxyService, private formBuilder: FormBuilder) {
+  constructor(
+    private router: Router,
+    private proxy$: CalndrProxyService,
+    private formBuilder: FormBuilder,
+    private authService: AuthService // Inject AuthService
+  ) {
     this.eventForm = this.formBuilder.group({
       eventName: [null, Validators.required],
       eventDescription: [null],
@@ -33,14 +39,17 @@ export class CreateEventModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.proxy$.getUserByName('DandyAndy77').subscribe({
+    this.authService.currentUser$.pipe(
+      filter((user): user is IUserModel => !!user && !!user._id)
+      ).subscribe({
       next: (result: IUserModel) => {
-        this.friends = result.friends || []; // Ensure 'friends' is always an array
-        this.user = result || {}
+        this.user = result || {};
+        this.friends = result.friends || [];
+        this.isFriendsListLoaded = true;
       },
       error: (error) => {
-        console.error('Failed to load friends:', error);
-        this.friends = []; // Ensure 'friends' is set to an empty array on error
+        console.error('Failed to load user:', error);
+        this.friends = [];
         this.isFriendsListLoaded = true;
       }
     });
@@ -77,6 +86,7 @@ export class CreateEventModalComponent implements OnInit {
         complete: () => {
           const modal: HTMLElement = this.createEventModal.nativeElement;
           $(modal).modal('hide');
+          this.onSave.emit();
         },
         error: (error) => {
           console.error('Failed to create event:', error);
