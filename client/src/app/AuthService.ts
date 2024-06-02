@@ -43,7 +43,7 @@ export class AuthService {
         this.router.navigate(['/login']); // Redirect to login page after logout
       },
       error: (error) => {
-        console.error('Failed to logout:', error);
+        console.error('Failed to logout:' + error);
       }
     });
   }
