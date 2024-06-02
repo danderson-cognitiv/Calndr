@@ -13,13 +13,10 @@ export default function createAuthRoutes() {
     );
 
     authRouter.get('/auth/google/callback',
-        passport.authenticate('google', { failureRedirect: '/' }),
+        passport.authenticate('google', { failureRedirect: `${process.env.CLIENT_URL}` }),
         (req, res) => {
-            if (req.user) {
                 res.redirect(`${process.env.CLIENT_URL}`);
-            } else {
-                res.redirect('/');
-            }
+
         }
     );
 
