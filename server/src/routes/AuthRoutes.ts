@@ -13,9 +13,13 @@ export default function createAuthRoutes() {
     );
 
     authRouter.get('/auth/google/callback',
-        passport.authenticate('google', { failureRedirect: `${process.env.CLIENT_URL}/login` }),
+        passport.authenticate('google', { failureRedirect: '/' }),
         (req, res) => {
-            res.redirect(`${process.env.CLIENT_URL}`);
+            if (req.user) {
+                res.redirect(`${process.env.CLIENT_URL}`);
+            } else {
+                res.redirect('/');
+            }
         }
     );
 
@@ -26,11 +30,9 @@ export default function createAuthRoutes() {
     authRouter.post('/auth/logout', AuthUtils.validateAuth, (req, res) => {
         req.logout(err => {
             if (err) {
-                console.error('Error during logout:', err);
                 return res.status(500).send('Failed to logout');
             }
-            console.log('User successfully logged out');
-            res.status(200).send();
+            res.status(200).send('Logged out');
         });
     });
 
