@@ -1,7 +1,6 @@
 import express from 'express';
-import { PhotoModel } from '../../../database/model/PhotoModel';
-import * as Mongoose from "mongoose";
 import { DatabaseModels } from '../../../database/DatabaseModels';
+import { AuthUtils } from './AuthUtils';
 
 const photoRouter = express.Router();
 
@@ -9,7 +8,7 @@ const photoRouter = express.Router();
 export default function createPhotoRoutes() {
     const photoModel = DatabaseModels.PhotoModel;
 
-    photoRouter.get('/photo/:photoId', async (req, res) => {
+    photoRouter.get('/photo/:photoId', AuthUtils.validateAuth, async (req, res) => {
         var photoId = req.params.photoId;
         console.log('Query photo by photoId: ' + photoId);
         try {
@@ -25,7 +24,7 @@ export default function createPhotoRoutes() {
         }
     });
 
-    photoRouter.post('/photo', async (req, res) => {
+    photoRouter.post('/photo', AuthUtils.validateAuth, async (req, res) => {
         var payload = req.body;
         try {
             const photo = await photoModel.createPhoto(payload);
@@ -40,7 +39,7 @@ export default function createPhotoRoutes() {
         }
     });
 
-    photoRouter.put('/photo/:photoId', async (req, res) => {
+    photoRouter.put('/photo/:photoId', AuthUtils.validateAuth, async (req, res) => {
         var photoId = req.params.photoId;
         var payload = req.body;
         try {
@@ -56,7 +55,7 @@ export default function createPhotoRoutes() {
         }
     });
 
-    photoRouter.delete('/photo/:photoId', async (req, res) => {
+    photoRouter.delete('/photo/:photoId', AuthUtils.validateAuth, async (req, res) => {
         var photoId = req.params.photoId;
         try {
             await photoModel.deletePhoto(photoId);

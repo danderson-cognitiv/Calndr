@@ -21,7 +21,7 @@ class UserEventModel {
                 reminderTime: { type: Date, required: true },
                 rsvp: { type: Boolean, required: true },
                 event: { type: Mongoose.Schema.Types.ObjectId, ref: 'Event' },
-                user: { type: Mongoose.Schema.Types.ObjectId, ref: 'User' }
+                user: { type: String, ref: 'User' }
             }, {collection: 'userEvents'}
         );    
     }

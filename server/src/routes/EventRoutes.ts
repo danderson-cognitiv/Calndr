@@ -1,5 +1,6 @@
 import express from 'express';
 import { DatabaseModels } from '../../../database/DatabaseModels';
+import { AuthUtils } from './AuthUtils';
 
 const eventRouter = express.Router();
 
@@ -8,7 +9,7 @@ export default function createEventRoutes() {
     const eventModel = DatabaseModels.EventModel;
     const userEventModel = DatabaseModels.UserEventModel;
 
-    eventRouter.get('/event/:eventId', async (req, res) => {
+    eventRouter.get('/event/:eventId', AuthUtils.validateAuth, async (req, res) => {
         var eventId = req.params.eventId;
         console.log('Query events by eventId: ' + eventId);
         try {
@@ -24,7 +25,7 @@ export default function createEventRoutes() {
         }
     });
 
-    eventRouter.post('/event', async (req, res) => {
+    eventRouter.post('/event', AuthUtils.validateAuth, async (req, res) => {
         var payload = req.body;
         try {
             const event = await eventModel.createEvent(payload);
@@ -55,7 +56,7 @@ export default function createEventRoutes() {
         }
     });
 
-    eventRouter.put('/event/:eventId', async (req, res) => {
+    eventRouter.put('/event/:eventId', AuthUtils.validateAuth, async (req, res) => {
         var eventId = req.params.eventId;
         var payload = req.body;
         try {
@@ -71,7 +72,7 @@ export default function createEventRoutes() {
         }
     });
 
-    eventRouter.delete('/event/:eventId', async (req, res) => {
+    eventRouter.delete('/event/:eventId', AuthUtils.validateAuth, async (req, res) => {
         var eventId = req.params.eventId;
         try {
             await eventModel.deleteEvent(eventId);

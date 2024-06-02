@@ -14,7 +14,8 @@ const mongoDBConnection = process.env.CLOUD_DB_CONNECTION_STRING || 'mongodb://'
 console.log("server db connection URL " + mongoDBConnection);
 
 const corsOptions = {
-  origin: 'http://' + process.env.CLIENT_HOST + ':' + process.env.CLIENT_PORT,
+  origin: process.env.CLIENT_URL,
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 };
 
