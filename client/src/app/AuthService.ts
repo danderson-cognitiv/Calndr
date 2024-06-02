@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   login(): void {
-    window.location.href = 'https://calndrteamnoslackerz.azurewebsites.net/auth/google';
+    window.location.href = `${this.calndrProxyService.hostUrl}auth/google`;
   }
 
   logout(): void {
