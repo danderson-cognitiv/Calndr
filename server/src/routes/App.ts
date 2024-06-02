@@ -35,11 +35,6 @@ class App {
         this.expressApp.use(bodyParser.urlencoded({ extended: false }));
 
         this.expressApp.use((req, res, next) => {
-            return res.redirect(`https://${req.headers.host}${req.url}`);
-        });
-
-
-        this.expressApp.use((req, res, next) => {
             res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
             res.header("Access-Control-Allow-Credentials", "true");
@@ -51,7 +46,7 @@ class App {
             resave: false,
             saveUninitialized: true,
             cookie: {
-                secure: true,
+                secure: false,
             }
         }));
         

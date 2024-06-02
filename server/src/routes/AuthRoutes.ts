@@ -13,15 +13,18 @@ export default function createAuthRoutes() {
     );
 
     authRouter.get('/auth/google/callback',
-        passport.authenticate('google', { failureRedirect: process.env.CLIENT_URL }),
-        (req, res) => {
-            if (req.user) {
-                res.redirect(`${process.env.CLIENT_URL}`);
-            } else {
-                res.redirect(`${process.env.CLIENT_URL}/login`);
-            }
+    passport.authenticate('google', { failureRedirect: '/' }),
+    (req, res) => {
+        if (req.user) {
+            console.log('User authenticated successfully:', req.user);
+            res.redirect('/');
+        } else {
+            console.log('User authentication failed');
+            res.redirect('/');
         }
-    );
+    }
+);
+
 
     authRouter.get('/auth/user', AuthUtils.validateAuth, (req, res) => {
         res.json(req.user);
