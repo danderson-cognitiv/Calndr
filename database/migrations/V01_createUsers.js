@@ -16,8 +16,7 @@ module.exports = {
       {
         _id: "104944650666529248096",
         username: "Fladenbrot420",
-        email: "mahir_email@gmail.com",
-        password: "password",
+        email: "mahirbahtija@gmail.com",
         fName: "Mahir",
         lName: "Bathija",
         eventsVisible: false
@@ -35,7 +34,6 @@ module.exports = {
 
         username: "AngeloAlfonso",
         email: "angeloalfonso@gmail.com",
-        password: "password",
         fName: "Angelo",
         lName: "Alfonso",
         eventsVisible: false

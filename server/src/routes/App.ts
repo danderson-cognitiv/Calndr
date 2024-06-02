@@ -11,7 +11,7 @@ import GooglePassport from '../GooglePassport';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import passport from 'passport'
-
+import path from 'path';
 
 class App {
     // ref to Express instance
@@ -70,6 +70,9 @@ class App {
         this.expressApp.use('/app/json/', express.static(__dirname + '/app/json'));
         this.expressApp.use('/images', express.static(__dirname + '/img'));
         this.expressApp.use('/', express.static(__dirname + '/../../dist/client/browser'));        
+        this.expressApp.get('*', (req, res) => {
+            res.sendFile(path.resolve(__dirname, '../../dist/client/browser/index.html'));
+        });
     }
 }
 
