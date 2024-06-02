@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   login(): void {
-    window.location.href = 'http://localhost:8080/auth/google';
+    window.location.href = 'https://calndrteamnoslackerz.azurewebsites.net/auth/google';
   }
 
   logout(): void {
