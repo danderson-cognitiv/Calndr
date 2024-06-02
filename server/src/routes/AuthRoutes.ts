@@ -35,7 +35,7 @@ export default function createAuthRoutes() {
             if (err) {
                 return res.status(500).send('Failed to logout');
             }
-            res.status(200).send('Logged out');
+            res.status(200).send();
         });
     });
 
