@@ -33,6 +33,12 @@ class App {
     private middleware(): void {
         this.expressApp.use(bodyParser.json());
         this.expressApp.use(bodyParser.urlencoded({ extended: false }));
+
+        this.expressApp.use((req, res, next) => {
+            return res.redirect(`https://${req.headers.host}${req.url}`);
+        });
+
+
         this.expressApp.use((req, res, next) => {
             res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
             res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -45,7 +51,7 @@ class App {
             resave: false,
             saveUninitialized: true,
             cookie: {
-                secure: false,
+                secure: true,
             }
         }));
         
