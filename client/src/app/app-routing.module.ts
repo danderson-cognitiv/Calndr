@@ -15,8 +15,7 @@ const routes: Routes = [
   { path: 'events', component: MyEventsComponent, canActivate: [AuthGuard] },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
-  { path: '**', redirectTo: '', pathMatch: 'full' } // Catch-all route to redirect to home
-
+  // { path: '**', redirectTo: '', pathMatch: 'full' } // Catch-all route to redirect to home
 ]
 
 @NgModule({
