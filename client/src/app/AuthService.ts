@@ -20,9 +20,6 @@ export class AuthService {
     this.calndrProxyService.getCurrentUser().subscribe({
       next: (user) => {
         this.currentUserSubject.next(user);
-        if (user) {
-          this.router.navigate(['/']);
-        }
       },
       error: (error) => {
         console.error('Failed to load current user:', error);
