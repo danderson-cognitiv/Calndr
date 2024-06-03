@@ -40,25 +40,25 @@ body.gamer-pusheen-theme {
     }
     
     .navbar {
-      background-color: #1f254c !important; /* Pink background */
+      background-color: #1f254c !important; 
       border-bottom: 2px solid #c6d7e6; 
     }
     
     /* Override Bootstrap primary button styles to be grey */
     .btn-primary {
-      background-color: #969098 !important; /* Grey background color */
-      border-color: #969098 !important; /* Grey border color */
-      color: #fff !important; /* White text color */
+      background-color: #969098 !important; 
+      border-color: #969098 !important;
+      color: #fff !important;
     }
     
     .btn-primary:hover {
-      background-color: #969098 !important; /* Darker grey on hover */
-      border-color: #969098 !important; /* Darker grey border on hover */
+      background-color: #969098 !important;
+      border-color: #969098 !important;
     }
     
     .btn-primary:focus, .btn-primary:active {
       background-color: #969098 !important;
       border-color: #969098 !important;
-      box-shadow: none !important; /* Remove default focus outline */
+      box-shadow: none !important; 
     }
 }
