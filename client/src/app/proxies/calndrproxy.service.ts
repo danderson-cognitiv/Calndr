@@ -10,7 +10,8 @@ import { IUserEventViewModel } from '../../../../database/views/IUserEventViewMo
 })
 export class CalndrProxyService {
 
-  hostUrl:string = 'https://calndrteamnoslackerz.azurewebsites.net/api/';
+  hostUrl:string = 'https://calndrteamnoslackerz.azurewebsites.net/';
+    // hostUrl:string = 'http://localhost:8080/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -19,7 +20,7 @@ export class CalndrProxyService {
   }
 
   getCurrentUser() {
-    return this.httpClient.get<IUserModel>('https://calndrteamnoslackerz.azurewebsites.net/auth/user', { withCredentials: true });
+    return this.httpClient.get<IUserModel>(this.hostUrl + 'auth/user', { withCredentials: true });
   }
 
   getUserByName(username:string) {
@@ -31,7 +32,7 @@ export class CalndrProxyService {
   }
 
   getEventById(eventId:string) {
-    return this.httpClient.get<IEventModel>(this.hostUrl + 'event/' + eventId, { withCredentials: true });
+    return this.httpClient.get<IEventModel>(this.hostUrl + 'events/' + eventId, { withCredentials: true });
   }
 
   getMessagesByEventId(eventId:string) {
@@ -47,7 +48,7 @@ export class CalndrProxyService {
   }
 
   createEvent(payload: any) {
-    return this.httpClient.post(this.hostUrl + 'event', payload, { withCredentials: true });
+    return this.httpClient.post(this.hostUrl + 'events', payload, { withCredentials: true });
   }
 
   getUserEventsByUserId(userId:string) {
@@ -67,10 +68,10 @@ export class CalndrProxyService {
   }
 
   logout() {
-    return this.httpClient.post('https://calndrteamnoslackerz.azurewebsites.net/auth/logout', {}, { withCredentials: true });
+    return this.httpClient.post(this.hostUrl + 'auth/logout', {}, { withCredentials: true });
   }
 
   login() {
-    return this.httpClient.get('https://calndrteamnoslackerz.azurewebsites.net/auth/google', { withCredentials: true });
+    return this.httpClient.get(`${this.hostUrl}auth/google`, { withCredentials: true });
   }
 }
