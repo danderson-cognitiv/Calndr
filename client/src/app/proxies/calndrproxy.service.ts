@@ -19,7 +19,7 @@ export class CalndrProxyService {
   }
 
   getCurrentUser() {
-    return this.httpClient.get<IUserModel>(this.hostUrl + 'auth/user', { withCredentials: true });
+    return this.httpClient.get<IUserModel>('https://calndrteamnoslackerz.azurewebsites.net/auth/user', { withCredentials: true });
   }
 
   getUserByName(username:string) {
@@ -67,10 +67,10 @@ export class CalndrProxyService {
   }
 
   logout() {
-    return this.httpClient.post(this.hostUrl + 'auth/logout', {}, { withCredentials: true });
+    return this.httpClient.post('https://calndrteamnoslackerz.azurewebsites.net/auth/logout', {}, { withCredentials: true });
   }
 
   login() {
-    return this.httpClient.get(`${this.hostUrl}auth/google`, { withCredentials: true });
+    return this.httpClient.get('https://calndrteamnoslackerz.azurewebsites.net/auth/google', { withCredentials: true });
   }
 }

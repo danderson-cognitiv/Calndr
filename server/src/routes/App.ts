@@ -58,7 +58,7 @@ class App {
 
     private routes(): void {
         // auth routes
-        this.expressApp.use('/api', createAuthRoutes());
+        this.expressApp.use('/', createAuthRoutes());
         // Use user routes
         this.expressApp.use('/api', createUserRoutes());
         this.expressApp.use('/api', createEventRoutes());
