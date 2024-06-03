@@ -15,7 +15,6 @@ const routes: Routes = [
   { path: 'settings', component: SettingsComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' } // Catch-all route to redirect to home
-
 ]
 
 @NgModule({

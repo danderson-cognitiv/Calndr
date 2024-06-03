@@ -1,5 +1,6 @@
 // app.component.ts
 import { Component, OnInit } from '@angular/core';
+import { aU } from '@fullcalendar/core/internal-common';
 import { AuthService } from './AuthService';
 
 @Component({
@@ -13,10 +14,6 @@ export class AppComponent implements OnInit {
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
-    this.authService.currentUser$.subscribe(user => {
-      this.currentUser = user;
-      console.log('Current user:', this.currentUser);
-    });
   }
 
   logout(): void {
