@@ -5,7 +5,7 @@ interface IPollModel extends Mongoose.Document {
     event: Mongoose.Schema.Types.ObjectId;
     pollName: String;
     createdAt: Date;
-    createdBy: Mongoose.Schema.Types.ObjectId;
+    createdBy: string;
 }
 
 export { IPollModel };

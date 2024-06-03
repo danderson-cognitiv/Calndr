@@ -5,7 +5,8 @@ import { IMessageModel } from '../../../../database/interfaces/IMessageModel';
 import { IUserModel } from '../../../../database/interfaces/IUserModel';
 import { IUserEventViewModel } from '../../../../database/views/IUserEventViewModel';
 import { FormsModule } from '@angular/forms'; 
-import { Observable } from 'rxjs';
+import { Observable, filter } from 'rxjs';
+import { AuthService } from '../AuthService';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,6 @@ import { Observable } from 'rxjs';
 export class EventChatComponent implements OnInit, AfterViewChecked {
   @ViewChild('messagesContainer') private messagesContainer!: ElementRef;
   messages!: any[];
-  currentUserName:string = 'DandyAndy77'; //todo change this to dynamically save the userId. Write down we are going to hardcode to fname of Dave
   currentUser!: IUserModel;
   userEvent!: IUserEventViewModel;
   messageContent: string = '';
@@ -25,15 +25,18 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
   constructor(
     private proxy$: CalndrProxyService, 
     private router: Router, 
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const userEventId = params['userEventId'];
       if (userEventId) {
-        this.loadUser(this.currentUserName).subscribe({
-          next: (user: IUserModel) => {
+        this.authService.currentUser$.pipe(
+          filter((user): user is IUserModel => !!user && !!user._id) // Type guard to ensure user is IUserModel
+        ).subscribe({
+          next: (user) => {
             this.currentUser = user;
             this.loadUserEvent(userEventId);
           },
@@ -44,7 +47,7 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
       }
     });
   }
-
+  
   private loadUserEvent(userEventId: string): void {
     console.log(this.currentUser)
     this.proxy$.getUserEventById(userEventId).subscribe({
@@ -67,9 +70,6 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
     });
   }
 
-  private loadUser(username: string): Observable<IUserModel> {
-    return this.proxy$.getUserByName(username);
-  }
 
   ngAfterViewChecked(): void {
     this.scrollToBottom();

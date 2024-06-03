@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CalndrProxyService } from '../proxies/calndrproxy.service';
 import { IUserModel } from '../../../../database/interfaces/IUserModel';
+import { AuthService } from '../AuthService';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -11,9 +13,14 @@ import { IUserModel } from '../../../../database/interfaces/IUserModel';
 })
 export class ProfileComponent implements OnInit {
   userForm: FormGroup;
-  user:any;
+  user: any;
 
-  constructor(private formBuilder: FormBuilder, private proxy$: CalndrProxyService, private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder, 
+    private proxy$: CalndrProxyService, 
+    private router: Router,
+    private authService: AuthService
+  ) {
     // Initialize the form with default values or placeholders
     this.userForm = this.formBuilder.group({
       username: ['', Validators.required],
@@ -25,8 +32,10 @@ export class ProfileComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.proxy$.getUserByName('DandyAndy77').subscribe({
-      next: (user: IUserModel) => {
+    this.authService.currentUser$.pipe(
+      filter((user): user is IUserModel => !!user && !!user._id) // Type guard to ensure user is IUserModel
+    ).subscribe({
+      next: (user) => {
         this.user = user;
         this.userForm.patchValue({
           username: user.username,
@@ -40,8 +49,6 @@ export class ProfileComponent implements OnInit {
     });
   }
   
-  
-
   saveProfile(): void {
     if (this.userForm.valid) {
       const formData = {
@@ -55,6 +62,4 @@ export class ProfileComponent implements OnInit {
       });
     }
   }
-  
-  
 }

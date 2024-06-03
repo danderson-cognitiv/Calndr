@@ -22,7 +22,7 @@ class EventModel {
                 endTime: { type: Date, required: true },
                 location: { type: String, required: true },
                 description: { type: String, required: true },
-                createdBy: { type: Mongoose.Schema.Types.ObjectId, ref: 'User' }
+                createdBy: { type: String, ref: 'User' }
             }, {collection: 'events'}
         );    
     }

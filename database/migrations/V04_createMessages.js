@@ -20,22 +20,22 @@ module.exports = {
         {
           userEvent: mahirUserEvent._id,
           content: 'Yeah dude im super stoked',
-          sentAt: new Date(Date.now() + 1 * 60000)
+          sentAt: new Date(Date.now() - 4 * 60000)
         },
         {
           userEvent: daveUserEvent._id,
           content: 'Is it cool if I bring my dog?',
-          sentAt: new Date(Date.now() + 2 * 60000)
+          sentAt: new Date(Date.now() - 3  * 60000)
         },
         {
           userEvent: mahirUserEvent._id,
           content: 'nahhh idk if luna would be cool with kiki',
-          sentAt: new Date(Date.now() + 3 * 60000)
+          sentAt: new Date(Date.now() - 2 * 60000)
         },
         {
           userEvent: daveUserEvent._id,
           content: 'word, cya then!',
-          sentAt: new Date(Date.now() + 4 * 60000)
+          sentAt: new Date(Date.now() -1 * 60000)
         }
 
       ]);

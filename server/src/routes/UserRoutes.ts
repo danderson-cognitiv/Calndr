@@ -1,7 +1,7 @@
 import express from 'express';
 import * as Mongoose from "mongoose";
 import { DatabaseModels } from '../../../database/DatabaseModels';
-import { UserModel } from '../../../database/model/UserModel';
+import { AuthUtils } from './AuthUtils';
 
 const userRouter = express.Router();
 
@@ -9,7 +9,7 @@ const userRouter = express.Router();
 export default function createUserRoutes() {
     const userModel = DatabaseModels.UserModel;
 
-    userRouter.get('/user/:userId', async (req, res) => {
+    userRouter.get('/user/:userId', AuthUtils.validateAuth, async (req, res) => {
         var userId = req.params.userId;
         console.log('Query users by userId: ' + userId);
         try {
@@ -25,7 +25,7 @@ export default function createUserRoutes() {
         }
     });
 
-    userRouter.get('/user/name/:username', async (req, res) => {
+    userRouter.get('/user/name/:username', AuthUtils.validateAuth, async (req, res) => {
         var username = req.params.username;
         console.log('Query users by username: ' + username);
         try {
@@ -41,7 +41,7 @@ export default function createUserRoutes() {
         }
     });
 
-    userRouter.get('/user', async (req, res) => {
+    userRouter.get('/user', AuthUtils.validateAuth, async (req, res) => {
         console.log('Query all users');
         try {
             console.log(userModel);
@@ -55,7 +55,7 @@ export default function createUserRoutes() {
     });
 
 
-    userRouter.get('/user/:userId/friends', async (req, res) => {
+    userRouter.get('/user/:userId/friends', AuthUtils.validateAuth, async (req, res) => {
         var userId = req.params.userId;
         console.log('Query friends for userId ' + userId);
         try {
@@ -68,7 +68,7 @@ export default function createUserRoutes() {
         }
     });
 
-    userRouter.post('/user', async (req, res) => {
+    userRouter.post('/user', AuthUtils.validateAuth, async (req, res) => {
         var payload = req.body;
         try {
             const user = await userModel.createUser(payload);
@@ -83,7 +83,7 @@ export default function createUserRoutes() {
         }
     });
 
-    userRouter.put('/user/:userId', async (req, res) => {
+    userRouter.put('/user/:userId', AuthUtils.validateAuth, async (req, res) => {
         var userId = req.params.userId;
         var payload = req.body;
         try {

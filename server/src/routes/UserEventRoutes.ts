@@ -1,6 +1,6 @@
 import express from 'express';
 import { DatabaseModels } from '../../../database/DatabaseModels';
-
+import { AuthUtils } from './AuthUtils';
 
 const userEventRouter = express.Router();
 
@@ -10,11 +10,11 @@ export default function createEventRoutes() {
     const userModel = DatabaseModels.UserModel;
 
 
-    userEventRouter.get('/user_event/:userEventId', async (req, res) => {
-        var eventId = req.params.userEventId;
-        console.log('Query events by userEventId: ' + eventId);
+    userEventRouter.get('/user_event/:userEventId', AuthUtils.validateAuth, async (req, res) => {
+        var userEventId = req.params.userEventId;
+        console.log('Query events by userEventId: ' + userEventId);
         try {
-            const event = await userEventModel.getUserEventById(eventId);
+            const event = await userEventModel.getUserEventById(userEventId);
             if (event) {
                 res.json(event);
             } else {
@@ -26,7 +26,7 @@ export default function createEventRoutes() {
         }
     });
     
-    userEventRouter.get('/user_event/user/:userId', async (req, res) => {
+    userEventRouter.get('/user_event/user/:userId', AuthUtils.validateAuth, async (req, res) => {
         const userId = req.params.userId;
         console.log(`Query user events by userId: ${userId}`);
         try {
@@ -39,7 +39,7 @@ export default function createEventRoutes() {
         }
     });
 
-    userEventRouter.get('/user_event/users/:userIds', async (req, res) => {
+    userEventRouter.get('/user_event/users/:userIds', AuthUtils.validateAuth, async (req, res) => {
         const userIds = req.params.userIds.split(',');
         console.log(`Query user events by userIds: ${userIds}`);
         try {
@@ -52,7 +52,7 @@ export default function createEventRoutes() {
         }
     });
 
-    userEventRouter.get('/user_event/user/:userId/event/:eventId', async (req, res) => {
+    userEventRouter.get('/user_event/user/:userId/event/:eventId', AuthUtils.validateAuth, async (req, res) => {
         const userId = req.params.userId;
         const eventId = req.params.eventId;
         console.log(`Query user events by userId: ${userId} and eventId: ${eventId}`);
@@ -66,7 +66,7 @@ export default function createEventRoutes() {
         }
     });
 
-    userEventRouter.get('/user_event/user/:userId/friend/:friendUserId', async (req, res) => {
+    userEventRouter.get('/user_event/user/:userId/friend/:friendUserId', AuthUtils.validateAuth, async (req, res) => {
         const { userId, friendUserId } = req.params;
         console.log(`Query user events by userId: ${userId} and friendUserId: ${friendUserId}`);
         try {
@@ -87,7 +87,7 @@ export default function createEventRoutes() {
         }
     });
 
-    userEventRouter.get('/user_event/event/:eventId', async (req, res) => {
+    userEventRouter.get('/user_event/event/:eventId', AuthUtils.validateAuth, async (req, res) => {
         const eventId = req.params.eventId;
         console.log(`Query user events by eventId: ${eventId}`);
         try {
@@ -100,7 +100,7 @@ export default function createEventRoutes() {
         }
     });
 
-    userEventRouter.post('/user_event', async (req, res) => {
+    userEventRouter.post('/user_event', AuthUtils.validateAuth, async (req, res) => {
         var payload = req.body;
         try {
             const userEvent = await userEventModel.createUserEvent(payload);
@@ -115,7 +115,7 @@ export default function createEventRoutes() {
         }
     });
 
-    userEventRouter.put('/user_event/:userEventId', async (req, res) => {
+    userEventRouter.put('/user_event/:userEventId', AuthUtils.validateAuth, async (req, res) => {
         var userEventId = req.params.userEventId;
         var payload = req.body;
         try {
@@ -131,7 +131,7 @@ export default function createEventRoutes() {
         }
     });
 
-    userEventRouter.delete('/user_event/:userEventId', async (req, res) => {
+    userEventRouter.delete('/user_event/:userEventId', AuthUtils.validateAuth, async (req, res) => {
         var userEventId = req.params.userEventId;
         try {
             await userEventModel.deleteUserEvent(userEventId);

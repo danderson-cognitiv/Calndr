@@ -14,7 +14,6 @@ describe('GET single User', function() {
         user = await userModel.createUser({
             username: "user", 
             email: "test@gmail.com", 
-            password: "password", 
             fName: "dave", 
             lName: "anderson",
             eventsVisible: true, 
@@ -62,7 +61,6 @@ describe('GET list of Users', function() {
         const user1 = await userModel.createUser({
             username: "test_user1",
             email: "test_user1@test.com",
-            password: "password",
             fName: "Dave",
             lName: "Anderson",
             eventsVisible: true,
@@ -72,7 +70,6 @@ describe('GET list of Users', function() {
         const user2 = await userModel.createUser({
             username: "test_user2",
             email: "test_user2@test.com",
-            password: "password",
             fName: "Mahir",
             lName: "Bathija",
             eventsVisible: true,
