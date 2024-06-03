@@ -78,7 +78,7 @@ module.exports = {
     );
     await db.collection('users').updateOne(
       { _id: userId4 },
-      { $set: { friends: [userId1, userId2, userId3, userId4] } }
+      { $set: { friends: [userId1, userId2, userId3] } }
     );
     await db.collection('users').updateOne(
       { _id: userId5 },
