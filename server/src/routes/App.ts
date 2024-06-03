@@ -12,6 +12,7 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import passport from 'passport'
 import path from 'path';
+import cors from 'cors';
 
 class App {
     // ref to Express instance
@@ -34,12 +35,13 @@ class App {
         this.expressApp.use(bodyParser.json());
         this.expressApp.use(bodyParser.urlencoded({ extended: false }));
 
-        this.expressApp.use((req, res, next) => {
-            res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
-            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-            res.header("Access-Control-Allow-Credentials", "true");
-            next();
-        });
+        this.expressApp.use(cors({
+            origin: process.env.CLIENT_URL,
+            credentials: true,
+            methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+            allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept'
+        }));
+
         this.expressApp.use(cookieParser());
         this.expressApp.use(session({
             secret: process.env.SESSION_SECRET || 'keyboard cat',
