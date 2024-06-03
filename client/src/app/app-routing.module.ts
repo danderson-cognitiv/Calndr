@@ -6,14 +6,13 @@ import { SettingsComponent } from './settings/settings.component';
 import { EventChatComponent } from './event-chat/event-chat.component';
 import { MyEventsComponent } from './my-events/my-events.component';
 import { LoginComponent } from './login/login.component';
-import { AuthGuard } from './AuthGuard';
 
 const routes: Routes = [
-  { path: '', component: HomePageComponent, canActivate: [AuthGuard] },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'event/:userEventId', component: EventChatComponent, canActivate: [AuthGuard] },
-  { path: 'events', component: MyEventsComponent, canActivate: [AuthGuard] },
-  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
+  { path: '', component: HomePageComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'event/:userEventId', component: EventChatComponent },
+  { path: 'events', component: MyEventsComponent },
+  { path: 'settings', component: SettingsComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' } // Catch-all route to redirect to home
 

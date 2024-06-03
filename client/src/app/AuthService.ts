@@ -20,13 +20,11 @@ export class AuthService {
     this.calndrProxyService.getCurrentUser().subscribe({
       next: (user) => {
         this.currentUserSubject.next(user);
-        if (user) {
-          this.router.navigate(['/']);
-        }
       },
       error: (error) => {
         console.error('Failed to load current user:', error);
         this.currentUserSubject.next(null);
+        this.router.navigate(['/login']);
       }
     });
   }
@@ -46,9 +44,5 @@ export class AuthService {
         console.error('Failed to logout:' + error);
       }
     });
-  }
-
-  isAuthenticated(): boolean {
-    return !!this.currentUserSubject.value;
   }
 }
