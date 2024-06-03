@@ -58,13 +58,13 @@ class App {
 
     private routes(): void {
         // auth routes
-        this.expressApp.use('/', createAuthRoutes());
+        this.expressApp.use('/api', createAuthRoutes());
         // Use user routes
-        this.expressApp.use('/', createUserRoutes());
-        this.expressApp.use('/', createEventRoutes());
-        this.expressApp.use('/', createUserEventRoutes());
-        this.expressApp.use('/', createMessageRoutes());
-        this.expressApp.use('/', createPhotoRoutes());
+        this.expressApp.use('/api', createUserRoutes());
+        this.expressApp.use('/api', createEventRoutes());
+        this.expressApp.use('/api', createUserEventRoutes());
+        this.expressApp.use('/api', createMessageRoutes());
+        this.expressApp.use('/api', createPhotoRoutes());
 
 
         // Serve static files
