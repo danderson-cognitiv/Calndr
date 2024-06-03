@@ -7,7 +7,7 @@ interface IUserModel extends Mongoose.Document {
     fName: string;
     lName: string;
     eventsVisible: boolean;
-    friends: Mongoose.Schema.Types.ObjectId[];
+    friends: string[];
 }
 
 export { IUserModel };

@@ -7,7 +7,7 @@ interface IEventModel extends Mongoose.Document {
     endTime: Date;
     location: string;
     description: string;
-    createdBy:  Mongoose.Schema.Types.ObjectId;
+    createdBy:  string;
 }
 
 export { IEventModel };
