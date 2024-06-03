@@ -14,7 +14,9 @@ const routes: Routes = [
   { path: 'event/:userEventId', component: EventChatComponent, canActivate: [AuthGuard] },
   { path: 'events', component: MyEventsComponent, canActivate: [AuthGuard] },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
-  { path: 'login', component: LoginComponent }
+  { path: 'login', component: LoginComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' } // Catch-all route to redirect to home
+
 ]
 
 @NgModule({
