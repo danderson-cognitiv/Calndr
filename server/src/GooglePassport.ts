@@ -18,7 +18,7 @@ class GooglePassport {
         passport.use(new GoogleStrategy({
             clientID: this.clientId,
             clientSecret: this.secretId,
-            callbackURL: `${process.env.CLIENT_URL}/auth/google/callback`
+            callbackURL: `${process.env.SERVER_URL}/auth/google/callback`
         },
         async (accessToken: string, refreshToken: string, profile: typeof Profile, done: typeof VerifyCallBack) => {
             console.log("Inside new Google Strategy");

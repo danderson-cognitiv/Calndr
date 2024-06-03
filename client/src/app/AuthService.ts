@@ -12,8 +12,7 @@ export class AuthService {
   currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(private calndrProxyService: CalndrProxyService, private router: Router) {
-    const checkUser = localStorage.getItem('currentUser');
-    !!checkUser ? this.currentUserSubject.next(JSON.parse(checkUser)) : this.loadCurrentUser;
+   this.loadCurrentUser();
   }
 
   private loadCurrentUser(): void {
@@ -21,11 +20,11 @@ export class AuthService {
     this.calndrProxyService.getCurrentUser().subscribe({
       next: (user) => {
         this.currentUserSubject.next(user);
-        localStorage.setItem('currentUser', JSON.stringify(user));
       },
       error: (error) => {
         console.error('Failed to load current user:', error);
         this.currentUserSubject.next(null);
+        this.router.navigate(['/login'])
       }
     });
   }

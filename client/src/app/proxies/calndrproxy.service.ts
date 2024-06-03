@@ -11,7 +11,8 @@ import { IUserEventViewModel } from '../../../../database/views/IUserEventViewMo
 export class CalndrProxyService {
 
   hostUrl:string = 'https://calndrteamnoslackerz.azurewebsites.net/';
-  
+    // hostUrl:string = 'http://localhost:8080/';
+
   constructor(private httpClient: HttpClient) { }
 
   getUserById(userId:string) {
