@@ -5,15 +5,20 @@
 /* @import '@angular/material/prebuilt-themes/indigo-pink.css'; */
 /* "@angular/material/prebuilt-themes/deeppurple-amber.css",*/
 @import "assets/themes/pusheen-theme.css"; 
-@import "assets/themes/hello-kitty-theme.css";
-
-/* .pusheen-theme {
-  @import "assets/themes/pusheen-theme.css";
-}
-
-.hello-kitty-theme {
-  @import "assets/themes/hello-kitty-theme.css";
-} */
+@import "assets/themes/gamer-pusheen-theme.css";
+@import "assets/themes/boba-pusheen.theme.css";
+@import "assets/themes/aries.theme.css";
+@import "assets/themes/taurus.theme.css";
+@import "assets/themes/gemini.theme.css";
+@import "assets/themes/cancer.theme.css";
+@import "assets/themes/leo.theme.css";
+@import "assets/themes/virgo.theme.css";
+@import "assets/themes/libra.theme.css";
+@import "assets/themes/scorpio.theme.css";
+@import "assets/themes/saggitarius.theme.css";
+@import "assets/themes/capricorn.theme.css";
+@import "assets/themes/aquarius.theme.css";
+@import "assets/themes/pisces.theme.css";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

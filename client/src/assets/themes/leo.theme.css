@@ -1,0 +1,68 @@
+body.leo {
+    background-color: #ffefed;
+    background-image: url('/assets/images/pusheen-horoscopes/Leo.webp');
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    background-size: 400px;
+    background-attachment: fixed; 
+    color: #4f311a;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    
+    .calendar-header {
+      background-color: #ffcccb;
+    }
+    
+    .calendar-event {
+      background-color: #4f311a;
+      border-color: #b39ddb;
+    }
+    
+    .month-display {
+      font-family: 'Comic Sans MS', cursive, sans-serif; 
+      font-size: 30px; 
+      color: #333; 
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .friends-section {
+      color: #50342B;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+    
+    .username {
+      color: #50342B; 
+    }
+    
+    .navbar, .navbar-brand, .nav-link {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+    
+    .navbar {
+      background-color: #ebb7be !important; /* Pink background */
+      border-bottom: 2px solid #ddabb4; /* Darker pink border for emphasis */
+    }
+    
+    /* Override Bootstrap primary button styles to be grey */
+    .btn-primary {
+      background-color: #6c757d !important; /* Grey background color */
+      border-color: #6c757d !important; /* Grey border color */
+      color: #fff !important; /* White text color */
+    }
+    
+    .btn-primary:hover {
+      background-color: #5a6268 !important; /* Darker grey on hover */
+      border-color: #545b62 !important; /* Darker grey border on hover */
+    }
+    
+    .btn-primary:focus, .btn-primary:active {
+      background-color: #5a6268 !important;
+      border-color: #545b62 !important;
+      box-shadow: none !important; /* Remove default focus outline */
+    }
+  }
+  
+  
+  
+  

@@ -1,5 +1,25 @@
+/* Container for the buttons */
+.button-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
+  gap: 20px;
+  padding: 10px; 
+}
+
 .theme-button {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
+  border: none; 
+  background: none; 
+  padding: 0; 
+  cursor: pointer; 
+}
+
+.theme-button img {
+  width: 100%; 
+  height: auto; 
+  border-radius: 5px; 
+  transition: transform 0.2s;
+}
+
+.theme-button img:hover {
+  transform: scale(1.1); 
+}
