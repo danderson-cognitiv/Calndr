@@ -1,15 +1,16 @@
-import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, } from '@angular/core';
-import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours, } from 'date-fns';
-import { Subject } from 'rxjs';
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView, } from 'angular-calendar';
+import { Component, ChangeDetectionStrategy, ViewChild, TemplateRef, OnInit } from '@angular/core';
+import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours } from 'date-fns';
+import { Subject, BehaviorSubject, of } from 'rxjs';
+import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { EventColor } from 'calendar-utils';
 import { Router } from '@angular/router';
 import { CalndrProxyService } from '../proxies/calndrproxy.service';
 import { IUserEventViewModel } from '../../../../database/views/IUserEventViewModel';
-import { title } from 'process';
 import { IUserModel } from '../../../../database/interfaces/IUserModel';
 import { FriendSelectionService } from '../friends/friend-selection.service';
 import { FriendColorService } from '../friends/friend-color.service';
+import { AuthService } from '../AuthService';
+import { filter, switchMap } from 'rxjs/operators';
 
 const colors: Record<string, EventColor> = {
   red: {
@@ -58,8 +59,9 @@ const colors: Record<string, EventColor> = {
     `,
   ],
   templateUrl: 'calendar.component.html',
+  styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
   view: CalendarView = CalendarView.Month;
   CalendarView = CalendarView;
   viewDate: Date = new Date();
@@ -67,6 +69,8 @@ export class CalendarComponent {
   events: CalendarEvent[] = [];
   refresh = new Subject<void>();
   currentUserId: string | null = null;
+
+  private userLoaded = new BehaviorSubject<boolean>(false);
 
   // Labels for Editing and Deleting Events from Calendar 
   actions: CalendarEventAction[] = [
@@ -132,22 +136,43 @@ export class CalendarComponent {
     private router: Router, 
     private proxy$: CalndrProxyService, 
     private friendSelectionService: FriendSelectionService,
-    private friendColorService: FriendColorService
+    private friendColorService: FriendColorService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.friendSelectionService.selectedFriends$.subscribe(this.onSelectedFriendsChange.bind(this));
-    this.proxy$.getUserByName('DandyAndy77').subscribe({
-      next: (user: IUserModel) => {
+    // Ensure friends change subscription only occurs after user data is loaded
+    this.authService.currentUser$.pipe(
+      filter(user => !!user && !!user._id), // Check if user is not null or undefined and has an _id
+      switchMap(user => this.loadUserData(user!._id)) // Use non-null assertion operator
+    ).subscribe({
+      next: () => {
+        this.userLoaded.next(true);
+      },
+      error: (error) => {
+        console.error('Failed to load current user data', error);
+        this.userLoaded.next(false);
+      }
+    });
+  
+    this.userLoaded.pipe(
+      filter(loaded => loaded),
+      switchMap(() => this.friendSelectionService.selectedFriends$)
+    ).subscribe(this.onSelectedFriendsChange.bind(this));
+  }
+
+  loadUserData(userId: string) {
+    return this.proxy$.getUserById(userId).pipe(
+      switchMap(user => {
         console.log('!!! received a user', user, user._id);
         this.currentUserId = user._id;
-      },
-      error: () => {
-        console.error('Failed to load current user data');
-      },
-    });
+        this.userLoaded.next(true);
+        return of(true);
+      })
+    );
   }
   
+
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -188,35 +213,35 @@ export class CalendarComponent {
   onSelectedFriendsChange(selectedFriends: any[]): void {
     console.log("!!! friends are", selectedFriends);
     const allUserIds = selectedFriends.map(f => f._id);
-  
     // Add the current user to the list of selected friends if selected
     if (this.currentUserId && !allUserIds.includes(this.currentUserId) && selectedFriends.some(f => f._id === this.currentUserId)) {
       allUserIds.push(this.currentUserId);
     }
-  
-    // Fetch events for the selected friends
-    this.proxy$.getUserEventsByUserIds(allUserIds).subscribe({
-      next: (userEvents: IUserEventViewModel[]) => {
-        console.log('received events!', userEvents);
-  
-        const events = userEvents.map(({ event, user, _id: userEventId }: IUserEventViewModel) => ({
-          start: new Date(event.startTime),
-          end: new Date(event.endTime),
-          title: event.name,
-          color: { primary: this.friendColorService.getFriendColor(user._id), secondary: '#F0F0F0' },
-          actions: this.actions,
-          draggable: true,
-          meta: { userEventId, user }
-        }));
-  
-        console.log("!!! [app-calendar] attempting to update events", events);
-        this.events = events;
-      },
-      error: (error) => {
-        console.error('Failed to load user events:', error);
-        this.events = [];
-      }
-    });
+
+    if (allUserIds.length > 0) {
+      this.proxy$.getUserEventsByUserIds(allUserIds).subscribe({
+        next: (userEvents: IUserEventViewModel[]) => {
+          console.log('received events!', userEvents);
+    
+          const events = userEvents.map(({ event, user, _id: userEventId }: IUserEventViewModel) => ({
+            start: new Date(event.startTime),
+            end: new Date(event.endTime),
+            title: event.name,
+            color: { primary: this.friendColorService.getFriendColor(user._id), secondary: '#F0F0F0' },
+            actions: this.actions,
+            draggable: true,
+            meta: { userEventId, user }
+          }));
+    
+          console.log("!!! [app-calendar] attempting to update events", events);
+          this.events = events;
+        },
+        error: (error) => {
+          console.error('Failed to load user events:', error);
+          this.events = [];
+        }
+      });
+    }    
   }
   
   addEvent(): void {

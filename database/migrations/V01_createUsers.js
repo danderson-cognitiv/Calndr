@@ -6,49 +6,52 @@ module.exports = {
 
     var result = await db.collection('users').insertMany([
       {
+        _id: "100863077704936259112",
         username: "DandyAndy77",
         email: "david.j.anderson94@gmail.com",
-        password: "password",
         fName: "Dave",
         lName: "Anderson",
         eventsVisible: true,
       },
       {
+        _id: "104944650666529248096",
         username: "Fladenbrot420",
-        email: "mahir_email@gmail.com",
-        password: "password",
+        email: "mahirbahtija@gmail.com",
         fName: "Mahir",
         lName: "Bathija",
         eventsVisible: false
       },
       {
+        _id: "124",
         username: "Emilit",
         email: "emilysoolee@gmail.com",
-        password: "password",
         fName: "Emily",
         lName: "Lee",
         eventsVisible: true
       },
       {
+        _id: "125",
+
         username: "AngeloAlfonso",
         email: "angeloalfonso@gmail.com",
-        password: "password",
         fName: "Angelo",
         lName: "Alfonso",
         eventsVisible: false
       },
       {
+        _id: "126",
+
         username: "Wes1004",
         email: "wesley_wong@gmail.com",
-        password: "password",
         fName: "Wesley",
         lName: "Wong",
         eventsVisible: true
       },
       {
+        _id: "127",
+
         username: "Benson143",
         email: "bensonwakaba@gmail.com",
-        password: "password",
         fName: "Benson",
         lName: "Wakaba",
         eventsVisible: false

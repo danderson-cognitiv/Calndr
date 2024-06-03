@@ -19,13 +19,14 @@ class UserModel {
     private createSchema() {
         
         this.schema = new Mongoose.Schema({
+            _id: String,
             username: String,
             email: String,
             password: String,
             fName: String,
             lName: String,
             eventsVisible: Boolean,
-            friends: [{ type: Mongoose.Schema.Types.ObjectId, ref: 'User' }] // Reference to User model
+            friends: [{ type: String, ref: 'User' }] // Reference to User model
         }, {collection: 'users'}
         ); 
     }
@@ -38,9 +39,8 @@ class UserModel {
 
     public async getUserById(userId:string): Promise<IUserModel | null> {
         try {
-            console.log("USERID" + userId)
             const user = await this.model
-            .findById(new ObjectId(userId))
+            .findById(userId)
             .populate('friends', 'username email');
             return user;
         }

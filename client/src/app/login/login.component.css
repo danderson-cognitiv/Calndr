@@ -1,0 +1,23 @@
+/* Center the container */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 4rem; 
+    margin-bottom: 2rem; 
+  }
+  
+  .login-button {
+    width: 200px; 
+  }
+  
+  .btn-primary {
+    width: 100%;
+  }
+  

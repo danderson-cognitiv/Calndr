@@ -97,11 +97,6 @@ module.exports = {
           rsvp: true
         },
         {
-          event: mahirGraduationEventId._id,
-          user: mahirId._id,
-          rsvp: true
-        },
-        {
           event: mahirSecretPartyEventId._id,
           user: daveId._id,
           rsvp: true
