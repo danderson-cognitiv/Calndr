@@ -1,5 +1,7 @@
 import express from 'express';
 import { DatabaseModels } from '../../../database/DatabaseModels';
+import { AuthUtils } from './AuthUtils';
+
 
 const messageRouter = express.Router();
 
@@ -7,7 +9,7 @@ const messageRouter = express.Router();
 export default function createMessageRoutes() {
     const messageModel = DatabaseModels.MessageModel;
 
-    messageRouter.get('/message/:messageId', async (req, res) => {
+    messageRouter.get('/message/:messageId', AuthUtils.validateAuth, async (req, res) => {
         var messageId = req.params.messageId;
         console.log('Query message by messageId: ' + messageId);
         try {
@@ -23,7 +25,7 @@ export default function createMessageRoutes() {
         }
     });
 
-    messageRouter.get('/message', async (req, res) => {
+    messageRouter.get('/message', AuthUtils.validateAuth, async (req, res) => {
         try {
             const message = await messageModel.getMessages();
             if (message) {
@@ -37,7 +39,7 @@ export default function createMessageRoutes() {
         }
     });
 
-    messageRouter.get('/message/event/:eventId', async (req, res) => {
+    messageRouter.get('/message/event/:eventId', AuthUtils.validateAuth, async (req, res) => {
         var eventId = req.params.eventId;
         console.log('Query message by eventId: ' + eventId);
         try {
@@ -53,7 +55,7 @@ export default function createMessageRoutes() {
         }
     });
 
-    messageRouter.post('/message', async (req, res) => {
+    messageRouter.post('/message', AuthUtils.validateAuth, async (req, res) => {
         var payload = req.body;
         try {
             const message = await messageModel.createMessaage(payload);
@@ -68,7 +70,7 @@ export default function createMessageRoutes() {
         }
     });
 
-    messageRouter.put('/message/:messageId', async (req, res) => {
+    messageRouter.put('/message/:messageId', AuthUtils.validateAuth, async (req, res) => {
         var messageId = req.params.messageId;
         var payload = req.body;
         try {
@@ -84,7 +86,7 @@ export default function createMessageRoutes() {
         }
     });
 
-    messageRouter.delete('/message/:messageId', async (req, res) => {
+    messageRouter.delete('/message/:messageId', AuthUtils.validateAuth, async (req, res) => {
         var messageId = req.params.messageId;
         try {
             await messageModel.deleteMessaage(messageId);

@@ -97,23 +97,18 @@ module.exports = {
           rsvp: true
         },
         {
-          event: mahirGraduationEventId._id,
+          event: mahirSecretPartyEventId._id,
+          user: emilitId._id,
+          rsvp: true
+        },
+        {
+          event: mahirSecretPartyEventId._id,
+          user: angeloId._id,
+          rsvp: true
+        },
+        {
+          event: mahirSecretPartyEventId._id,
           user: mahirId._id,
-          rsvp: true
-        },
-        {
-          event: mahirSecretPartyEventId._id,
-          user: daveId._id,
-          rsvp: true
-        },
-        {
-          event: mahirSecretPartyEventId._id,
-          user: angeloId._id,
-          rsvp: true
-        },
-        {
-          event: mahirSecretPartyEventId._id,
-          user: angeloId._id,
           rsvp: true
         },
         {
@@ -223,9 +218,8 @@ module.exports = {
         }, 
       ]);
     },
-  
+
     async down(db, client) {
       await db.collection('userEvents').drop();
     }
   };
-  

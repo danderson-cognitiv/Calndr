@@ -1,5 +1,7 @@
 import * as Mongoose from "mongoose";
 import {IUserModel} from '../interfaces/IUserModel';
+const { ObjectId } = require('mongoose').Types;
+
 
 class UserModel {
     public schema:any;
@@ -17,13 +19,14 @@ class UserModel {
     private createSchema() {
         
         this.schema = new Mongoose.Schema({
+            _id: String,
             username: String,
             email: String,
             password: String,
             fName: String,
             lName: String,
             eventsVisible: Boolean,
-            friends: [{ type: Mongoose.Schema.Types.ObjectId, ref: 'User' }] // Reference to User model
+            friends: [{ type: String, ref: 'User' }] // Reference to User model
         }, {collection: 'users'}
         ); 
     }
@@ -39,7 +42,6 @@ class UserModel {
             const user = await this.model
             .findById(userId)
             .populate('friends', 'username email');
-            console.log(user)
             return user;
         }
         catch(e) {
