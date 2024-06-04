@@ -29,7 +29,6 @@ export class AuthService {
     });
   }
 
-
   login(): void {
     window.location.href = `${this.calndrProxyService.hostUrl}auth/google`;
   }

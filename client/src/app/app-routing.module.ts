@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'event/:userEventId', component: EventChatComponent },
-  { path: 'events', component: MyEventsComponent},
+  { path: 'events', component: MyEventsComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' } // Catch-all route to redirect to home
