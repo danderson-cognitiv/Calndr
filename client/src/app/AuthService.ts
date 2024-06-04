@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { CalndrProxyService } from './proxies/calndrproxy.service';
 import { IUserModel } from '../../../database/interfaces/IUserModel';
-import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,23 +19,16 @@ export class AuthService {
     console.log('Loading current user');
     this.calndrProxyService.getCurrentUser().subscribe({
       next: (user) => {
-        if (user) {
-          this.currentUserSubject.next(user);
-        } else {
-          this.handleUserNotFound();
-        }
+        this.currentUserSubject.next(user);
       },
       error: (error) => {
         console.error('Failed to load current user:', error);
-        this.handleUserNotFound();
+        this.currentUserSubject.next(null);
+        this.router.navigate(['/login']);
       }
     });
   }
 
-  private handleUserNotFound(): void {
-    this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
-  }
 
   login(): void {
     window.location.href = `${this.calndrProxyService.hostUrl}auth/google`;
@@ -52,15 +45,5 @@ export class AuthService {
         console.error('Failed to logout:' + error);
       }
     });
-  }
-
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const user = this.currentUserSubject.value;
-    if (user) {
-      return true;
-    } else {
-      this.router.navigate(['/login']);
-      return false;
-    }
   }
 }
