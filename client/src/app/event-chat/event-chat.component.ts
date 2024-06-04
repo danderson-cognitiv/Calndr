@@ -85,22 +85,30 @@ export class EventChatComponent implements OnInit, AfterViewChecked {
       return;
     }
   
-    let sentAt = new Date()
-    const payload = {
-      content: this.messageContent,
-      sentAt: sentAt,
-      userEvent: this.userEvent._id,
-    };
-  
-    this.proxy$.createMessage(payload).subscribe({
+
+    this.proxy$.getUserEventsByUserIdAndEventId(this.currentUser._id, this.userEvent.event._id).subscribe({
       next: (result) => {
-        console.log('Message posted successfully', result);
-        console.log(this.userEvent)
-        this.messages.push({ ...result, userEvent: this.userEvent, sentAt: sentAt, content: this.messageContent });
-        this.messageContent = '';
+        let userContextUserEvent = result;
+        let sentAt = new Date()
+        const payload = {
+          content: this.messageContent,
+          sentAt: sentAt,
+          userEvent: userContextUserEvent._id,
+        };
+        this.proxy$.createMessage(payload).subscribe({
+          next: (result) => {
+            console.log('Message posted successfully', result);
+            console.log(this.userEvent)
+            this.messages.push({ ...result, userEvent: userContextUserEvent, sentAt: sentAt, content: this.messageContent });
+            this.messageContent = '';
+          },
+          error: (error) => {
+            console.error('Failed to post message:', error);
+          }
+        });
       },
       error: (error) => {
-        console.error('Failed to post message:', error);
+        console.error("failed to get current user to post message")
       }
     });
   }
