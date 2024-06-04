@@ -29,6 +29,12 @@ export class DatabaseModels {
         }
     }
 
+    public static async close(): Promise<void> {
+        if (this.connection) {
+            this.connection.close;
+        }
+    }
+
     public static get UserModel(): UserModel {
         return this.userModel;
     }

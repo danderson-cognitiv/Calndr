@@ -5,7 +5,7 @@
   "main": "server/src/AppServer.ts",
   "scripts": {
     "start": "ts-node server/src/AppServer.ts",
-    "test": "node --loader ts-node/esm node_modules/.bin/mocha --require ts-node/register 'server/tests/*'"
+    "test": "node --loader ts-node/esm node_modules/.bin/mocha --require ts-node/register 'server/tests/*' --exit"
   },
   "keywords": [],
   "author": "",

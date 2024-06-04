@@ -3,11 +3,18 @@ import { describe, it, before } from 'mocha';
 import { UserModel } from '../../database/model/UserModel';
 import { IUserModel } from '../../database/interfaces/IUserModel';
 import * as dotenv from 'dotenv';
+
 dotenv.config()
 
 before(async () => {
     await DatabaseModels.initialize(process.env.CLOUD_DB_CONNECTION_STRING!);
-});describe('GET single User', function() {
+});
+
+after(async () => {
+    await DatabaseModels.close();
+});
+
+describe('GET single User', function() {
     let user:any;
     let userModel:UserModel
     before(async () => {
