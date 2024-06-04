@@ -43,18 +43,11 @@ class GooglePassport {
         ));
 
         passport.serializeUser((user: any, done) => {
-            console.log("Serializing user:", user);
-            done(null, user._id); // Serialize the user ID
+            done(null, user);
         });
 
-        passport.deserializeUser(async (id: string, done) => {
-            try {
-                const user = await DatabaseModels.UserModel.getUserById(id);
-                console.log("Deserializing user:", user);
-                done(null, user);
-            } catch (error) {
-                done(error, null);
-            }
+        passport.deserializeUser((user: any, done) => {
+            done(null, user);
         });
     }
 }

@@ -24,6 +24,7 @@ export class ProfileComponent implements OnInit {
     // Initialize the form with default values or placeholders
     this.userForm = this.formBuilder.group({
       username: ['', Validators.required],
+      userId: [{ value: '', disabled: true }],
       email: ['', [Validators.required, Validators.email]],
       fName: ['', Validators.required],
       lName: ['', Validators.required],
@@ -39,6 +40,7 @@ export class ProfileComponent implements OnInit {
         this.user = user;
         this.userForm.patchValue({
           username: user.username,
+          userId: user._id,
           email: user.email,
           fName: user.fName,
           lName: user.lName,

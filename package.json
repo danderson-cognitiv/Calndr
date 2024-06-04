@@ -5,7 +5,7 @@
   "main": "server/src/AppServer.ts",
   "scripts": {
     "start": "ts-node server/src/AppServer.ts",
-    "test": "node --loader ts-node/esm node_modules/.bin/mocha --require ts-node/register 'server/tests/*'"
+    "test": "node --loader ts-node/esm node_modules/.bin/mocha --require ts-node/register 'server/tests/*' --exit"
   },
   "keywords": [],
   "author": "",
@@ -32,7 +32,9 @@
     "jwt-decode": "^4.0.0",
     "migrate-mongo": "^11.0.0",
     "passport": "^0.7.0",
-    "passport-google-oauth20-with-people-api": "^2.0.0"
+    "passport-google-oauth20-with-people-api": "^2.0.0",
+    "sass": "^1.77.4",
+    "scss": "^0.2.4"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.7",

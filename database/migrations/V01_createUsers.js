@@ -22,7 +22,7 @@ module.exports = {
         eventsVisible: false
       },
       {
-        _id: "124",
+        _id: "108903236547046208087",
         username: "Emilit",
         email: "emilysoolee@gmail.com",
         fName: "Emily",
@@ -30,8 +30,7 @@ module.exports = {
         eventsVisible: true
       },
       {
-        _id: "125",
-
+        _id: "116963747852830421789",
         username: "AngeloAlfonso",
         email: "angeloalfonso@gmail.com",
         fName: "Angelo",
@@ -40,7 +39,6 @@ module.exports = {
       },
       {
         _id: "126",
-
         username: "Wes1004",
         email: "wesley_wong@gmail.com",
         fName: "Wesley",
@@ -80,7 +78,7 @@ module.exports = {
     );
     await db.collection('users').updateOne(
       { _id: userId4 },
-      { $set: { friends: [userId1, userId2, userId3, userId4] } }
+      { $set: { friends: [userId1, userId2, userId3] } }
     );
     await db.collection('users').updateOne(
       { _id: userId5 },

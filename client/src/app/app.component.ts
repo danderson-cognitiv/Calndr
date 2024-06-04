@@ -1,5 +1,5 @@
-// app.component.ts
 import { Component, OnInit } from '@angular/core';
+import { ThemeService } from './theme.service';
 import { aU } from '@fullcalendar/core/internal-common';
 import { AuthService } from './AuthService';
 
@@ -8,12 +8,14 @@ import { AuthService } from './AuthService';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements OnInit {
   currentUser: any;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private themeService: ThemeService) {}
 
   ngOnInit() {
+    console.log('AppComponent initialized');
   }
 
   logout(): void {

@@ -10,21 +10,9 @@
     <p>Calndr is a calendar application that helps you manage your events and share them with friends.</p>
   </div>
 
-  <!-- List of Current User's Friends -->
-  <div class="friends-section">
-    <h3>Share your calendar with...</h3>
-    <ul class="no-bullets-friends">
-      <li *ngFor="let friend of friends" class="friend-item">
-        <label class="friend-label">
-          <input type="checkbox" [(ngModel)]="friend.selected">
-          <span class="username">{{ friend.username }}</span>
-        </label>
-      </li>
-    </ul>
-  </div>
-
-  <!-- Submit Button -->
-  <div class="submit-section">
-    <button (click)="submitSettings()" class="btn btn-primary">Submit</button>
+    <!-- Customization Section -->  
+  <div class="themes-section">
+    <h3>Choose your theme...</h3>
+    <app-theme-switcher></app-theme-switcher>
   </div>
 </div>

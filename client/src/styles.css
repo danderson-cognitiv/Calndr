@@ -2,8 +2,23 @@
 
 /* angular-cli file: src/styles.css */
 @import "../node_modules/angular-calendar/css/angular-calendar.css";
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
-
+/* @import '@angular/material/prebuilt-themes/indigo-pink.css'; */
+/* "@angular/material/prebuilt-themes/deeppurple-amber.css",*/
+@import "assets/themes/pusheen-theme.scss"; 
+@import "assets/themes/gamer-pusheen-theme.scss";
+@import "assets/themes/boba-pusheen.theme.scss";
+@import "assets/themes/aries.theme.scss";
+@import "assets/themes/taurus.theme.scss";
+@import "assets/themes/gemini.theme.scss";
+@import "assets/themes/cancer.theme.scss";
+@import "assets/themes/leo.theme.scss";
+@import "assets/themes/virgo.theme.scss";
+@import "assets/themes/libra.theme.scss";
+@import "assets/themes/scorpio.theme.scss";
+@import "assets/themes/saggitarius.theme.scss";
+@import "assets/themes/capricorn.theme.scss";
+@import "assets/themes/aquarius.theme.scss";
+@import "assets/themes/pisces.theme.scss";
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -17,6 +17,8 @@ import { EventChatComponent } from './event-chat/event-chat.component';
 import { CommonModule } from '@angular/common';
 import { MyEventsComponent } from './my-events/my-events.component';
 import { MatIconModule } from '@angular/material/icon';
+import { ThemeSwitcherComponent } from './theme-switcher/theme-switcher.component'; 
+import { ThemeService } from './theme.service';
 
 // angular-calendar related
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -38,7 +40,8 @@ import { CalendarComponent } from './calendar/calendar.component';
       SettingsComponent,
       EventChatComponent,
       MyEventsComponent,
-      CalendarComponent
+      CalendarComponent,
+      ThemeSwitcherComponent,
     ],
     imports: [
       BrowserModule,
@@ -57,7 +60,7 @@ import { CalendarComponent } from './calendar/calendar.component';
       }),
     ],
     exports: [CalendarComponent],
-    providers: [CalndrProxyService, provideAnimationsAsync()],
+    providers: [CalndrProxyService, ThemeService, provideAnimationsAsync()],
     bootstrap: [AppComponent]
   })
   export class AppModule { }

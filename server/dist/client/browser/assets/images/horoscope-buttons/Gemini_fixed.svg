@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="383.7px" height="363.5px" viewBox="0 0 383.7 363.5" style="enable-background:new 0 0 383.7 363.5;" xml:space="preserve"
+	>
+<style type="text/css">
+	.st0{fill:#D9CFFF;}
+	.st1{fill:none;stroke:#FFFFFF;stroke-width:14;stroke-linecap:round;stroke-linejoin:round;}
+	.st2{enable-background:new    ;}
+	.st3{fill:#4D103C;}
+</style>
+<title>Gemini</title>
+<circle class="st0" cx="194.5" cy="130.2" r="129.9"/>
+<g id="gemini_symbol">
+	<path class="st1" d="M150.2,70.7c0,0,43.1,21.2,88.5,0"/>
+	<path class="st1" d="M150.2,189.7c0,0,43.1-21.2,88.5,0"/>
+	<line class="st1" x1="174.7" y1="80.1" x2="174.7" y2="181.9"/>
+	<line class="st1" x1="214.2" y1="80.1" x2="214.2" y2="180.3"/>
+</g>
+<g class="st2">
+	<path class="st3" d="M109.9,337.6h15v18.2h-6.3v-2.9c-1.5,2.3-4.7,3.5-7.9,3.5c-9,0-16.6-7.3-16.6-16.2c0-8.9,7.5-16.2,16.6-16.2
+		c5.4,0,10.2,2.6,13.2,6.5l-6.5,4.4c-1.6-2-4-3.2-6.7-3.2c-4.7,0-8.5,3.8-8.5,8.5c0,4.7,3.8,8.5,8.5,8.5c2.8,0,5.2-1.4,6.7-3.6v-0.9
+		h-7.6V337.6z"/>
+	<path class="st3" d="M138.2,324.6h24v7.8h-16v4.5h13.1v7.2h-13.1v4h16v7.7h-24V324.6z"/>
+	<path class="st3" d="M175.2,355.8v-31.2h8l9,19.7l9-19.7h8v31.2h-8v-14.7l-6.5,13.5h-5.2l-6.5-13.5v14.7H175.2z"/>
+	<path class="st3" d="M231.3,324.6v31.2h-8v-31.2H231.3z"/>
+	<path class="st3" d="M245.3,355.8v-31.2h6.8l13.9,17.4v-17.4h8v31.2h-6.8l-13.9-17.4v17.4H245.3z"/>
+	<path class="st3" d="M296,324.6v31.2h-8v-31.2H296z"/>
+</g>
+</svg>
