@@ -9,7 +9,8 @@
 }
 
 .info-section {
-  margin-bottom: 20px;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 .info-icon {
@@ -49,9 +50,12 @@
 
 .submit-section {
   text-align: center;
+  margin-bottom: 30px;
 }
 
 .btn {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 10px 10px;
+  font-size: 14px;
 }
+
+
