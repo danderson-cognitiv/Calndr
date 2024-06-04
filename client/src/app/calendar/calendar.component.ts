@@ -241,7 +241,11 @@ export class CalendarComponent implements OnInit {
           this.events = [];
         }
       });
-    }    
+    } else {
+      // Clear the events if no friends are selected
+      this.events = [];
+    }  
+    this.refresh.next();
   }
   
   addEvent(): void {
