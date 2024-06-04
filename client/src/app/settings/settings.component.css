@@ -26,36 +26,4 @@
   cursor: pointer;
 }
 
-.friends-section {
-  margin-bottom: 20px;
-}
-
-.no-bullets-friends {
-  list-style-type: none;
-  padding: 0;
-}
-
-.friend-item {
-  margin-bottom: 10px;
-}
-
-.friend-label {
-  display: flex;
-  align-items: center;
-}
-
-.username {
-  margin-left: 10px;
-}
-
-.submit-section {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.btn {
-  padding: 10px 10px;
-  font-size: 14px;
-}
-
 
