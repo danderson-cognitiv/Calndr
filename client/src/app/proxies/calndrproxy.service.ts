@@ -10,8 +10,8 @@ import { IUserEventViewModel } from '../../../../database/views/IUserEventViewMo
 })
 export class CalndrProxyService {
 
-  hostUrl:string = 'https://calndrteamnoslackerz.azurewebsites.net/';
-    // hostUrl:string = 'http://localhost:8080/';
+  hostUrl:string = 'http://localhost:8080/';
+  // 'https://calndrteamnoslackerz.azurewebsites.net/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -57,6 +57,10 @@ export class CalndrProxyService {
 
   getUserEventsByEventId(eventId:string) {
     return this.httpClient.get<IUserEventViewModel[]>(this.hostUrl + 'user_event/event/' + eventId, { withCredentials: true });
+  }
+
+  getUserEventsByUserIdAndEventId(userId:string, eventId:string) {
+    return this.httpClient.get<IUserEventViewModel>(this.hostUrl + 'user_event/user/' + userId + "/event/" + eventId , { withCredentials: true });
   }
 
   updateUserEvent(userEvent: string, payload: any) {
