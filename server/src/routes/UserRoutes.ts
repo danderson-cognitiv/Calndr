@@ -25,6 +25,20 @@ export default function createUserRoutes() {
         }
     });
 
+    // this is only for testing
+    userRouter.get('/test/user/:userId', async (req, res) => {
+        var userId = req.params.userId;
+        console.log('Query users by userId: ' + userId);
+        try {
+            const user = await userModel.getUserById(userId);
+            res.json(user);
+
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
     userRouter.get('/user/name/:username', AuthUtils.validateAuth, async (req, res) => {
         var username = req.params.username;
         console.log('Query users by username: ' + username);
@@ -54,6 +68,20 @@ export default function createUserRoutes() {
         }
     });
 
+    // this is only for testing
+    userRouter.get('/test/user', async (req, res) => {
+        console.log('Query all users');
+        try {
+            console.log(userModel);
+            const user = await userModel.getUsers();
+            res.json(user);
+
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
 
     userRouter.get('/user/:userId/friends', AuthUtils.validateAuth, async (req, res) => {
         var userId = req.params.userId;
@@ -69,6 +97,22 @@ export default function createUserRoutes() {
     });
 
     userRouter.post('/user', AuthUtils.validateAuth, async (req, res) => {
+        var payload = req.body;
+        try {
+            const user = await userModel.createUser(payload);
+            if (user) {
+                res.json(user);
+            } else {
+                res.status(404).json({ message: "Failed" });
+            }
+        } catch (error) {
+            console.error('Error accessing database:', error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    });
+
+    // this is only for testing
+    userRouter.post('/test/user', async (req, res) => {
         var payload = req.body;
         try {
             const user = await userModel.createUser(payload);

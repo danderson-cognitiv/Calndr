@@ -1,0 +1,64 @@
+body.gamer-pusheen-theme {
+    background-color: #ffe1af;
+    background-image: url('/assets/images/game-on-pusheen.jpg');
+    background-repeat: no-repeat;
+    background-position: bottom left;
+    background-size: 300px; 
+    background-attachment: fixed;
+    color: #1f254c;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+
+    .calendar-header {
+      background-color: #ff69b4;
+    }
+    
+    .calendar-event {
+      background-color: #ffe4e1;
+      border-color: #ffb6c1;
+    }
+
+    .month-display {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-size: 30px; 
+      color: #333; 
+      text-align: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .friends-section {
+      color: #50342B;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+    
+    .username {
+      color: #50342B; 
+    }
+    
+    .navbar, .navbar-brand, .nav-link {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+    }
+    
+    .navbar {
+      background-color: #1f254c !important; 
+      border-bottom: 2px solid #c6d7e6; 
+    }
+    
+    /* Override Bootstrap primary button styles to be grey */
+    .btn-primary {
+      background-color: #969098 !important; 
+      border-color: #969098 !important;
+      color: #fff !important;
+    }
+    
+    .btn-primary:hover {
+      background-color: #969098 !important;
+      border-color: #969098 !important;
+    }
+    
+    .btn-primary:focus, .btn-primary:active {
+      background-color: #969098 !important;
+      border-color: #969098 !important;
+      box-shadow: none !important; 
+    }
+}

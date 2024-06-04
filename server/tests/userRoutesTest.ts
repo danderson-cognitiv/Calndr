@@ -2,16 +2,18 @@ import { DatabaseModels } from '../../database/DatabaseModels';
 import { describe, it, before } from 'mocha';
 import { UserModel } from '../../database/model/UserModel';
 import { IUserModel } from '../../database/interfaces/IUserModel';
+import * as dotenv from 'dotenv';
+dotenv.config()
 
-
-describe('GET single User', function() {
+before(async () => {
+    await DatabaseModels.initialize(process.env.CLOUD_DB_CONNECTION_STRING!);
+});describe('GET single User', function() {
     let user:any;
-    let userModel:UserModel;
-
+    let userModel:UserModel
     before(async () => {
-        await global.serverReady;
         userModel = DatabaseModels.UserModel;
         user = await userModel.createUser({
+            _id: "0",
             username: "user", 
             email: "test@gmail.com", 
             fName: "dave", 
@@ -26,8 +28,8 @@ describe('GET single User', function() {
         const chaiHttp = await import('chai-http');
         chai.default.use(chaiHttp.default);
 
-        const res = await chai.default.request('http://localhost:8080')
-                             .get(`/user/${user._id}`);
+        const res = await chai.default.request(process.env.CLIENT_URL)
+                             .get(`/test/user/${user._id}`);
         chai.expect(res).to.have.status(200);
         chai.expect(res.body).to.be.an('object');
         chai.expect(res.body.username).to.equal('user');
@@ -48,6 +50,54 @@ describe('GET single User', function() {
 
     
 });
+    
+
+describe('POST single User', function() {
+    let user: any;
+    let userModel:UserModel
+    before(async () => {
+        userModel = DatabaseModels.UserModel;
+
+        // Initialize the user object
+        user = {
+            _id: "1",
+            username: "DandyAndyy77",
+            email: "David.j.anderson94@gmail.com",
+            fName: "Dave",
+            lName: "Anderson",
+            eventsVisible: true,
+            friends: []
+        };
+    });
+
+    it('should create a new user and check attributes', async () => {
+        const chai = await import('chai');
+        const chaiHttp = await import('chai-http');
+        chai.default.use(chaiHttp.default);
+
+        const res = await chai.default.request(process.env.CLIENT_URL)
+                             .post('/test/user')
+                             .send(user);
+
+        chai.expect(res).to.have.status(200);
+        chai.expect(res.body).to.be.an('object');
+        chai.expect(res.body.username).to.equal(user.username);
+        chai.expect(res.body.email).to.equal(user.email);
+        chai.expect(res.body.fName).to.equal(user.fName);
+        chai.expect(res.body.lName).to.equal(user.lName);
+        chai.expect(res.body.eventsVisible).to.be.true;
+        chai.expect(res.body.friends).to.be.an('array').that.is.empty;
+    });
+
+    after(async () => {
+        try {
+            await userModel.deleteUser(user._id);
+        } catch (error) {
+            console.error('Failed to clean up user:', error);
+        }
+    });
+});
+
 
 
 describe('GET list of Users', function() {
@@ -55,10 +105,10 @@ describe('GET list of Users', function() {
     let userModel: UserModel;
 
     before(async () => {
-        await global.serverReady;
         userModel = DatabaseModels.UserModel;
 
         const user1 = await userModel.createUser({
+            _id: "0",
             username: "test_user1",
             email: "test_user1@test.com",
             fName: "Dave",
@@ -68,6 +118,7 @@ describe('GET list of Users', function() {
         });
 
         const user2 = await userModel.createUser({
+            _id: "1",
             username: "test_user2",
             email: "test_user2@test.com",
             fName: "Mahir",
@@ -89,7 +140,7 @@ describe('GET list of Users', function() {
         const chaiHttp = await import('chai-http');
         chai.default.use(chaiHttp.default);
 
-        const res = await chai.default.request('http://localhost:8080').get(`/user`);
+        const res = await chai.default.request(process.env.CLIENT_URL).get(`/test/user`);
         const testUsers = res.body.filter((user: IUserModel) => user.email.includes('test.com'));
     
         chai.expect(testUsers.length).to.equal(users.length);
@@ -114,4 +165,6 @@ describe('GET list of Users', function() {
         }
     });
 });
+
+
 

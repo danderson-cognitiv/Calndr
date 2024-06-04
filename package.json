@@ -32,7 +32,9 @@
     "jwt-decode": "^4.0.0",
     "migrate-mongo": "^11.0.0",
     "passport": "^0.7.0",
-    "passport-google-oauth20-with-people-api": "^2.0.0"
+    "passport-google-oauth20-with-people-api": "^2.0.0",
+    "sass": "^1.77.4",
+    "scss": "^0.2.4"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.7",
